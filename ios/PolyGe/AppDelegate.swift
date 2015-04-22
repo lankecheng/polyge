@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //去掉状态栏的阴影
 //        UINavigationBar.appearance().clipsToBounds = true
 //        UINavigationBar.appearance().shadowImage = UIImage()
+        UITabBar.appearance().backgroundColor = UIColor.whiteColor()
         return true
     }
 

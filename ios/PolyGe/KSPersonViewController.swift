@@ -8,20 +8,12 @@
 
 import UIKit
 
-class KSPersonViewController: UITableViewController,UITableViewDelegate {
-    var person = PersonModel(name: "wangjb")
+class KSPersonViewController: KSTableViewController {
+    var person = KSUserEntity()
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        let nibView = NSBundle.mainBundle().loadNibNamed(MainStoryboard.XIBIdentifiers.personHeaderView, owner: nil, options: nil)
-        let headerView = nibView[0] as? UIView
-        headerView?.frame = CGRectMake(0, 0, tableView.frame.width, 285)
-        headerView?.backgroundColor = KSColor.tintColor
-        tableView.tableHeaderView = headerView
-        let footView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 1))
-        footView.backgroundColor = UIColor.whiteColor()
-        tableView.tableFooterView = footView
+        tableView.tableHeaderView?.backgroundColor = KSColor.tintColor
+//        tableView.rowHeight = UITableViewAutomaticDimension
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -37,15 +29,20 @@ class KSPersonViewController: UITableViewController,UITableViewDelegate {
     
     
     //MARK: UITableViewDataSource
+
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+            return 44
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 7
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var identifier = MainStoryboard.TableViewCellIdentifiers.subtitleCell
-        if indexPath.row == 5 {
+        if indexPath.row == 4 {
             identifier = MainStoryboard.TableViewCellIdentifiers.playAudioCell
-        }else if indexPath.row == 7 {
+        }else if indexPath.row == 6 {
             identifier = MainStoryboard.TableViewCellIdentifiers.reportAbuseCell
         }
         var cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! UITableViewCell
@@ -63,14 +60,13 @@ class KSPersonViewController: UITableViewController,UITableViewDelegate {
             cell.textLabel?.text = "Hobbies & interests"
             cell.detailTextLabel?.text = person.interests
         case 4:
-            cell.textLabel?.text = "About me"
-            cell.detailTextLabel?.text = person.about
+            let playAudioCell = cell as! KSPlayAudioTableViewCell
+            playAudioCell.titleLable.text = "About me"
+            playAudioCell.subTitleLable.text = "about"
         case 5:
-           break
-        case 6:
             cell.textLabel?.text = "User comments"
             cell.detailTextLabel?.text = person.comments
-        case 7:
+        case 6:
            break
 
         default:
@@ -78,6 +74,19 @@ class KSPersonViewController: UITableViewController,UITableViewDelegate {
         }
         return cell
         
+    }
+
+    @IBAction func openMessage(sender: AnyObject) {
+        let viewController = KSChattingViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    @IBAction func openPhone(sender: AnyObject) {
+        let viewController = KSChattingViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    @IBAction func playAudio(sender: AnyObject) {
+
     }
     
 }

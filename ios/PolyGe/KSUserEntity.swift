@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class PersonModel {
+class KSUserEntity: KSBaseEntity {
     var userName: String
     var imageUrl: String?
     var image: UIImage?
@@ -18,6 +18,10 @@ class PersonModel {
     var about: String?
     var audio: AnyObject?
     var comments: String?
+    
+    override init() {
+        userName = ""
+    }
     
     init(name: String) {
         userName = name

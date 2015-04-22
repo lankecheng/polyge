@@ -8,16 +8,16 @@
 
 import UIKit
 
-class SearchViewController: KSTabTableViewController {
-
-    let conditions = ["language","Topic","Price","Seats"]
-    
+class SearchViewController: KSTabTableViewController{
+    let pickerViewController = KSPickerViewController()
+    let conditions: [NSMutableArray] = [["language"," "],["Topic"," "],["Seats"," "],["Price"," "]]
+    var pickerContent = [String]()
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let footView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 1))
-        footView.backgroundColor = UIColor.whiteColor()
-        tableView.tableFooterView = footView
+        tableView.tableFooterView = pickerViewController.view
+        pickerViewController.view.hidden = true
+       
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,17 +33,37 @@ class SearchViewController: KSTabTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var identifier = MainStoryboard.TableViewCellIdentifiers.subtitleCell
-        
         if (personType == .Professional && indexPath.row == conditions.count) || (personType == .Partner && indexPath.row == conditions.count-1 ) {
             return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.searchCell, forIndexPath: indexPath) as! UITableViewCell
-        }else {
+        } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.subtitleCell, forIndexPath: indexPath) as! UITableViewCell
-            cell.textLabel?.text = conditions[indexPath.row]
+            cell.textLabel?.text = conditions[indexPath.row][0] as? String
+            cell.detailTextLabel?.text = conditions[indexPath.row][1] as? String
+            cell.layoutIfNeeded()
             return cell
-
         }
     }
-    
+    //MARK: UITableViewDelegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch indexPath.row {
+        case 0:
+            pickerContent = ["English","Chinese"]
+        case 1:
+            pickerContent = ["运动","美食","游戏"]
+        case 2:
+            pickerContent = ["1","2","3-5","5以上"]
+        case 3:
+            pickerContent = ["0-5","6-10","11-15","16-20","20以上"]
+        default:
+            break
+        }
+        pickerViewController.pickerData = pickerContent
+        pickerViewController.callBackBlock = {
+            index in
+            self.conditions[indexPath.row][1] = self.pickerContent[index]
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        }
+        pickerViewController.view.hidden = false
+    }
 }
 

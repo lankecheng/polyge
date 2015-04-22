@@ -15,6 +15,7 @@ struct MainStoryboard {
     }
     
     struct TableViewCellIdentifiers {
+        static let cell = "cell"
         static let languageCell = "languageCell"
         static let personCell = "personCell"
         static let friendCell = "friendCell"
@@ -24,6 +25,7 @@ struct MainStoryboard {
         static let playAudioCell = "playAudioCell"
         static let searchCell = "searchCell"
         static let lastMessageCell = "lastMessageCell"
+
     }
     
     struct SegueIdentifiers {

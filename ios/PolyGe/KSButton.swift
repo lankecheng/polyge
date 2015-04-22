@@ -12,9 +12,10 @@ import UIKit
 class KSButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setBackgroundImage(UIColor.createImageWithColor(KSColor.hightColor), forState: UIControlState.Selected)
-        setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
-        setTitleColor(KSColor.hightColor, forState: UIControlState.Normal)
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.whiteColor().CGColor
+        setBackgroundImage(UIColor.createImageWithColor(UIColor.whiteColor()), forState: UIControlState.Selected)
+        setTitleColor(KSColor.tintColor, forState: UIControlState.Selected)
         clipsToBounds = true
     }
 

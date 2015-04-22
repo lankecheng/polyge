@@ -31,7 +31,7 @@ class KSTabTableViewController: KSTableViewController {
         titleView.addSubview(secondTab)
         titleView.layer.cornerRadius = 4
         titleView.layer.borderWidth = 1
-        titleView.layer.borderColor = KSColor.hightColor.CGColor
+        titleView.layer.borderColor = UIColor.whiteColor().CGColor
         titleView.clipsToBounds = true
         navigationItem.titleView = titleView
         firstTab.selected = true

@@ -9,7 +9,7 @@
 import UIKit
 
 class KSPersonListViewController: KSTableViewController {
-    var personList: [PersonModel]?
+    var personList: [KSUserEntity]?
     
     //MARK: View Life Cycle
     override func viewDidLoad() {

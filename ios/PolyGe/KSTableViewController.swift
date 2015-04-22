@@ -8,11 +8,14 @@
 
 import UIKit
 
-class KSTableViewController: UITableViewController,UITableViewDataSource {
+class KSTableViewController: UITableViewController,UITableViewDataSource,UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = .None
         tableView.dataSource = self
         tableView.delegate = self
+        let footView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 1))
+        footView.backgroundColor = UIColor.whiteColor()
+        tableView.tableFooterView = footView
     }
 }
