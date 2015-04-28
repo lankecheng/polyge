@@ -10,6 +10,7 @@ import UIKit
 extension UIImage {
     func transformtoScale(scale: CGFloat) -> UIImage {
         return UIImage(CGImage: self.CGImage, scale: scale, orientation: .Up)!
+        
 //        // 创建一个bitmap的context
 //        UIGraphicsBeginImageContext(size)
 //        // 绘制改变大小的图片
