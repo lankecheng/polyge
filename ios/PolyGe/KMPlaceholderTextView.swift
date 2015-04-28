@@ -25,10 +25,7 @@ import UIKit
 
 @IBDesignable
 public class KMPlaceholderTextView: UITextView {
-    
-    struct Constants {
-        static let defaultiOSPlaceholderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22)
-    }
+    static let defaultiOSPlaceholderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22)
     
     @IBInspectable public var placeholder: String = "" {
         didSet {
@@ -36,7 +33,7 @@ public class KMPlaceholderTextView: UITextView {
         }
     }
     
-    @IBInspectable public var placeholderColor: UIColor = KMPlaceholderTextView.Constants.defaultiOSPlaceholderColor {
+    @IBInspectable public var placeholderColor: UIColor = KMPlaceholderTextView.defaultiOSPlaceholderColor {
         didSet {
             placeholderLabel.textColor = placeholderColor
         }
@@ -92,17 +89,38 @@ public class KMPlaceholderTextView: UITextView {
             name: UITextViewTextDidChangeNotification,
             object: nil)
         
+        backgroundColor = UIColor.whiteColor()
+        self.layer.borderWidth = BorderWidth
+        self.layer.borderColor = BorderColor
+        self.layer.cornerRadius = CornerRadius
+        
+        self.scrollIndicatorInsets = UIEdgeInsetsMake(CornerRadius, 0, CornerRadius, 0)
+        self.contentInset = UIEdgeInsetsMake(1.0, 0.0, 1.0, 0.0)
+        
+        self.scrollEnabled = true
+        self.scrollsToTop = false
+        self.userInteractionEnabled = true
+        
+        self.font = UIFont.systemFontOfSize(16)
+        self.textColor = UIColor.blackColor()
+        self.textAlignment = .Natural
+        
+        self.contentMode = .Redraw
+        self.dataDetectorTypes = .None
+        self.keyboardAppearance = .Default
+        self.keyboardType = .Default
+        self.returnKeyType = .Default
+
         placeholderLabel.font = font
         placeholderLabel.textColor = placeholderColor
         placeholderLabel.textAlignment = textAlignment
         placeholderLabel.text = placeholder
         placeholderLabel.numberOfLines = 0
         placeholderLabel.backgroundColor = UIColor.clearColor()
-        placeholderLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         addSubview(placeholderLabel)
-        
+        placeholderLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         updateConstraintsForPlaceholderLabel()
-        
+        self.textContainerInset = UIEdgeInsetsMake(4.0, 2.0, 4.0, 2.0)
     }
     
     func updateConstraintsForPlaceholderLabel() {

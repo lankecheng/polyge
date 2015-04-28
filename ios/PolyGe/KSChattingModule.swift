@@ -6,23 +6,22 @@
 //  Copyright (c) 2015年 king. All rights reserved.
 //
 
-import Foundation
-import JSQMessagesViewController
+import UIKit
 class KSChattingModule {
     var messages: NSMutableArray
-    var avatars: [String:JSQMessagesAvatarImage]
+    var avatars: NSMutableArray
     var users: [String:String]
 
-    var outgoingBubbleImageData: JSQMessagesBubbleImage
-    var incomingBubbleImageData: JSQMessagesBubbleImage
+    var outgoingBubbleImageData: UIImage?
+    var incomingBubbleImageData: UIImage?
     
     init() {
         messages = NSMutableArray()
-        avatars = [String:JSQMessagesAvatarImage]()
+        avatars = NSMutableArray()
         users = [String:String]()
-        let bubbleFactory = JSQMessagesBubbleImageFactory()
-        outgoingBubbleImageData = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
-        incomingBubbleImageData =
-            bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
+//        let bubbleFactory = JSQMessagesBubbleImageFactory()
+//        outgoingBubbleImageData = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
+//        incomingBubbleImageData =
+//            bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
     }
 }

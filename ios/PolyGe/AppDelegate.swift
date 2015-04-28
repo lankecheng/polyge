@@ -16,14 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window?.tintColor = KSColor.tintColor
         UIApplication.sharedApplication().statusBarStyle = .LightContent
-        UINavigationBar.appearance().barTintColor = KSColor.tintColor
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = KSColor.titleTextAttributes
+        let navBar = UINavigationBar.appearance()
+        navBar.barTintColor = KSColor.tintColor
+        navBar.tintColor = UIColor.whiteColor()
+        navBar.titleTextAttributes = KSColor.titleTextAttributes
         //状态栏不透明，这样颜色比较饱满
-        UINavigationBar.appearance().translucent = false;
+        navBar.translucent = false
+
         //去掉状态栏的阴影
-//        UINavigationBar.appearance().clipsToBounds = true
-//        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
         return true
     }

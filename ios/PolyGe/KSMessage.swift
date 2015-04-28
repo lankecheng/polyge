@@ -17,7 +17,7 @@ enum MessageState{//当前发送消息状态
     case Sending//发送中
     case Failed//发送失败
 }
-class McMessage: NSObject {
+class KSMessage: NSObject {
     var strIcon: String?
     var strId: String?
     var strTime: NSDate?

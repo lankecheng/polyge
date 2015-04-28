@@ -1,6 +1,8 @@
 import UIKit
 
-class McProgressHUD: UIView {
+class KSProgressHUD: UIView {
+    static var sharedView = KSProgressHUD()
+
     var titleLabel: UILabel?
     var subTitleLabel: UILabel?
     var myTimer: NSTimer?
@@ -8,20 +10,13 @@ class McProgressHUD: UIView {
     var centerLabel: UILabel?
     var edgeImageView: UIImageView?
     
-    class var sharedView: McProgressHUD {//单例模式的使用
-        struct Singleton {
-            static let instance = McProgressHUD()
-        }
-        return Singleton.instance
-    }
-    
     
     class func show(superView:UIView){
-        McProgressHUD.sharedView.show(superView)
+        KSProgressHUD.sharedView.show(superView)
     }
     
     func show(superView:UIView){
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) {
             if self.centerLabel == nil{
                 self.centerLabel = UILabel(frame: CGRectMake(0, 0, 150, 40))
                 self.centerLabel!.backgroundColor = UIColor.clearColor()
@@ -35,7 +30,7 @@ class McProgressHUD: UIView {
                 self.titleLabel!.backgroundColor = UIColor.clearColor()
             }
             if self.edgeImageView == nil{
-                self.edgeImageView = UIImageView(image: UIImage(named: "chat_record_circle"))
+                self.edgeImageView = UIImageView(image: UIImage(named: "Chat_record_circle"))
             }
             self.subTitleLabel!.center = CGPointMake(ScreenBounds.width/2, ScreenBounds.height/2 + 30)
             self.subTitleLabel!.text = "上滑取消发送"
@@ -65,11 +60,9 @@ class McProgressHUD: UIView {
             self.backgroundColor = UIColor.grayColor()
             self.alpha = 0
             superView.addSubview(self)
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
+            UIView.animateWithDuration(1.0, animations: {
                 self.alpha = 0.4
-                }, completion: { (finished: Bool) -> Void in
-                    
-            })
+                }, completion:nil)
             self.myTimer?.invalidate()
             self.myTimer = nil
             self.myTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
@@ -77,7 +70,7 @@ class McProgressHUD: UIView {
                 selector: "startAnimation",
                 userInfo: nil,
                 repeats: true)
-        })
+        }
     }
     func startAnimation(){
         self.angle -= 3
@@ -97,7 +90,7 @@ class McProgressHUD: UIView {
     }
     
     class func changeSubTitle(str:String){
-        McProgressHUD.sharedView.setState(str)
+        KSProgressHUD.sharedView.setState(str)
     }
     
     func setState(str: String){
@@ -107,13 +100,13 @@ class McProgressHUD: UIView {
     }
     
     class func dismissWithSuccess(str: String){
-        McProgressHUD.sharedView.dismiss(str)
+        KSProgressHUD.sharedView.dismiss(str)
     }
     class func dismissWithError(str: String){
-        McProgressHUD.sharedView.dismiss(str)
+        KSProgressHUD.sharedView.dismiss(str)
     }
     func dismiss(state: String){
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(dispatch_get_main_queue()){
             if self.centerLabel != nil && self.edgeImageView != nil && self.subTitleLabel != nil{
                 self.myTimer?.invalidate()
                 self.myTimer = nil
@@ -128,9 +121,9 @@ class McProgressHUD: UIView {
                 }else{
                     timeLonger = 0.6
                 }
-                UIView.animateWithDuration(timeLonger, animations: { () -> Void in
+                UIView.animateWithDuration(timeLonger, animations: {
                     self.alpha = 0
-                    }, completion: { (finished: Bool) -> Void in
+                    }){ finished in
                         self.removeFromSuperview()
                         self.centerLabel!.removeFromSuperview()
                         self.centerLabel = nil
@@ -138,9 +131,9 @@ class McProgressHUD: UIView {
                         self.edgeImageView = nil
                         self.subTitleLabel!.removeFromSuperview()
                         self.subTitleLabel = nil
-                })
+                }
             }
-        })
+        }
     }
     
 }
