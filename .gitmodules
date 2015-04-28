@@ -1,0 +1,9 @@
+[submodule "ios/Alamofire"]
+	path = ios/Alamofire
+	url = https://github.com/Alamofire/Alamofire.git
+[submodule "ios/Kingfisher"]
+	path = ios/Kingfisher
+	url = https://github.com/onevcat/Kingfisher.git
+[submodule "ios/Cartography"]
+	path = ios/Cartography
+	url = https://github.com/robb/Cartography
