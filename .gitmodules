@@ -7,3 +7,9 @@
 [submodule "ios/Cartography"]
 	path = ios/Cartography
 	url = https://github.com/robb/Cartography
+[submodule "ios/CryptoSwift"]
+	path = ios/CryptoSwift
+	url = https://github.com/krzyzanowskim/CryptoSwift.git
+[submodule "ios/Async"]
+	path = ios/Async
+	url = https://github.com/duemunk/Async.git
