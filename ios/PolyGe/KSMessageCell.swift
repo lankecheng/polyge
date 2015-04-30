@@ -26,7 +26,8 @@ class KSMessageCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         constrain(contentView){view in
-            view.edges == view.superview!.edges
+            view.width == view.superview!.width
+            view.leading == view.superview!.leading
         }
         self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
