@@ -9,14 +9,14 @@
 import UIKit
 
 class SearchViewController: KSTabTableViewController{
-    let pickerViewController = KSPickerViewController()
+    let pickerView = KSPickerView(frame: CGRectMake(0, 0, ScreenBounds.width, 200))
     let conditions: [NSMutableArray] = [["language"," "],["Topic"," "],["Seats"," "],["Price"," "]]
     var pickerContent = [String]()
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.tableFooterView = pickerViewController.view
-        pickerViewController.view.hidden = true
+        tableView.tableFooterView = pickerView
+        pickerView.hidden = true
        
     }
     
@@ -57,13 +57,16 @@ class SearchViewController: KSTabTableViewController{
         default:
             break
         }
-        pickerViewController.pickerData = pickerContent
-        pickerViewController.callBackBlock = {
+        pickerView.pickerData = pickerContent
+        pickerView.callBackBlock = {
             index in
             self.conditions[indexPath.row][1] = self.pickerContent[index]
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            tableView.scrollEnabled = true
+
         }
-        pickerViewController.view.hidden = false
+        pickerView.hidden = false
+        tableView.scrollEnabled = false
     }
 }
 
