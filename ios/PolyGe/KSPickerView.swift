@@ -29,7 +29,7 @@ class KSPickerView: UIView ,UIPickerViewDataSource, UIPickerViewDelegate {
         
         toolBar.setItems([cancelBtn,flexSpace,doneBtn], animated: true)
         
-        pickerView.frame = CGRectMake(0.0, toolBar.frame.height, self.frame.width, self.frame.height - 44)
+        pickerView.frame = CGRectMake(0.0, toolBar.frame.height, toolBar.frame.width, self.frame.height - toolBar.frame.height)
         pickerView.dataSource = self
         pickerView.delegate = self
         pickerView.showsSelectionIndicator = true;

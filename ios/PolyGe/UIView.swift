@@ -136,5 +136,13 @@ extension UIView {
         }
         return nil
     }
+    public func navigationController() -> UINavigationController?{
+        if let viewController = navigationController() {
+            if let nav = viewController.navigationController {
+                return nav
+            }
+        }
+        return nil
+    }
     
 }
