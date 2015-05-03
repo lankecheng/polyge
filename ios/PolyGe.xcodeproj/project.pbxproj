@@ -19,6 +19,10 @@
 		3C315F8F1ADF6D180040FF99 /* KSTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F8E1ADF6D180040FF99 /* KSTableViewController.swift */; };
 		3C33C2531AE2793F003041EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C33C2551AE2793F003041EB /* Main.storyboard */; };
 		3C4D29E81AECADEC00DFC0F2 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D29E71AECADEC00DFC0F2 /* ChattingViewController.swift */; };
+		3C62BDA91AF6311900BD6C9A /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */; };
+		3C62BDAA1AF6311900BD6C9A /* LlamaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */; };
+		3C62BDAB1AF6312A00BD6C9A /* CryptoSwift.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3C62BDAC1AF6312A00BD6C9A /* LlamaKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C7A7CC41AE63F9F00426583 /* TcpClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A7CC31AE63F9F00426583 /* TcpClientManager.swift */; };
 		3C7A7CC61AE6407D00426583 /* NSStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A7CC51AE6407D00426583 /* NSStream.swift */; };
 		3C7A7CC81AE64BE000426583 /* KSPlayAudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A7CC71AE64BE000426583 /* KSPlayAudioTableViewCell.swift */; };
@@ -97,6 +101,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3C62BDAB1AF6312A00BD6C9A /* CryptoSwift.framework in Copy Frameworks */,
+				3C62BDAC1AF6312A00BD6C9A /* LlamaKit.framework in Copy Frameworks */,
 				3C7DEA9D1AF602140046B1BD /* Box.framework in Copy Frameworks */,
 				3C7DEA961AF6013E0046B1BD /* Result.framework in Copy Frameworks */,
 				3C7DEA971AF6013E0046B1BD /* Alamofire.framework in Copy Frameworks */,
@@ -124,6 +130,8 @@
 		3C315F8E1ADF6D180040FF99 /* KSTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSTableViewController.swift; sourceTree = "<group>"; };
 		3C33C2541AE2793F003041EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3C4D29E71AECADEC00DFC0F2 /* ChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = "<group>"; };
+		3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LlamaKit.framework; sourceTree = "<group>"; };
 		3C7A7CC31AE63F9F00426583 /* TcpClientManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TcpClientManager.swift; sourceTree = "<group>"; };
 		3C7A7CC51AE6407D00426583 /* NSStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSStream.swift; sourceTree = "<group>"; };
 		3C7A7CC71AE64BE000426583 /* KSPlayAudioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSPlayAudioTableViewCell.swift; sourceTree = "<group>"; };
@@ -189,10 +197,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C62BDA91AF6311900BD6C9A /* CryptoSwift.framework in Frameworks */,
 				3CB3DE161AF5FCFF00289E8B /* Alamofire.framework in Frameworks */,
 				3CB3DE191AF5FCFF00289E8B /* Kingfisher.framework in Frameworks */,
 				3CB3DE1D1AF5FE4E00289E8B /* Result.framework in Frameworks */,
 				3CB3DE181AF5FCFF00289E8B /* Cartography.framework in Frameworks */,
+				3C62BDAA1AF6311900BD6C9A /* LlamaKit.framework in Frameworks */,
 				3C7DEA9C1AF602050046B1BD /* Box.framework in Frameworks */,
 				3CB3DE1A1AF5FCFF00289E8B /* ReactiveCocoa.framework in Frameworks */,
 			);
@@ -415,6 +425,8 @@
 		3CB3DDC71AF5F32100289E8B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */,
+				3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */,
 				3C7DEA9B1AF602050046B1BD /* Box.framework */,
 				3CB3DE1C1AF5FE4E00289E8B /* Result.framework */,
 				3CB3DE101AF5FCFF00289E8B /* Alamofire.framework */,

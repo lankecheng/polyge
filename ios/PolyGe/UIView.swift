@@ -128,5 +128,13 @@ extension UIView {
     public func constrainCenterY(_ constant: CGFloat = 0.0) -> UIView{
         return ksconstrain(.CenterY,.Equal,self.superview!,.CenterY,constant: constant)
     }
+    public func viewController() -> UIViewController?{
+        for var next = self.nextResponder(); next != nil ;next = next?.nextResponder(){
+            if next!.isKindOfClass(UIViewController.classForCoder()) {
+                return next as? UIViewController
+            }
+        }
+        return nil
+    }
     
 }

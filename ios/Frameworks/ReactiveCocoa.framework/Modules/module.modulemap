@@ -4,3 +4,7 @@ framework module ReactiveCocoa {
   export *
   module * { export * }
 }
+
+module ReactiveCocoa.Swift {
+    header "ReactiveCocoa-Swift.h"
+}

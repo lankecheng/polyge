@@ -1,16 +1,15 @@
 import UIKit
-//import KMPlaceholderTextView
+import ReactiveCocoa
 protocol KSInputMessageViewDelegate: NSObjectProtocol{
     func sendMessageText(message: String)
     func sendMessagePhoto(data: NSData, fileName: String)
     func sendMessageVoice(voiceURL: NSURL, fileName: String, voiceTime: Int)
 }
-class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActionSheetDelegate,KSAVAudioRecorderDelegate{
+class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KSAVAudioRecorderDelegate{
     lazy var audioRecorder: KSAVAudioRecorder = {
         KSAVAudioRecorder(delegate: self)
     }()
     var delegate: KSInputMessageViewDelegate?
-    var actionSheetDelegate: UIActionSheetDelegate?
     
     var inputTextView: KMPlaceholderTextView!
     var sendMessageBtn: UIButton!
@@ -41,7 +40,19 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         var speechImage = UIImage(named: "Speech")
         let stretchableButtonImage = speechImage?.stretchableImageWithLeftCapWidth(12, topCapHeight: 0)
         voiceOrTextBtn.setBackgroundImage(stretchableButtonImage, forState: UIControlState.Selected)
-        voiceOrTextBtn.addTarget(self, action: "didVoiceOrTextBtn:", forControlEvents: UIControlEvents.TouchUpInside)
+        voiceOrTextBtn.rac_command = RACCommand(signalBlock: { (id) -> RACSignal! in
+            let btn = id as! UIButton
+            btn.selected = !btn.selected
+            if btn.selected{
+                self.inputTextView.resignFirstResponder()
+                self.inputTextView.hidden = true
+                self.pressstartRecorderBtn.hidden = false
+            }else{
+                self.inputTextView.hidden = false
+                self.pressstartRecorderBtn.hidden = true
+            }
+            return RACSignal.empty()
+        })
 
         //输入框
         inputTextView = KMPlaceholderTextView()
@@ -61,8 +72,21 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         sendMessageBtn.layer.cornerRadius = CornerRadius
         sendMessageBtn.clipsToBounds = true
         getCurBtnShowType()
-        sendMessageBtn.addTarget(self, action: "didSendMessageBtn", forControlEvents: UIControlEvents.TouchUpInside)
-        
+        sendMessageBtn.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
+            if count(self.inputTextView.text) > 0{
+                self.inputTextView.resignFirstResponder()
+                self.delegate?.sendMessageText(self.inputTextView.text)
+                self.inputTextView.text = ""
+                //重新滚到顶
+                self.inputTextView.scrollRangeToVisible(NSMakeRange(0,0))
+                self.getCurBtnShowType()
+            }else{
+                self.inputTextView.resignFirstResponder()
+                let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
+                sheet.showInView(self.window)
+            }
+            return RACSignal.empty()
+        })
         
         //按下开始录音按钮
         pressstartRecorderBtn = UIButton.buttonWithType(.Custom) as! UIButton
@@ -86,22 +110,9 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         pressstartRecorderBtn.hidden = true
     }
     
-    func didVoiceOrTextBtn(btn: UIButton){//点击切换语音和文字输入
-        btn.selected = !btn.selected
-        if btn.selected{
-            inputTextView.resignFirstResponder()
-            inputTextView.hidden = true
-            pressstartRecorderBtn.hidden = false
-        }else{
-            inputTextView.hidden = false
-            pressstartRecorderBtn.hidden = true
-        }
-    }
-    
     func getCurBtnShowType(){
-        isAbleToSendText = count(inputTextView.text)>0
         let image: UIImage
-        if isAbleToSendText {
+        if count(inputTextView.text)>0 {
             sendMessageBtn.setTitle("发送", forState: .Normal)
             sendMessageBtn.setBackgroundImage(nil, forState: .Normal)
             image = KSColor.createImageWithColor(KSColor.tintColor)
@@ -176,23 +187,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         inputTextView.hidden = false
         pressstartRecorderBtn.hidden = true
     }
-    //--------------------------------
     
-    //MARK: 发送消息----
-    func didSendMessageBtn(){
-        if count(inputTextView.text) > 0{
-            inputTextView.resignFirstResponder()
-            delegate?.sendMessageText(self.inputTextView.text)
-            inputTextView.text = ""
-            //重新滚到顶
-            inputTextView.scrollRangeToVisible(NSMakeRange(0,0))
-            getCurBtnShowType()
-        }else{
-            inputTextView.resignFirstResponder()
-            let sheet = UIActionSheet(title: nil, delegate: actionSheetDelegate, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
-            sheet.showInView(self.window)
-        }
-    }
     //MARK: KSAVAudioRecorderDelegate
     func failRecord(failedStr: String){
         KSProgressHUD.dismissWithError(failedStr)
@@ -214,5 +209,89 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         })
         
     }
+    //MARK: UIActionSheetDelegate
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 1 {
+            getCamera()
+        }else if buttonIndex == 2 {
+            getImage()
+        }
+    }
+    
+    
+    //打开相机
+    func getCamera(){
+        //先设定sourceType为相机，然后判断相机是否可用（ipod）没相机，不可用将sourceType设定为相片库
+        var sourceType = UIImagePickerControllerSourceType.Camera
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        }
+        var picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true//设置可编辑
+        picker.sourceType = sourceType
+        self.viewController()!.presentViewController(picker, animated: true, completion: nil)//进入照相界面
+    }
+    func getImage(){
+        var pickerImage = UIImagePickerController()
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+            pickerImage.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            pickerImage.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(pickerImage.sourceType)!
+        }
+        pickerImage.delegate = self
+        pickerImage.allowsEditing = true
+        self.viewController()!.presentViewController(pickerImage, animated: true, completion: nil)
+    }
+    //选择好照片后choose后执行的方法
+    // MARK: UIImagePickerControllerDelegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
+        println("choose--------->>")
+        var img = info[UIImagePickerControllerOriginalImage] as! UIImage
+        var smallImg = self.scaleFromImage(img, size: CGSize(width: img.size.width * 0.8,height: img.size.height * 0.8))
+        println(img.size)
+        println(smallImg.size)
+        var pathExtension = "png"
+        if let imgUrl = info[UIImagePickerControllerReferenceURL] as? NSURL{
+            pathExtension = imgUrl.pathExtension!
+        }
+        var format = NSDateFormatter()
+        format.dateFormat="yyyyMMddHHmmss"
+        var currentFileName = "\(format.stringFromDate(NSDate())).\(pathExtension)"//"\(appDelegate.user.id!)-avatar-\(format.stringFromDate(NSDate())).\(pathExtension)"
+        var imageData = UIImagePNGRepresentation(smallImg)
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        var documentsDirectory : AnyObject = paths[0]
+        var fullPathToFile = documentsDirectory.stringByAppendingPathComponent(currentFileName)
+        let filemanager = NSFileManager.defaultManager()
+        if filemanager.fileExistsAtPath(fullPathToFile) {
+            // probably won't happen. want to do something about it?
+            println("photo exists")
+        }else{
+            
+        }
+        imageData.writeToFile(fullPathToFile, atomically: false)
+        let uploadImgUrl = NSURL(fileURLWithPath: fullPathToFile)
+        var data = NSData(contentsOfFile: uploadImgUrl!.path!)
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        println("choose----ss----->>")
+        delegate!.sendMessagePhoto(data!, fileName: currentFileName)
+        println("choose----ssssssss----->>")
+    }
+    
+    //修改图片尺寸
+    func scaleFromImage(image:UIImage,size:CGSize)->UIImage{
+        UIGraphicsBeginImageContext(size)
+        image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    //cancel后执行的方法
+    func imagePickerControllerDidCancel(picker: UIImagePickerController){
+        println("cancel--------->>")
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+
 
 }
