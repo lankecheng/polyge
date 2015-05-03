@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Result
 class KSHttpServer {
     class func getMsgIp(block: Result<NSDictionary,NSError> -> Void){
         Alamofire.request(.GET,

@@ -19,16 +19,21 @@ class KSPickerViewController: UIViewController, UIPickerViewDataSource, UIPicker
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let pickerToolbar = UIToolbar(frame: CGRectMake(10,0,view.frame.width-20, 44))
-        pickerToolbar.barTintColor = UIColor.whiteColor()
-        pickerToolbar.translucent = true
+        view.backgroundColor = UIColor.whiteColor()
+        let pickerToolbar = UIView()
+        pickerToolbar.backgroundColor = UIColor.whiteColor()
+        pickerToolbar.layer.borderWidth = BorderWidth
         
-        var cancelBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelButtonClicked:")
-        
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneButtonClicked:")
-        
-        pickerToolbar.setItems([cancelBtn,flexSpace,doneBtn], animated: true)
+        var cancelBtn = UIButton()
+        cancelBtn.setTitle("Cancel", forState: UIControlState.Normal)
+        cancelBtn.addTarget(self, action: "cancelButtonClicked:", forControlEvents: .TouchUpInside)
+        let doneBtn = UIButton()
+        doneBtn.setTitle("None", forState: .Normal)
+        doneBtn.addTarget(self, action: "doneButtonClicked:", forControlEvents: .TouchUpInside)
+
+        pickerToolbar.addSubview(cancelBtn)
+        pickerToolbar.addSubview(doneBtn)
+//        pickerToolbar.setItems([cancelBtn,flexSpace,doneBtn], animated: true)
         
         pickerView.frame = CGRectMake(0.0, pickerToolbar.frame.height, view.frame.width, 162)
         pickerView.dataSource = self

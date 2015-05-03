@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Result
 class KSTcpServer {
     static var instance = KSTcpServer()
     var connecting = false

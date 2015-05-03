@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Result
 class LoginModule{
     class func loginWithUsername(name: String, password: String, block: (Result<KSUserEntity,NSError>) -> Void){
         KSHttpServer.getMsgIp(){ (result) in

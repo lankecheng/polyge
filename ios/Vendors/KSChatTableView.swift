@@ -43,7 +43,7 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         if self.cellArray.count > 0 {
             var indexPath = NSIndexPath(forRow: self.cellArray.count - 1, inSection: 0)
             //用自动布局的话，要延迟一下才能滚到最后一行
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.09)), dispatch_get_main_queue()){
+            Async.main(after: 0.1){
                 self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
             }
         }
