@@ -9,7 +9,7 @@ class KSMessageCell: UITableViewCell {
     var messageView: KSMessageContentView!
     var timeLable: UILabel!
 //    var nameLabel: UILabel!
-    var message: KSMessage!
+    var message: Message!
     var audio: KSAVAudioPlayer!
     
     let Margin: CGFloat = 5//内间距
@@ -34,27 +34,29 @@ class KSMessageCell: UITableViewCell {
         //1.创建时间
         self.timeLable = UILabel()
         self.timeLable.textAlignment = NSTextAlignment.Center
-        self.timeLable.textColor = TimeLabelTextColor
-        self.timeLable.font = ChatTimeFont
+        self.timeLable.textColor = kTimeLabelTextColor
+        self.timeLable.font = kChatTimeFont
         self.contentView.addSubview(self.timeLable)
 
         //2.创建头像
         self.avatarBtnView = UIButton()
-        self.avatarBtnView.layer.cornerRadius = CornerRadius
+        self.avatarBtnView.imageView?.image = kUserPlaceHolderImage
+
+        self.avatarBtnView.layer.cornerRadius = kCornerRadius
         self.avatarBtnView.layer.masksToBounds = true
         self.contentView.addSubview(avatarBtnView)
         //3.创建姓名
 //        self.nameLabel = UILabel()
 //        self.nameLabel.textAlignment = NSTextAlignment.Center
-//        self.nameLabel.textColor = TimeLabelTextColor
-//        self.nameLabel.font = ChatTimeFont
+//        self.nameLabel.textColor = kTimeLabelTextColor
+//        self.nameLabel.font = kChatTimeFont
 //        self.contentView.addSubview(self.nameLabel)
 //        nameLabel.constrainWidth(70)
 
 
         //4.创建聊天框
         self.messageView = KSMessageContentView()
-        self.messageView.layer.cornerRadius = CornerRadius
+        self.messageView.layer.cornerRadius = kCornerRadius
         self.messageView.layer.masksToBounds = true
         self.messageView.addTarget(self, action: "didMessageView", forControlEvents: UIControlEvents.TouchUpInside)
         self.contentView.addSubview(self.messageView)
@@ -76,11 +78,11 @@ class KSMessageCell: UITableViewCell {
     }
     
     //设置cell的内容Frame
-    func setMessageFrame(message: KSMessage){
+    func setMessageFrame(message: Message){
         self.message = message
         //1.是否显示时间
         if self.message.showDateLabel{
-            self.timeLable.text = self.message.strTime!.relativeTimeToString()
+            self.timeLable.text = self.message.createDate.relativeTimeToString()
             self.timeLable.sizeToFit()
         }
         
@@ -100,7 +102,9 @@ class KSMessageCell: UITableViewCell {
             }
         }
         //3.获取头像
-        avatarBtnView.kf_setBackgroundImageWithURL(NSURL(string: self.message!.strIcon!)!,forState:.Normal)
+        if let userIcon = self.message.userIcon {
+            avatarBtnView.kf_setBackgroundImageWithURL(NSURL(string: userIcon)!,forState:.Normal,placeholderImage:kUserPlaceHolderImage)
+        }
 //        let request:NSURLRequest = NSURLRequest(URL:NSURL(string: self.message!.strIcon!)!)
 //        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler:{(response:NSURLResponse!,data:NSData!,error:NSError!)->Void in
 //            if data != nil{
@@ -115,27 +119,17 @@ class KSMessageCell: UITableViewCell {
     
     //MARK: 处理点击聊天类容事件
     func didMessageView(){
-        switch self.message.type{
-        case .Text:
-            break
-        case .Picture:
-            break
+        switch self.message.messageType{
         case .Voice:
             if !contentVoiceIsPlaying{
                 NSNotificationCenter.defaultCenter().postNotificationName(KSMessageCell.NotificationName, object: nil)
                 contentVoiceIsPlaying = true
                 self.audio = KSAVAudioPlayer.sharedInstance
                 self.audio.delegate = self
-                if self.message.voice != nil{
-                    self.audio.playSongWithData(self.message.voice!)
-                }else if self.message.voiceURL != nil{
-                    self.audio.playSongWithUrl(self.message.voiceURL!)
-                }
+                self.audio.playSongWithData(self.message.messageData)
             }else{
                 KSAVAudioPlayerDidFinishPlay()
             }
-           
-            break
         default:
             break
         }

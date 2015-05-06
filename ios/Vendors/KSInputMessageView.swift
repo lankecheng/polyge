@@ -1,9 +1,8 @@
 import UIKit
-import ReactiveCocoa
 protocol KSInputMessageViewDelegate: NSObjectProtocol{
-    func sendMessageText(message: String)
+    func sendMessageText(text: String)
     func sendMessagePhoto(data: NSData, fileName: String)
-    func sendMessageVoice(voiceURL: NSURL, fileName: String, voiceTime: Int)
+    func sendMessageVoice(voiceData: NSData,voiceTime: Int)
 }
 class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KSAVAudioRecorderDelegate{
     lazy var audioRecorder: KSAVAudioRecorder = {
@@ -28,8 +27,8 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     }
     func commonInit() {
         //设置边框
-        layer.borderWidth = BorderWidth
-        layer.borderColor = BorderColor
+        layer.borderWidth = kBorderWidth
+        layer.borderColor = kBorderColor
 
         //切换语音和文字输入框按钮
         voiceOrTextBtn = UIButton.buttonWithType(.Custom) as! UIButton
@@ -40,19 +39,8 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         var speechImage = UIImage(named: "Speech")
         let stretchableButtonImage = speechImage?.stretchableImageWithLeftCapWidth(12, topCapHeight: 0)
         voiceOrTextBtn.setBackgroundImage(stretchableButtonImage, forState: UIControlState.Selected)
-        voiceOrTextBtn.rac_command = RACCommand(signalBlock: { (id) -> RACSignal! in
-            let btn = id as! UIButton
-            btn.selected = !btn.selected
-            if btn.selected{
-                self.inputTextView.resignFirstResponder()
-                self.inputTextView.hidden = true
-                self.pressstartRecorderBtn.hidden = false
-            }else{
-                self.inputTextView.hidden = false
-                self.pressstartRecorderBtn.hidden = true
-            }
-            return RACSignal.empty()
-        })
+        voiceOrTextBtn.addTarget(self, action: "", forControlEvents: .TouchUpInside)
+        voiceOrTextBtn.addTarget(self, action: "didVoiceOrTextBtn:", forControlEvents: UIControlEvents.TouchUpInside)
 
         //输入框
         inputTextView = KMPlaceholderTextView()
@@ -69,35 +57,20 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         sendMessageBtn.constrainTop(5).constrainTrailing(-5).constrainWidth(30).constrainCenterY()
         sendMessageBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
         sendMessageBtn.setTitleColor(KSColor.hightColor, forState: .Normal)
-        sendMessageBtn.layer.cornerRadius = CornerRadius
+        sendMessageBtn.layer.cornerRadius = kCornerRadius
         sendMessageBtn.clipsToBounds = true
         getCurBtnShowType()
-        sendMessageBtn.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
-            if count(self.inputTextView.text) > 0{
-                self.inputTextView.resignFirstResponder()
-                self.delegate?.sendMessageText(self.inputTextView.text)
-                self.inputTextView.text = ""
-                //重新滚到顶
-                self.inputTextView.scrollRangeToVisible(NSMakeRange(0,0))
-                self.getCurBtnShowType()
-            }else{
-                self.inputTextView.resignFirstResponder()
-                let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
-                sheet.showInView(self.window)
-            }
-            return RACSignal.empty()
-        })
-        
+            sendMessageBtn.addTarget(self, action: "didSendMessageBtn", forControlEvents: UIControlEvents.TouchUpInside)
         //按下开始录音按钮
         pressstartRecorderBtn = UIButton.buttonWithType(.Custom) as! UIButton
         addSubview(pressstartRecorderBtn)
         pressstartRecorderBtn.constrainTop(5).constrainCenterX().constrainCenterY()
         pressstartRecorderBtn.ksconstrain(.Leading,.Equal,voiceOrTextBtn,.Trailing,constant:50)
         
-        pressstartRecorderBtn.layer.cornerRadius = CornerRadius
+        pressstartRecorderBtn.layer.cornerRadius = kCornerRadius
         pressstartRecorderBtn.layer.masksToBounds = true
         pressstartRecorderBtn.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5).CGColor
-        pressstartRecorderBtn.layer.borderWidth = BorderWidth
+        pressstartRecorderBtn.layer.borderWidth = kBorderWidth
         pressstartRecorderBtn.backgroundColor = UIColor.whiteColor()
         pressstartRecorderBtn.setTitleColor(KSColor.tintColor, forState: UIControlState.Normal)
         pressstartRecorderBtn.setTitle("按住说话", forState: UIControlState.Normal)
@@ -198,8 +171,8 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         })
         
     }
-    func endConvertWithData(voiceURL: NSURL, fileName: String, voiceTime: Int){
-        delegate?.sendMessageVoice(voiceURL, fileName: fileName, voiceTime: voiceTime)
+    func endConvertWithData(voiceData: NSData,voiceTime: Int){
+        delegate?.sendMessageVoice(voiceData,voiceTime: voiceTime)
         KSProgressHUD.dismissWithSuccess("录音成功")
         
         //缓冲消失时间（最好有回调消失完成）
@@ -291,6 +264,34 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         println("cancel--------->>")
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func didVoiceOrTextBtn(btn: UIButton){//点击切换语音和文字输入
+        btn.selected = !btn.selected
+        if btn.selected{
+            self.inputTextView.resignFirstResponder()
+            self.inputTextView.hidden = true
+            self.pressstartRecorderBtn.hidden = false
+        }else{
+            self.inputTextView.hidden = false
+            self.pressstartRecorderBtn.hidden = true
+        }
+
+    }
+    func didSendMessageBtn(){
+        if count(self.inputTextView.text) > 0{
+            self.inputTextView.resignFirstResponder()
+            self.delegate?.sendMessageText(self.inputTextView.text)
+            self.inputTextView.text = ""
+            //重新滚到顶
+            self.inputTextView.scrollRangeToVisible(NSMakeRange(0,0))
+            self.getCurBtnShowType()
+        }else{
+            self.inputTextView.resignFirstResponder()
+            let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
+            sheet.showInView(self.window)
+        }
+        
     }
 
 

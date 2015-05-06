@@ -1,5 +1,5 @@
 //
-//  KSMessageListTableViewCell.swift
+//  MessageListTableViewCell.swift
 //  PolyGe
 //
 //  Created by king on 15/4/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KSMessageListTableViewCell: UITableViewCell {
+class MessageListTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

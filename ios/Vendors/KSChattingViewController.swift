@@ -2,6 +2,15 @@ import UIKit
 import Cartography
 class KSChattingViewController: UIViewController{
     
+    var cellArray: [Message]{
+        get{
+            return chat_tv.cellArray
+        }
+        set{
+            chat_tv.cellArray = newValue
+            chat_tv.reloadData()
+        }
+    }
     var chat_tv: KSChatTableView!
     var inputMessageView: KSInputMessageView!
     let photohandelHeight: CGFloat = 160
@@ -70,43 +79,30 @@ class KSChattingViewController: UIViewController{
 }
 
 extension KSChattingViewController: KSInputMessageViewDelegate{
-    func sendMessageText(message: String) {
-        var messageDict = NSMutableDictionary()
-        messageDict.setValue(message, forKey: "strContent")
-        messageDict.setValue(NSDate(), forKey: "strTime")
-        messageDict.setValue("蛋羹先生", forKey: "strName")
-        messageDict.setValue(0, forKey: "type")
-        messageDict.setValue(1, forKey: "from")
-        messageDict.setValue("http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png", forKey: "strIcon")
-        var message = KSMessage()
-        message.setMessageWithDic(messageDict)
+    func sendMessageText(text: String) {
+        let message = Message.create() as! Message
+        message.createDate = NSDate()
+        message.messageData = text.dataUsingEncoding(NSUTF8StringEncoding)!
+        message.createUserID = KSUserHelper.userID
+        message.messageTypeValue = NSNumber(char: MessageType.Text.rawValue)
         chat_tv.sendMessage(message)
-
     }
     
     func sendMessagePhoto(data: NSData, fileName: String){
-        var messageDict = NSMutableDictionary()
-        messageDict.setValue(NSDate(), forKey: "strTime")
-        messageDict.setValue("发图好玩啊", forKey: "strName")
-        messageDict.setValue(1, forKey: "type")
-        messageDict.setValue(1, forKey: "from")
-        messageDict.setValue("http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png", forKey: "strIcon")
-        messageDict.setValue(UIImage(data: data), forKey: "picture")
-        var message = KSMessage()
-        message.setMessageWithDic(messageDict)
+        let message = Message.create() as! Message
+        message.messageData = data
+        message.createDate = NSDate()
+        message.createUserID = KSUserHelper.userID
+        message.messageTypeValue = NSNumber(char: MessageType.Picture.rawValue)
          chat_tv.sendMessage(message)
     }
-    func sendMessageVoice(voiceURL: NSURL, fileName: String, voiceTime: Int){
-        var messageDict = NSMutableDictionary()
-        messageDict.setValue(NSDate(), forKey: "strTime")
-        messageDict.setValue("说话也好玩", forKey: "strName")
-        messageDict.setValue(2, forKey: "type")
-        messageDict.setValue(1, forKey: "from")
-        messageDict.setValue("http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png", forKey: "strIcon")
-        messageDict.setValue(voiceURL, forKey: "voiceURL")
-        messageDict.setValue(voiceTime, forKey: "strVoiceTime")
-        var message = KSMessage()
-        message.setMessageWithDic(messageDict)
+    func sendMessageVoice(voiceData: NSData,voiceTime: Int){
+        let message = Message.create() as! Message
+        message.messageData = voiceData
+        message.voiceTime = voiceTime
+        message.createDate = NSDate()
+        message.createUserID = KSUserHelper.userID
+        message.messageTypeValue = NSNumber(char: MessageType.Voice.rawValue)
         chat_tv.sendMessage(message)
     }
 }

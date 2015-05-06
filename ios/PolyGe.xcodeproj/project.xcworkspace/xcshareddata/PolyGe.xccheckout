@@ -7,16 +7,24 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B2C94AC0-2836-417F-B41A-72B5BADB45FE</string>
 	<key>IDESourceControlProjectName</key>
-	<string>PolyGe</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>3AE8ED2E684071AF4FB151FA51BF266B82FF45BD</key>
+		<string>https://github.com/stephencelis/SQLite.swift.git</string>
+		<key>55011AEBD444630C0E9DF47BD2E18FDBBDCC285D</key>
+		<string>https://github.com/sqlcipher/sqlcipher.git</string>
 		<key>B5368AD4447FBC865426C5EDB65DD6FD9F4B0D41</key>
 		<string>https://github.com/lankecheng/polyge.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/PolyGe.xcodeproj</string>
+	<string>ios/PolyGe.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>3AE8ED2E684071AF4FB151FA51BF266B82FF45BD</key>
+		<string>../../..ios/SQLite.swift</string>
+		<key>55011AEBD444630C0E9DF47BD2E18FDBBDCC285D</key>
+		<string>../../..ios/SQLite.swift/Vendor/sqlcipher</string>
 		<key>B5368AD4447FBC865426C5EDB65DD6FD9F4B0D41</key>
 		<string>../../..</string>
 	</dict>
@@ -35,6 +43,22 @@
 			<string>B5368AD4447FBC865426C5EDB65DD6FD9F4B0D41</string>
 			<key>IDESourceControlWCCName</key>
 			<string>polyge</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>55011AEBD444630C0E9DF47BD2E18FDBBDCC285D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sqlcipher</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3AE8ED2E684071AF4FB151FA51BF266B82FF45BD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SQLite.swift</string>
 		</dict>
 	</array>
 </dict>

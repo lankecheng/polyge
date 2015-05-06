@@ -90,11 +90,11 @@ public class KMPlaceholderTextView: UITextView {
             object: nil)
         
         backgroundColor = UIColor.whiteColor()
-        self.layer.borderWidth = BorderWidth
-        self.layer.borderColor = BorderColor
-        self.layer.cornerRadius = CornerRadius
+        self.layer.borderWidth = kBorderWidth
+        self.layer.borderColor = kBorderColor
+        self.layer.cornerRadius = kCornerRadius
         
-        self.scrollIndicatorInsets = UIEdgeInsetsMake(CornerRadius, 0, CornerRadius, 0)
+        self.scrollIndicatorInsets = UIEdgeInsetsMake(kCornerRadius, 0, kCornerRadius, 0)
         self.contentInset = UIEdgeInsetsMake(1.0, 0.0, 1.0, 0.0)
         
         self.scrollEnabled = true

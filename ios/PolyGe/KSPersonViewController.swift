@@ -13,7 +13,6 @@ class KSPersonViewController: KSTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableHeaderView?.backgroundColor = KSColor.tintColor
-//        tableView.rowHeight = UITableViewAutomaticDimension
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)

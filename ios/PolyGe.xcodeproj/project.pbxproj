@@ -19,6 +19,10 @@
 		3C315F8F1ADF6D180040FF99 /* KSTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F8E1ADF6D180040FF99 /* KSTableViewController.swift */; };
 		3C33C2531AE2793F003041EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C33C2551AE2793F003041EB /* Main.storyboard */; };
 		3C4D29E81AECADEC00DFC0F2 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D29E71AECADEC00DFC0F2 /* ChattingViewController.swift */; };
+		3C5694781AF7A35B00E9BCB6 /* KSUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5694771AF7A35A00E9BCB6 /* KSUserHelper.swift */; };
+		3C5694811AF7AF6F00E9BCB6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C56947F1AF7AF6E00E9BCB6 /* Model.xcdatamodeld */; };
+		3C5694891AF7B67D00E9BCB6 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5694881AF7B67D00E9BCB6 /* Message.swift */; };
+		3C56948B1AF7B67E00E9BCB6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C56948A1AF7B67E00E9BCB6 /* User.swift */; };
 		3C62BDA91AF6311900BD6C9A /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */; };
 		3C62BDAA1AF6311900BD6C9A /* LlamaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */; };
 		3C62BDAB1AF6312A00BD6C9A /* CryptoSwift.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -30,7 +34,6 @@
 		3C7DEA971AF6013E0046B1BD /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE101AF5FCFF00289E8B /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C7DEA981AF6013E0046B1BD /* Cartography.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE121AF5FCFF00289E8B /* Cartography.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C7DEA991AF6013E0046B1BD /* Kingfisher.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE131AF5FCFF00289E8B /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3C7DEA9A1AF6013E0046B1BD /* ReactiveCocoa.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE141AF5FCFF00289E8B /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C7DEA9C1AF602050046B1BD /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C7DEA9B1AF602050046B1BD /* Box.framework */; };
 		3C7DEA9D1AF602140046B1BD /* Box.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C7DEA9B1AF602050046B1BD /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C7DEAA01AF603730046B1BD /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7DEA9F1AF603730046B1BD /* Async.swift */; };
@@ -60,7 +63,6 @@
 		3CB3DDDC1AF5F4AE00289E8B /* KSChatTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD31AF5F4AE00289E8B /* KSChatTableView.swift */; };
 		3CB3DDDD1AF5F4AE00289E8B /* KSChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD41AF5F4AE00289E8B /* KSChattingViewController.swift */; };
 		3CB3DDDE1AF5F4AE00289E8B /* KSInputMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD51AF5F4AE00289E8B /* KSInputMessageView.swift */; };
-		3CB3DDDF1AF5F4AE00289E8B /* KSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD61AF5F4AE00289E8B /* KSMessage.swift */; };
 		3CB3DDE01AF5F4AE00289E8B /* KSMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD71AF5F4AE00289E8B /* KSMessageCell.swift */; };
 		3CB3DDE11AF5F4AE00289E8B /* KSMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD81AF5F4AE00289E8B /* KSMessageContentView.swift */; };
 		3CB3DDE21AF5F4AE00289E8B /* KSProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD91AF5F4AE00289E8B /* KSProgressHUD.swift */; };
@@ -72,10 +74,12 @@
 		3CB3DE161AF5FCFF00289E8B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE101AF5FCFF00289E8B /* Alamofire.framework */; };
 		3CB3DE181AF5FCFF00289E8B /* Cartography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE121AF5FCFF00289E8B /* Cartography.framework */; };
 		3CB3DE191AF5FCFF00289E8B /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE131AF5FCFF00289E8B /* Kingfisher.framework */; };
-		3CB3DE1A1AF5FCFF00289E8B /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE141AF5FCFF00289E8B /* ReactiveCocoa.framework */; };
 		3CB3DE1D1AF5FE4E00289E8B /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB3DE1C1AF5FE4E00289E8B /* Result.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		3CBB19711AE0B8E60073B4C7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBB19701AE0B8E60073B4C7 /* String.swift */; };
 		3CBB19731AE0CC4C0073B4C7 /* KSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBB19721AE0CC4C0073B4C7 /* KSColor.swift */; };
+		3CCC11011AFA5FC1002009B2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCC11001AFA5FC1002009B2 /* CoreData.framework */; };
+		3CCC11081AFA6041002009B2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCC11071AFA6041002009B2 /* libc++.dylib */; };
+		3CCC112B1AFA6357002009B2 /* NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC112A1AFA6357002009B2 /* NSManagedObject.swift */; };
 		3CCFF1521AE0AB0B00A2D13B /* KSPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCFF1511AE0AB0B00A2D13B /* KSPersonViewController.swift */; };
 		3CD8B7701AF6455700AA5122 /* KSPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8B76F1AF6455700AA5122 /* KSPickerView.swift */; };
 		3CE4FFEF1AE5FD19005C200E /* LoginModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE4FFEE1AE5FD19005C200E /* LoginModule.swift */; };
@@ -91,6 +95,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C315F5F1ADF5F360040FF99;
 			remoteInfo = PolyGe;
+		};
+		3C5694651AF7086100E9BCB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DC3773F319C8CBB3004FCF85;
+			remoteInfo = SQLite;
+		};
+		3C5694671AF7086100E9BCB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DC3773FE19C8CBB3004FCF85;
+			remoteInfo = "SQLite Tests";
+		};
+		3C5694691AF7086100E9BCB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCC6B3801A9191C300734B78;
+			remoteInfo = SQLiteCipher;
+		};
+		3C56946B1AF7086100E9BCB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCC6B3921A9191D100734B78;
+			remoteInfo = "SQLiteCipher Tests";
+		};
+		3C56946D1AF7086100E9BCB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCAE4D151ABE0B3300EFCE7A;
+			remoteInfo = sqlite3;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -108,7 +147,6 @@
 				3C7DEA971AF6013E0046B1BD /* Alamofire.framework in Copy Frameworks */,
 				3C7DEA981AF6013E0046B1BD /* Cartography.framework in Copy Frameworks */,
 				3C7DEA991AF6013E0046B1BD /* Kingfisher.framework in Copy Frameworks */,
-				3C7DEA9A1AF6013E0046B1BD /* ReactiveCocoa.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,6 +168,11 @@
 		3C315F8E1ADF6D180040FF99 /* KSTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSTableViewController.swift; sourceTree = "<group>"; };
 		3C33C2541AE2793F003041EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3C4D29E71AECADEC00DFC0F2 /* ChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = SQLite.swift/SQLite.xcodeproj; sourceTree = "<group>"; };
+		3C5694771AF7A35A00E9BCB6 /* KSUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSUserHelper.swift; sourceTree = "<group>"; };
+		3C5694801AF7AF6F00E9BCB6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		3C5694881AF7B67D00E9BCB6 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3C56948A1AF7B67E00E9BCB6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = "<group>"; };
 		3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LlamaKit.framework; sourceTree = "<group>"; };
 		3C7A7CC31AE63F9F00426583 /* TcpClientManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TcpClientManager.swift; sourceTree = "<group>"; };
@@ -166,7 +209,6 @@
 		3CB3DDD31AF5F4AE00289E8B /* KSChatTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSChatTableView.swift; path = Vendors/KSChatTableView.swift; sourceTree = SOURCE_ROOT; };
 		3CB3DDD41AF5F4AE00289E8B /* KSChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSChattingViewController.swift; path = Vendors/KSChattingViewController.swift; sourceTree = SOURCE_ROOT; };
 		3CB3DDD51AF5F4AE00289E8B /* KSInputMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSInputMessageView.swift; path = Vendors/KSInputMessageView.swift; sourceTree = SOURCE_ROOT; };
-		3CB3DDD61AF5F4AE00289E8B /* KSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSMessage.swift; path = Vendors/KSMessage.swift; sourceTree = SOURCE_ROOT; };
 		3CB3DDD71AF5F4AE00289E8B /* KSMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSMessageCell.swift; path = Vendors/KSMessageCell.swift; sourceTree = SOURCE_ROOT; };
 		3CB3DDD81AF5F4AE00289E8B /* KSMessageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSMessageContentView.swift; path = Vendors/KSMessageContentView.swift; sourceTree = SOURCE_ROOT; };
 		3CB3DDD91AF5F4AE00289E8B /* KSProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSProgressHUD.swift; path = Vendors/KSProgressHUD.swift; sourceTree = SOURCE_ROOT; };
@@ -178,12 +220,14 @@
 		3CB3DE101AF5FCFF00289E8B /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
 		3CB3DE121AF5FCFF00289E8B /* Cartography.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Cartography.framework; sourceTree = "<group>"; };
 		3CB3DE131AF5FCFF00289E8B /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = "<group>"; };
-		3CB3DE141AF5FCFF00289E8B /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
 		3CB3DE1C1AF5FE4E00289E8B /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = "<group>"; };
 		3CBB19701AE0B8E60073B4C7 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		3CBB19721AE0CC4C0073B4C7 /* KSColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSColor.swift; sourceTree = "<group>"; };
 		3CBB19761AE14D440073B4C7 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		3CC3B8401AE89CF20017227D /* PolyGe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PolyGe-Bridging-Header.h"; sourceTree = "<group>"; };
+		3CCC11001AFA5FC1002009B2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3CCC11071AFA6041002009B2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		3CCC112A1AFA6357002009B2 /* NSManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObject.swift; sourceTree = "<group>"; };
 		3CCFF1511AE0AB0B00A2D13B /* KSPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSPersonViewController.swift; sourceTree = "<group>"; };
 		3CD8B76F1AF6455700AA5122 /* KSPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSPickerView.swift; sourceTree = "<group>"; };
 		3CE4FFEE1AE5FD19005C200E /* LoginModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModule.swift; sourceTree = "<group>"; };
@@ -197,6 +241,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CCC11081AFA6041002009B2 /* libc++.dylib in Frameworks */,
+				3CCC11011AFA5FC1002009B2 /* CoreData.framework in Frameworks */,
 				3C62BDA91AF6311900BD6C9A /* CryptoSwift.framework in Frameworks */,
 				3CB3DE161AF5FCFF00289E8B /* Alamofire.framework in Frameworks */,
 				3CB3DE191AF5FCFF00289E8B /* Kingfisher.framework in Frameworks */,
@@ -204,7 +250,6 @@
 				3CB3DE181AF5FCFF00289E8B /* Cartography.framework in Frameworks */,
 				3C62BDAA1AF6311900BD6C9A /* LlamaKit.framework in Frameworks */,
 				3C7DEA9C1AF602050046B1BD /* Box.framework in Frameworks */,
-				3CB3DE1A1AF5FCFF00289E8B /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +308,7 @@
 				3CB3DDD01AF5F41800289E8B /* Vendors */,
 				3CB3DDC71AF5F32100289E8B /* Frameworks */,
 				3C315F611ADF5F360040FF99 /* Products */,
+				3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -374,6 +420,18 @@
 			path = ../PolyGe;
 			sourceTree = "<group>";
 		};
+		3C56945D1AF7086100E9BCB6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C5694661AF7086100E9BCB6 /* SQLite.framework */,
+				3C5694681AF7086100E9BCB6 /* SQLite Tests.xctest */,
+				3C56946A1AF7086100E9BCB6 /* SQLite.framework */,
+				3C56946C1AF7086100E9BCB6 /* SQLiteCipher Tests.xctest */,
+				3C56946E1AF7086100E9BCB6 /* sqlite3.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C7DEA9E1AF6033B0046B1BD /* Async */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,7 +448,6 @@
 				3CB3DDD31AF5F4AE00289E8B /* KSChatTableView.swift */,
 				3CB3DDD41AF5F4AE00289E8B /* KSChattingViewController.swift */,
 				3CB3DDD51AF5F4AE00289E8B /* KSInputMessageView.swift */,
-				3CB3DDD61AF5F4AE00289E8B /* KSMessage.swift */,
 				3CB3DDD71AF5F4AE00289E8B /* KSMessageCell.swift */,
 				3CB3DDD81AF5F4AE00289E8B /* KSMessageContentView.swift */,
 				3CB3DDD91AF5F4AE00289E8B /* KSProgressHUD.swift */,
@@ -411,6 +468,8 @@
 		3C9970671ADFEECB00AF10E1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C56948A1AF7B67E00E9BCB6 /* User.swift */,
+				3C5694881AF7B67D00E9BCB6 /* Message.swift */,
 				3CE4FFF11AE60023005C200E /* Http */,
 				3CE4FFF01AE6000B005C200E /* Login */,
 				3C9970681ADFEEEF00AF10E1 /* RuntimeStatus.swift */,
@@ -418,6 +477,7 @@
 				3C97F5A51AE3AD1A00C21849 /* KSBaseEntity.swift */,
 				3C97F5A71AE3B55C00C21849 /* KSMessageEntity.swift */,
 				3C97F5A91AE3B7BF00C21849 /* KSChattingModule.swift */,
+				3C56947F1AF7AF6E00E9BCB6 /* Model.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -425,6 +485,8 @@
 		3CB3DDC71AF5F32100289E8B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CCC11071AFA6041002009B2 /* libc++.dylib */,
+				3CCC11001AFA5FC1002009B2 /* CoreData.framework */,
 				3C62BDA71AF6311900BD6C9A /* CryptoSwift.framework */,
 				3C62BDA81AF6311900BD6C9A /* LlamaKit.framework */,
 				3C7DEA9B1AF602050046B1BD /* Box.framework */,
@@ -432,7 +494,6 @@
 				3CB3DE101AF5FCFF00289E8B /* Alamofire.framework */,
 				3CB3DE121AF5FCFF00289E8B /* Cartography.framework */,
 				3CB3DE131AF5FCFF00289E8B /* Kingfisher.framework */,
-				3CB3DE141AF5FCFF00289E8B /* ReactiveCocoa.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -458,6 +519,7 @@
 				3C8AB8CC1AE2CDBE001073B5 /* UIImage.swift */,
 				3C97F5B41AE4FF8300C21849 /* NSUserDefaults.swift */,
 				3C7A7CC51AE6407D00426583 /* NSStream.swift */,
+				3CCC112A1AFA6357002009B2 /* NSManagedObject.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -496,6 +558,7 @@
 			children = (
 				3C96BFE81AE8974D00DB857E /* KSDefault.swift */,
 				3CE4FFF71AE61F3D005C200E /* KSNotificationHelp.swift */,
+				3C5694771AF7A35A00E9BCB6 /* KSUserHelper.swift */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -571,6 +634,12 @@
 			mainGroup = 3C315F571ADF5F360040FF99;
 			productRefGroup = 3C315F611ADF5F360040FF99 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3C56945D1AF7086100E9BCB6 /* Products */;
+					ProjectRef = 3C56945C1AF7086100E9BCB6 /* SQLite.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3C315F5F1ADF5F360040FF99 /* PolyGe */,
@@ -578,6 +647,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3C5694661AF7086100E9BCB6 /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = 3C5694651AF7086100E9BCB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C5694681AF7086100E9BCB6 /* SQLite Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLite Tests.xctest";
+			remoteRef = 3C5694671AF7086100E9BCB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C56946A1AF7086100E9BCB6 /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = 3C5694691AF7086100E9BCB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C56946C1AF7086100E9BCB6 /* SQLiteCipher Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteCipher Tests.xctest";
+			remoteRef = 3C56946B1AF7086100E9BCB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C56946E1AF7086100E9BCB6 /* sqlite3.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = sqlite3.framework;
+			remoteRef = 3C56946D1AF7086100E9BCB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3C315F5E1ADF5F360040FF99 /* Resources */ = {
@@ -612,6 +719,7 @@
 				3C8AB8CD1AE2CDBE001073B5 /* UIImage.swift in Sources */,
 				3CB3DE021AF5F52C00289E8B /* WIndicator.swift in Sources */,
 				3C99706B1AE0117800AF10E1 /* KSUserEntity.swift in Sources */,
+				3C5694811AF7AF6F00E9BCB6 /* Model.xcdatamodeld in Sources */,
 				3CE4FFF81AE61F3D005C200E /* KSNotificationHelp.swift in Sources */,
 				3CBB19711AE0B8E60073B4C7 /* String.swift in Sources */,
 				3C7A7CC61AE6407D00426583 /* NSStream.swift in Sources */,
@@ -623,8 +731,10 @@
 				3CB3DDFD1AF5F4EE00289E8B /* KMPlaceholderTextView.swift in Sources */,
 				3C97F5A81AE3B55C00C21849 /* KSMessageEntity.swift in Sources */,
 				3C99705E1ADF9D2F00AF10E1 /* KSButton.swift in Sources */,
+				3C5694891AF7B67D00E9BCB6 /* Message.swift in Sources */,
 				3C1F3C421AE1FE8A009860F5 /* KSTabTableViewController.swift in Sources */,
 				3C9970661ADFEBC800AF10E1 /* KSPersonListViewController.swift in Sources */,
+				3C56948B1AF7B67E00E9BCB6 /* User.swift in Sources */,
 				3CE4FFEF1AE5FD19005C200E /* LoginModule.swift in Sources */,
 				3C7A7CC41AE63F9F00426583 /* TcpClientManager.swift in Sources */,
 				3C4D29E81AECADEC00DFC0F2 /* ChattingViewController.swift in Sources */,
@@ -644,12 +754,12 @@
 				3C315F8A1ADF62E70040FF99 /* MessageViewController.swift in Sources */,
 				3C9970641ADFBFBE00AF10E1 /* MainStoryboard.swift in Sources */,
 				3C97F5B51AE4FF8300C21849 /* NSUserDefaults.swift in Sources */,
-				3CB3DDDF1AF5F4AE00289E8B /* KSMessage.swift in Sources */,
 				3C315F681ADF5F370040FF99 /* HomeViewController.swift in Sources */,
 				3CE4FFF31AE6004C005C200E /* KSHttpServer.swift in Sources */,
 				3CB3DDDB1AF5F4AE00289E8B /* KSAVAudioRecorder.swift in Sources */,
 				3C97F5AF1AE4EBFC00C21849 /* KSLoginViewController.swift in Sources */,
 				3CB3DDDE1AF5F4AE00289E8B /* KSInputMessageView.swift in Sources */,
+				3CCC112B1AFA6357002009B2 /* NSManagedObject.swift in Sources */,
 				3CB3DDE21AF5F4AE00289E8B /* KSProgressHUD.swift in Sources */,
 				3CBB19731AE0CC4C0073B4C7 /* KSColor.swift in Sources */,
 				3C97F5A61AE3AD1A00C21849 /* KSBaseEntity.swift in Sources */,
@@ -657,6 +767,7 @@
 				3C9970621ADFBDB800AF10E1 /* KSLanguageTableViewCell.swift in Sources */,
 				3C9970731AE0165400AF10E1 /* KSPersonListTableViewCell.swift in Sources */,
 				3CB3DDE01AF5F4AE00289E8B /* KSMessageCell.swift in Sources */,
+				3C5694781AF7A35B00E9BCB6 /* KSUserHelper.swift in Sources */,
 				3CCFF1521AE0AB0B00A2D13B /* KSPersonViewController.swift in Sources */,
 				3C9970691ADFEEEF00AF10E1 /* RuntimeStatus.swift in Sources */,
 			);
@@ -911,6 +1022,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3C56947F1AF7AF6E00E9BCB6 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3C5694801AF7AF6F00E9BCB6 /* Model.xcdatamodel */,
+			);
+			currentVersion = 3C5694801AF7AF6F00E9BCB6 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3C315F581ADF5F360040FF99 /* Project object */;
 }

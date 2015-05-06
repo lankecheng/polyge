@@ -1,10 +1,12 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
-    var cellArray = [KSMessage]()
+    var cellArray = [Message]()
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.loadHistory()
         self.delegate = self
         self.dataSource = self
         self.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
@@ -32,9 +34,9 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         var cell = KSMessageCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CellId")
         var curMessage = cellArray[indexPath.row]
         if indexPath.row > 0{
-            curMessage.minuteOffSetStart(cellArray[indexPath.row-1].strTime, end: curMessage.strTime!)
+            curMessage.minuteOffSetStart(cellArray[indexPath.row-1].createDate, end: curMessage.createDate)
         }else{
-            curMessage.minuteOffSetStart(nil, end: curMessage.strTime!)
+            curMessage.minuteOffSetStart(nil, end: curMessage.createDate)
         }
         cell.setMessageFrame(curMessage)
         return cell
@@ -51,13 +53,31 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     
     //MARK: 数据源处理
     func loadHistory(){//加载历史聊天记录...需要数据持久化处理...
+        //1
+        let fetchRequest = NSFetchRequest(entityName:"Message")
+        //2
+        var error: NSError?
+        let fetchedResults =
+        kManagedContext.executeFetchRequest(fetchRequest,
+            error: &error) as! [Message]?
         
+        if let results = fetchedResults {
+            self.cellArray = results
+        } else {
+            println("Could not fetch \(error), \(error!.userInfo)")
+        }
+
     }
     
-    func sendMessage(message: KSMessage){//新曾消息记录
+    func sendMessage(message: Message){//新曾消息记录
+        kManagedContext.insertObject(message)
         self.cellArray.append(message)
         self.reloadData()
         self.scrollToBottom()
+        var error: NSError?
+        if !kManagedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+        }
     }
     
     //处理监听触发事件

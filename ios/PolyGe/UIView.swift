@@ -86,6 +86,7 @@ extension UIView {
             return self
         }
         assert(false)
+        return self
     }
     
     public func ksconstrain(attribute: NSLayoutAttribute, _ relation: NSLayoutRelation, constant: CGFloat, multiplier : CGFloat = 1.0) -> UIView

@@ -32,19 +32,19 @@ class KSProgressHUD: UIView {
             if self.edgeImageView == nil{
                 self.edgeImageView = UIImageView(image: UIImage(named: "Chat_record_circle"))
             }
-            self.subTitleLabel!.center = CGPointMake(ScreenBounds.width/2, ScreenBounds.height/2 + 30)
+            self.subTitleLabel!.center = CGPointMake(kScreenBounds.width/2, kScreenBounds.height/2 + 30)
             self.subTitleLabel!.text = "上滑取消发送"
             self.subTitleLabel!.textAlignment = NSTextAlignment.Center
             self.subTitleLabel!.font = UIFont.boldSystemFontOfSize(14)
             self.subTitleLabel!.textColor = UIColor.whiteColor()
             
             self.titleLabel!.text = "时间限制"
-            self.titleLabel!.center = CGPointMake(ScreenBounds.width/2,ScreenBounds.height/2 - 30)
+            self.titleLabel!.center = CGPointMake(kScreenBounds.width/2,kScreenBounds.height/2 - 30)
             self.titleLabel!.textAlignment = NSTextAlignment.Center
             self.titleLabel!.font = UIFont.boldSystemFontOfSize(18)
             self.titleLabel!.textColor = UIColor.whiteColor()
             
-            self.centerLabel!.center = CGPointMake(ScreenBounds.width/2, ScreenBounds.height/2)
+            self.centerLabel!.center = CGPointMake(kScreenBounds.width/2, kScreenBounds.height/2)
             self.centerLabel!.text = "60"
             self.centerLabel!.textAlignment = NSTextAlignment.Center
             self.centerLabel!.font = UIFont.systemFontOfSize(30)

@@ -7,41 +7,45 @@ class KSMessageContentView: UIButton {
     var backImageView: UIImageView!
     var voiceImageView: UIImageView!
     var voiceTimeLabel: UILabel!
-    var message: KSMessage!
+    var message: Message!
     
-    func initContent(message:KSMessage){//处理三种不同类型的消息界面...
+    func initContent(message:Message){//处理三种不同类型的消息界面...
         self.message = message
-        var contentW: CGFloat = ScreenBounds.width - 120
-        switch message.type{
+        var contentW: CGFloat = kScreenBounds.width - 120
+        switch message.messageType{
         case .Text:
             self.backLabel = UILabel()
             self.addSubview(self.backLabel)
             constrain(backLabel) { view in
-                view.leading == view.superview!.leading + 15
                 view.top == view.superview!.top + 5
+                if message.from == .Me{
+                    view.leading == view.superview!.leading + 10
+                }else{
+                    view.leading == view.superview!.leading + 15
+                }
                 view.superview!.width == view.width + 25
                 view.superview!.height == view.height + 10
             }
             self.backLabel.textColor = UIColor.blackColor()
             self.backLabel.font = UIFont.systemFontOfSize(14)
             self.backLabel.numberOfLines = 0
-            var attributedString = NSMutableAttributedString(string: self.message.strContent!)
+            var attributedString = NSMutableAttributedString(string: NSString(data: self.message.messageData, encoding: NSUTF8StringEncoding) as! String)
             var paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 5
-            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, count(self.message.strContent!)))
+            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
             self.backLabel.attributedText = attributedString
             self.backLabel.sizeToFit()
             
             break
-        case .Picture:
+        case .Picture :
             self.backImageView = UIImageView()
             self.addSubview(self.backImageView)
-            self.backImageView.image = message.picture!
+            self.backImageView.image = UIImage(data: self.message.messageData)
             var width = contentW
             var height = contentW
-            if message.picture != nil{
-                var pH = message.picture!.size.height
-                var pW = message.picture!.size.width
+            if let image = self.backImageView.image {
+                var pH = image.size.height
+                var pW = image.size.width
                 if pH > pW{
                     width = pW * contentW / pH
                 }else{
@@ -57,9 +61,9 @@ class KSMessageContentView: UIButton {
                 view.superview!.height == view.height + 10
             }
             break
-        case .Voice:
+        case .Voice :
             self.voiceTimeLabel = UILabel()
-            self.voiceTimeLabel.text = "\(self.message.strVoiceTime!)\""
+            self.voiceTimeLabel.text = "\(self.message.voiceTime)\""
             self.voiceTimeLabel.font = UIFont.systemFontOfSize(12)
             self.voiceImageView = UIImageView()
             self.addSubview(voiceTimeLabel)

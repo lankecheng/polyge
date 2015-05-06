@@ -9,7 +9,7 @@
 import UIKit
 
 class SearchViewController: KSTabTableViewController{
-    let pickerView = KSPickerView(frame: CGRectMake(0, 0, ScreenBounds.width, 180))
+    let pickerView = KSPickerView(frame: CGRectMake(0, 0, kScreenBounds.width, 180))
     let conditions: [NSMutableArray] = [["language"," "],["Topic"," "],["Seats"," "],["Price"," "]]
     var pickerContent = [String]()
     //MARK: View Life Cycle

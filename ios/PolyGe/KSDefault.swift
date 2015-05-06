@@ -2,10 +2,13 @@
 import UIKit
 
 //定义ui样式
-let ScreenBounds = UIScreen.mainScreen().bounds
-let CornerRadius: CGFloat = 6
-let BorderWidth: CGFloat = 0.5
-let BorderColor = UIColor.lightGrayColor().CGColor
+let kScreenBounds = UIScreen.mainScreen().bounds
+let kCornerRadius: CGFloat = 6
+let kBorderWidth: CGFloat = 0.5
+let kBorderColor = UIColor.lightGrayColor().CGColor
 
-let TimeLabelTextColor = UIColor.grayColor()// 时间字体颜色
-let ChatTimeFont = UIFont.systemFontOfSize(11)//时间字体
+let kTimeLabelTextColor = UIColor.grayColor()// 时间字体颜色
+let kChatTimeFont = UIFont.systemFontOfSize(11)//时间字体
+let kUserDefault = 00001
+let kUserPlaceHolderImage = UIImage(named: "User")
+let kManagedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!

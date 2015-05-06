@@ -5,13 +5,13 @@ import AVFoundation
 
 protocol KSAVAudioRecorderDelegate: NSObjectProtocol{
     func failRecord(failedStr: String)
-    func endConvertWithData(voiceURL: NSURL, fileName: String, voiceTime: Int)
+    func endConvertWithData(voiceData: NSData,voiceTime: Int)
 }
 
 class KSAVAudioRecorder {
     var delegate: KSAVAudioRecorderDelegate
     var recorder: AVAudioRecorder?
-    var soundFileURL = NSURL()
+    var soundFilePath = String()
     
     init(delegate: KSAVAudioRecorderDelegate){
         self.delegate = delegate
@@ -40,10 +40,9 @@ class KSAVAudioRecorder {
     func startRecord(){//进入录音接口...
         self.recorder = nil
         //设置录音文件的存储路径
-        let path = self.storePath()
-        self.soundFileURL = NSURL(fileURLWithPath: path)!
+        self.soundFilePath = self.storePath()
         let filemanager = NSFileManager.defaultManager()
-        if filemanager.fileExistsAtPath(path) {
+        if filemanager.fileExistsAtPath(self.soundFilePath) {
             // probably won't happen. want to do something about it?
             println("sound exists")
         }
@@ -59,7 +58,7 @@ class KSAVAudioRecorder {
             AVEncoderAudioQualityKey: AVAudioQuality.Min.rawValue
             ] as [NSObject : AnyObject]
         var error: NSError?
-        self.recorder = AVAudioRecorder(URL: self.soundFileURL, settings: recordSettings, error: &error)
+        self.recorder = AVAudioRecorder(URL: NSURL(fileURLWithPath: self.soundFilePath), settings: recordSettings, error: &error)
         if let e = error {
             println(e.localizedDescription)
         } else {
@@ -85,10 +84,9 @@ class KSAVAudioRecorder {
                         return
                     }
                 }
-                var fileName = self.soundFileURL.lastPathComponent
-                self.delegate.endConvertWithData(self.soundFileURL, fileName: fileName!, voiceTime: Int(cTime))
+                self.delegate.endConvertWithData(NSData(contentsOfFile: self.soundFilePath)!, voiceTime: Int(cTime))
             }else{
-                self.deleteCurRecording(self.soundFileURL.path!)
+                self.deleteCurRecording(self.soundFilePath)
                 self.delegate.failRecord("太短啦")
             }
         }
@@ -97,7 +95,7 @@ class KSAVAudioRecorder {
         if recorder != nil {
             recorder!.stop()
             recorder = nil
-            self.deleteCurRecording(self.soundFileURL.path!)
+            self.deleteCurRecording(self.soundFilePath)
         }
     }
     
