@@ -6,7 +6,6 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     var cellArray = [Message]()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.loadHistory()
         self.delegate = self
         self.dataSource = self
         self.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
@@ -15,6 +14,7 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         //红外线感应监听
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sensorStateChange:", name: UIDeviceProximityStateDidChangeNotification, object: nil)
         self.estimatedRowHeight = 50
+        self.loadHistory()
     }
     
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -63,6 +63,7 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         
         if let results = fetchedResults {
             self.cellArray = results
+            self.scrollToBottom()
         } else {
             println("Could not fetch \(error), \(error!.userInfo)")
         }

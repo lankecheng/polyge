@@ -53,7 +53,6 @@ class KSChattingViewController: UIViewController{
         inputMessageViewBottomConstrain = constrain(inputMessageView){ view in
             view.bottom == view.superview!.bottom
         }
-        chat_tv.scrollToBottom()
     }
     
     func keyboardChange(notification: NSNotification){
