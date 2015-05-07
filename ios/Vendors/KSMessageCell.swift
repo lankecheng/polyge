@@ -88,17 +88,20 @@ class KSMessageCell: UITableViewCell {
         
         //2.头像、消息的布局
         self.messageView.initContent(message)
-        if self.message.from == .Other{
+        if self.message.from == .Me{
+            messageView.setBackgroundImage(UIImage(named: "Sending_Solid"), forState: .Normal)
+            constrain(avatarBtnView,messageView) { view1,view2 in
+                view1.trailing == view1.superview!.trailing - self.Margin
+                view2.leading >= view1.superview!.leading + self.Margin
+                view2.trailing == view1.leading - self.Margin
+            }
+
+        }else{
             messageView.setBackgroundImage(UIImage(named: "Receiving_Solid"), forState: .Normal)
             constrain(avatarBtnView,messageView) { view1,view2 in
                 view1.leading == view1.superview!.leading + self.Margin
                 view2.leading == view1.trailing + self.Margin
-            }
-        }else{
-            messageView.setBackgroundImage(UIImage(named: "Sending_Solid"), forState: .Normal)
-            constrain(avatarBtnView,messageView) { view1,view2 in
-                view1.trailing == view1.superview!.trailing - self.Margin
-                view2.trailing == view1.leading - self.Margin
+                view2.trailing <= view1.superview!.trailing - self.Margin
             }
         }
         //3.获取头像

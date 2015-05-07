@@ -18,13 +18,13 @@ class KSMessageContentView: UIButton {
             self.addSubview(self.backLabel)
             constrain(backLabel) { view in
                 view.top == view.superview!.top + 5
+                view.superview!.width == view.width + 25
+                view.superview!.height == view.height + 10
                 if message.from == .Me{
                     view.leading == view.superview!.leading + 10
                 }else{
                     view.leading == view.superview!.leading + 15
                 }
-                view.superview!.width == view.width + 25
-                view.superview!.height == view.height + 10
             }
             self.backLabel.textColor = UIColor.blackColor()
             self.backLabel.font = UIFont.systemFontOfSize(14)
@@ -55,10 +55,14 @@ class KSMessageContentView: UIButton {
             constrain(backImageView) { view in
                 view.width == width
                 view.height == height
-                view.leading == view.superview!.leading + 15
                 view.top == view.superview!.top + 5
                 view.superview!.width == view.width + 25
                 view.superview!.height == view.height + 10
+                if message.from == .Me{
+                    view.leading == view.superview!.leading + 10
+                }else{
+                    view.leading == view.superview!.leading + 15
+                }
             }
             break
         case .Voice :

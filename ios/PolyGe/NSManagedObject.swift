@@ -16,7 +16,7 @@ extension NSManagedObject
         return NSStringFromClass(self).componentsSeparatedByString(".").last!
     }
     public class func create() -> AnyObject{
-        let managedObjectClass: NSManagedObject.Type = self as! NSManagedObject.Type
+        let managedObjectClass: NSManagedObject.Type = self as NSManagedObject.Type
         var object: AnyObject = NSEntityDescription.insertNewObjectForEntityForName(managedObjectClass.modelName(), inManagedObjectContext: kManagedContext)
         return object
     }

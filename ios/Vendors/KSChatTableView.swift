@@ -45,8 +45,8 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         if self.cellArray.count > 0 {
             var indexPath = NSIndexPath(forRow: self.cellArray.count - 1, inSection: 0)
             //用自动布局的话，要延迟一下才能滚到最后一行
-            Async.main(after: 0.1){
-                self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+            Async.main(after: 0.01){
+                self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
             }
         }
     }
@@ -72,7 +72,9 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     func sendMessage(message: Message){//新曾消息记录
         kManagedContext.insertObject(message)
         self.cellArray.append(message)
-        self.reloadData()
+        self.beginUpdates()
+        self.insertRowsAtIndexPaths([NSIndexPath(forRow: self.cellArray.count - 1, inSection: 0)], withRowAnimation: .Automatic)
+        self.endUpdates()
         self.scrollToBottom()
         var error: NSError?
         if !kManagedContext.save(&error) {
