@@ -2,7 +2,7 @@ import UIKit
 protocol KSInputMessageViewDelegate: NSObjectProtocol{
     func sendMessageText(text: String)
     func sendMessagePhoto(data: NSData, fileName: String)
-    func sendMessageVoice(voiceData: NSData,voiceTime: Int)
+    func sendMessageVoice(voiceData: NSData,voiceTime: Int16)
 }
 class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KSAVAudioRecorderDelegate{
     lazy var audioRecorder: KSAVAudioRecorder = {
@@ -171,7 +171,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         })
         
     }
-    func endConvertWithData(voiceData: NSData,voiceTime: Int){
+    func endConvertWithData(voiceData: NSData,voiceTime: Int16){
         delegate?.sendMessageVoice(voiceData,voiceTime: voiceTime)
         KSProgressHUD.dismissWithSuccess("录音成功")
         

@@ -5,7 +5,7 @@ import AVFoundation
 
 protocol KSAVAudioRecorderDelegate: NSObjectProtocol{
     func failRecord(failedStr: String)
-    func endConvertWithData(voiceData: NSData,voiceTime: Int)
+    func endConvertWithData(voiceData: NSData,voiceTime: Int16)
 }
 
 class KSAVAudioRecorder {
@@ -84,7 +84,7 @@ class KSAVAudioRecorder {
                         return
                     }
                 }
-                self.delegate.endConvertWithData(NSData(contentsOfFile: self.soundFilePath)!, voiceTime: Int(cTime))
+                self.delegate.endConvertWithData(NSData(contentsOfFile: self.soundFilePath)!, voiceTime: Int16(cTime))
             }else{
                 self.deleteCurRecording(self.soundFilePath)
                 self.delegate.failRecord("太短啦")

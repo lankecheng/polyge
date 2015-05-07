@@ -14,7 +14,7 @@ class KSUserHelper {
     static var userID = kUserDefault
     var userIcon: String? = "http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png"
    
-    static func getUser(userID: NSNumber) -> User? {
+    static func getUser(userID: Int64) -> User? {
         if self.userID == userID {
             let user = User.create() as! User
             user.imageUrl = "http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png"
@@ -22,13 +22,13 @@ class KSUserHelper {
         }
         //1
         let fetchRequest = NSFetchRequest(entityName:"User")
-        fetchRequest.predicate = NSPredicate(format: "pkUser=%@", userID)
+        fetchRequest.predicate = NSPredicate(format: "pkUser=\(userID)")
         //2
         var error: NSError?
         let fetchedResults =
         kManagedContext.executeFetchRequest(fetchRequest,
             error: &error) as! [User]?
-        if fetchedResults?.count > 0{
+        if fetchedResults?.count > 0 {
             return fetchedResults![0]
         }
         return nil

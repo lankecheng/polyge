@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-enum MessageType : Int8{//当前消息的类型
+enum MessageType : Int16{//当前消息的类型
     case Text = 0//文字
     case Picture = 1//图片
     case Voice = 2//声音
@@ -27,19 +27,19 @@ enum MessageState{//当前发送消息状态
 @objc(Message)
 class Message: NSManagedObject {
     
-    @NSManaged var pkMessage: String
     @NSManaged var createDate: NSDate
-    @NSManaged var messageTypeValue: NSNumber
-    @NSManaged var createUserID: NSNumber
+    @NSManaged var createUserID: Int64
     @NSManaged var messageData: NSData
-    @NSManaged var voiceTime: NSNumber
+    @NSManaged var messageTypeValue: Int16
+    @NSManaged var pkMessage: String
+    @NSManaged var voiceTime: Int16
     
     var messageType: MessageType{
         get{
-            return MessageType(rawValue: self.messageTypeValue.charValue)!
+            return MessageType(rawValue: self.messageTypeValue)!
         }
         set{
-            self.messageTypeValue = NSNumber(char: newValue.rawValue)
+            self.messageTypeValue = newValue.rawValue
         }
     }
     var userIcon: String? {

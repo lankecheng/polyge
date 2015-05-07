@@ -42,11 +42,15 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         return cell
     }
     func scrollToBottom(){//显示最后一行消息
-        if self.cellArray.count > 0 {
-            var indexPath = NSIndexPath(forRow: self.cellArray.count - 1, inSection: 0)
-            //用自动布局的话，要延迟一下才能滚到最后一行
-            Async.main(after: 0.01){
+        //用自动布局的话，要延迟一下才能滚到最后一行,而且还要延迟两次.
+        Async.main(after: 0.01){
+            if self.contentSize.height > self.frame.height {
+                var indexPath = NSIndexPath(forRow: self.cellArray.count-1, inSection: 0)
                 self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                 Async.main(after: 0.01){
+                    self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                }
+               
             }
         }
     }
