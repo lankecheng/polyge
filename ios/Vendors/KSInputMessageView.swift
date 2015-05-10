@@ -39,7 +39,6 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         var speechImage = UIImage(named: "Speech")
         let stretchableButtonImage = speechImage?.stretchableImageWithLeftCapWidth(12, topCapHeight: 0)
         voiceOrTextBtn.setBackgroundImage(stretchableButtonImage, forState: UIControlState.Selected)
-        voiceOrTextBtn.addTarget(self, action: "", forControlEvents: .TouchUpInside)
         voiceOrTextBtn.addTarget(self, action: "didVoiceOrTextBtn:", forControlEvents: UIControlEvents.TouchUpInside)
 
         //输入框

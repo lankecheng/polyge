@@ -18,6 +18,7 @@ PODS:
     - ReactiveCocoa/Core
   - Result (0.4):
     - Box (~> 1.2)
+  - Starscream (0.9.3)
   - SwiftyJSON (2.2.0)
 
 DEPENDENCIES:
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - Kingfisher
   - ObjectMapper
   - ReactiveCocoa
+  - Starscream
   - SwiftyJSON
 
 EXTERNAL SOURCES:
@@ -53,6 +55,7 @@ SPEC CHECKSUMS:
   ObjectMapper: fc34b29bb04086ed831174a01c8310b507a6ba25
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   Result: 03957bbe943dd96a9f12ff1c6b5ac65c8a6b64aa
+  Starscream: b5d9ce738fcf55c23bb2174c368a6490e946d831
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
 
 COCOAPODS: 0.37.1

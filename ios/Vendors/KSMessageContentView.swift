@@ -76,14 +76,14 @@ class KSMessageContentView: UIButton {
                 self.voiceTimeLabel.textAlignment = NSTextAlignment.Right
                 constrain(voiceTimeLabel,voiceImageView) {view1,view2 in
                     view1.top == view1.superview!.top + 5
-                    view1.leading == view1.superview!.leading + 15
+                    view1.leading == view1.superview!.leading + 5
                     view1.width == 45
                     view1.height == 25
                     view2.top == view1.top
                     view2.leading == view1.trailing + 10
                     view2.height == view1.height
                     view2.width == 25
-                    view1.superview!.width == 95
+                    view1.superview!.trailing == view2.trailing + 15
                     view1.superview!.height == view2.height + 10
                 }
                 self.voiceImageView.image = UIImage(named: "chat_animation_white3")
@@ -103,7 +103,7 @@ class KSMessageContentView: UIButton {
                     view2.leading == view1.trailing + 10
                     view2.height == view1.height
                     view2.width == 45
-                    view1.superview!.width == 95
+                    view1.superview!.trailing == view2.trailing + 5
                     view1.superview!.height == view2.height + 10
                 }
                 self.voiceImageView.image = UIImage(named: "chat_animation3")

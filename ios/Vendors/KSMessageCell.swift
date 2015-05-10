@@ -148,9 +148,11 @@ extension KSMessageCell: KSAVAudioPlayerDelegate{
         self.messageView.didLoadVoice()
     }
     func KSAVAudioPlayerDidFinishPlay(){
-        UIDevice.currentDevice().proximityMonitoringEnabled = false
-        contentVoiceIsPlaying = false
-        self.messageView.stopPlay()
-        KSAVAudioPlayer.sharedInstance.stopSound()
+        if self.message.messageType == .Voice {
+            UIDevice.currentDevice().proximityMonitoringEnabled = false
+            contentVoiceIsPlaying = false
+            self.messageView.stopPlay()
+            KSAVAudioPlayer.sharedInstance.stopSound()
+        }
     }
 }
