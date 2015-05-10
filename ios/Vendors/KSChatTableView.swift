@@ -2,6 +2,7 @@
 import UIKit
 import AVFoundation
 import CoreData
+import Async
 class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     var cellArray = [Message]()
     override init(frame: CGRect) {

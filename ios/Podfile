@@ -1,5 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform:ios, "8.0"
 use_frameworks!
 pod 'Kingfisher'
 pod 'Alamofire'
-#pod 'KMPlaceholderTextView'
+pod 'Cartography'
+pod 'CryptoSwift'
+pod 'ReactiveCocoa'
+pod 'APIKit'
+pod 'SwiftyJSON'
+pod 'ObjectMapper'
+pod 'Async', :git => 'https://github.com/duemunk/Async.git'
+pod 'AlecrimCoreData', '~> 3.0-beta.8'
