@@ -16,21 +16,10 @@ class KSUserHelper {
    
     static func getUser(userID: Int64) -> User? {
         if self.userID == userID {
-            let user = User.create() as! User
+            let user = dataContext.users.createEntity()
             user.imageUrl = "http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png"
             return user
         }
-        //1
-        let fetchRequest = NSFetchRequest(entityName:"User")
-        fetchRequest.predicate = NSPredicate(format: "pkUser=\(userID)")
-        //2
-        var error: NSError?
-        let fetchedResults =
-        kManagedContext.executeFetchRequest(fetchRequest,
-            error: &error) as! [User]?
-        if fetchedResults?.count > 0 {
-            return fetchedResults![0]
-        }
-        return nil
+        return dataContext.users.filterBy(attribute: "pkUser", value: NSNumber(longLong: userID)).first()
     }
 }

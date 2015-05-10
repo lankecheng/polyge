@@ -2,15 +2,6 @@ import UIKit
 import Cartography
 class KSChattingViewController: UIViewController{
     
-    var cellArray: [Message]{
-        get{
-            return chat_tv.cellArray
-        }
-        set{
-            chat_tv.cellArray = newValue
-            chat_tv.reloadData()
-        }
-    }
     var chat_tv: KSChatTableView!
     var inputMessageView: KSInputMessageView!
     let photohandelHeight: CGFloat = 160
@@ -79,7 +70,7 @@ class KSChattingViewController: UIViewController{
 
 extension KSChattingViewController: KSInputMessageViewDelegate{
     func sendMessageText(text: String) {
-        let message = Message.create() as! Message
+        let message = dataContext.messages.createEntity()
         message.createDate = NSDate()
         message.messageData = text.dataUsingEncoding(NSUTF8StringEncoding)!
         message.createUserID = KSUserHelper.userID
@@ -88,7 +79,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
     }
     
     func sendMessagePhoto(data: NSData, fileName: String){
-        let message = Message.create() as! Message
+        let message = dataContext.messages.createEntity()
         message.messageData = data
         message.createDate = NSDate()
         message.createUserID = KSUserHelper.userID
@@ -96,7 +87,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
          chat_tv.sendMessage(message)
     }
     func sendMessageVoice(voiceData: NSData,voiceTime: Int16){
-        let message = Message.create() as! Message
+        let message = dataContext.messages.createEntity()
         message.messageData = voiceData
         message.voiceTime = voiceTime
         message.createDate = NSDate()
