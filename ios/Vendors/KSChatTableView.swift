@@ -76,7 +76,7 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
         let (success, error) = dataContext.save()
         if !success {
             // Replace this implementation with code to handle the error appropriately.
-            println("Unresolved error \(error), \(error?.userInfo)")
+            NSLog("Unresolved error \(error), \(error?.userInfo)")
         }
         self.scrollToBottom()
     }

@@ -99,7 +99,6 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     var recorderTime: Int!
     var recorderTimer: NSTimer!
     func beginRecordVoice(button: UIButton){
-        println("--------begin")
         audioRecorder.startRecord()
         if audioRecorder.recorder != nil{
             recorderTime = 0
@@ -108,7 +107,6 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         }
     }
     func endRecordVoice(button: UIButton?){
-        println("--------send")
         if recorderTimer != nil{
             audioRecorder.stopRecord()
             recorderTimer?.invalidate()
@@ -117,7 +115,6 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     }
     
     func cancelRecordVoice(button: UIButton){
-        println("--------cancel")
         if recorderTimer != nil{
             audioRecorder.cancelRecord()
             recorderTimer?.invalidate()
@@ -132,14 +129,11 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         KSProgressHUD.changeSubTitle("上滑取消发送")
     }
     func countVoiceTime(){
-        println("--------\(recorderTime)")
         recorderTime!++
         if recorderTime >= 60{
             endRecordVoice(nil)
         }
     }
-    //-------------------------------------------
-
     
     //MARK: UITextViewDelegate
     func textViewDidBeginEditing(textView: UITextView) {
@@ -217,11 +211,8 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     //选择好照片后choose后执行的方法
     // MARK: UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
-        println("choose--------->>")
         var img = info[UIImagePickerControllerOriginalImage] as! UIImage
         var smallImg = self.scaleFromImage(img, size: CGSize(width: img.size.width * 0.8,height: img.size.height * 0.8))
-        println(img.size)
-        println(smallImg.size)
         var pathExtension = "png"
         if let imgUrl = info[UIImagePickerControllerReferenceURL] as? NSURL{
             pathExtension = imgUrl.pathExtension!
@@ -236,7 +227,6 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         let filemanager = NSFileManager.defaultManager()
         if filemanager.fileExistsAtPath(fullPathToFile) {
             // probably won't happen. want to do something about it?
-            println("photo exists")
         }else{
             
         }
@@ -245,9 +235,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         var data = NSData(contentsOfFile: uploadImgUrl!.path!)
         
         picker.dismissViewControllerAnimated(true, completion: nil)
-        println("choose----ss----->>")
         delegate!.sendMessagePhoto(data!, fileName: currentFileName)
-        println("choose----ssssssss----->>")
     }
     
     //修改图片尺寸
@@ -261,7 +249,6 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     
     //cancel后执行的方法
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
-        println("cancel--------->>")
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     

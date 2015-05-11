@@ -19,15 +19,13 @@ class KSAVAudioRecorder {
             if granted {
                 var error: NSError?
                 if !AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, error:&error) {
-                    println("could not set session category")
                     if let e = error {
-                        println(e.localizedDescription)
+                        NSLog(e.localizedDescription)
                     }
                 }
                 if !AVAudioSession.sharedInstance().setActive(true, error: &error) {
-                    println("could not make session active")
                     if let e = error {
-                        println(e.localizedDescription)
+                        NSLog(e.localizedDescription)
                     }
                 }
             }else {
@@ -44,7 +42,6 @@ class KSAVAudioRecorder {
         let filemanager = NSFileManager.defaultManager()
         if filemanager.fileExistsAtPath(self.soundFilePath) {
             // probably won't happen. want to do something about it?
-            println("sound exists")
         }
         var recordSettings = [
             //录音格式 无法使用`
@@ -60,7 +57,7 @@ class KSAVAudioRecorder {
         var error: NSError?
         self.recorder = AVAudioRecorder(URL: NSURL(fileURLWithPath: self.soundFilePath), settings: recordSettings, error: &error)
         if let e = error {
-            println(e.localizedDescription)
+            NSLog(e.localizedDescription)
         } else {
             self.recorder!.meteringEnabled = true
         }
@@ -69,7 +66,6 @@ class KSAVAudioRecorder {
     }
     
     func stopRecord() {//停止录音
-        println("stop")
         if recorder != nil{
             var cTime = self.recorder!.currentTime
             recorder!.stop()
@@ -78,13 +74,13 @@ class KSAVAudioRecorder {
                 let session = AVAudioSession.sharedInstance()
                 var error: NSError?
                 if !session.setActive(false, error: &error) {
-                    println("could not make session inactive")
                     if let e = error {
-                        println(e.localizedDescription)
+                        NSLog(e.localizedDescription)
                         return
                     }
                 }
                 self.delegate.endConvertWithData(NSData(contentsOfFile: self.soundFilePath)!, voiceTime: Int16(cTime))
+                self.deleteCurRecording(self.soundFilePath)
             }else{
                 self.deleteCurRecording(self.soundFilePath)
                 self.delegate.failRecord("太短啦")
@@ -104,45 +100,10 @@ class KSAVAudioRecorder {
     }
     
     func deleteCurRecording(curPath: String){
-        var docsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var fileManager = NSFileManager.defaultManager()
         var error: NSError?
-        var files = fileManager.contentsOfDirectoryAtPath(docsDir, error: &error) as! [String]
-        if let e = error {
-            println(e.localizedDescription)
-        }
-        
-        println("removing \(curPath)")
-        if !fileManager.removeItemAtPath(curPath, error: &error) {
-            NSLog("could not remove \(curPath)")
-        }
-        if let e = error {
-            println(e.localizedDescription)
+        if !NSFileManager.defaultManager().removeItemAtPath(curPath, error: &error) {
+            NSLog("could not remove \(curPath) \(error?.localizedDescription)")
         }
     }
     
-    func deleteAllRecordings() {//--删除所有录音文件
-        var docsDir =
-        NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var fileManager = NSFileManager.defaultManager()
-        var error: NSError?
-        var files = fileManager.contentsOfDirectoryAtPath(docsDir, error: &error) as! [String]
-        if let e = error {
-            println(e.localizedDescription)
-        }
-        var recordings = files.filter( { (name: String) -> Bool in
-            return name.hasPrefix("recording-")//name.hasSuffix("mp3")
-        })
-        for var i = 0; i < recordings.count; i++ {
-            var path = docsDir + "/" + recordings[i]
-            
-            println("removing \(path)")
-            if !fileManager.removeItemAtPath(path, error: &error) {
-                NSLog("could not remove \(path)")
-            }
-            if let e = error {
-                println(e.localizedDescription)
-            }
-        }
-    }
 }
