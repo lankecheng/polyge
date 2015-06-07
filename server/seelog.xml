@@ -1,0 +1,33 @@
+<!--<seelog minlevel="warn" maxlevel="error">-->
+<seelog>
+    <outputs formatid="common">
+        <!--<console/>-->
+        <filter levels="trace">
+            <!--<buffered size="10000" flushperiod="1000">-->
+            <!--<rollingfile type="date" filename="logs/trace.log" datepattern="20060102" />-->
+            <!--</buffered>-->
+            <console/>
+            <rollingfile type="date" filename="logs/rs.log" datepattern="20060102"/>
+        </filter>
+        <filter levels="debug">
+            <console/>
+            <rollingfile type="date" filename="logs/debug.log" datepattern="20060102"/>
+        </filter>
+        <filter levels="info">
+            <console/>
+            <rollingfile type="date" filename="logs/info.log" datepattern="20060102"/>
+        </filter>
+        <filter levels="warn">
+            <console/>
+            <rollingfile type="date" filename="logs/warn.log" datepattern="20060102"/>
+        </filter>
+        <filter levels="error">
+            <console/>
+            <rollingfile type="date" filename="logs/error.log" datepattern="20060102"/>
+        </filter>
+    </outputs>
+    <formats>
+        <format id="common" format="%Date %Time [%LEVEL] %Msg%n"/>
+        <!--<format id="tracefmt" format="%Date %Time %Msg%n"/>-->
+    </formats>
+</seelog>
