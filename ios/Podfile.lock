@@ -1,38 +1,30 @@
 PODS:
-  - Alamofire (1.2.1)
-  - AlecrimCoreData (3.0-beta.8)
-  - APIKit (0.8.0):
+  - Alamofire (HEAD based on 1.2.1)
+  - AlecrimCoreData (HEAD based on 3.0-beta.8)
+  - APIKit (HEAD based on 0.8.0):
     - Result (~> 0.4)
   - Async (1.2.0)
   - Box (1.2.0)
-  - Cartography (0.5.0)
-  - CryptoSwift (0.0.10)
-  - Kingfisher (1.3.1)
-  - ObjectMapper (0.11)
-  - ReactiveCocoa (2.5):
-    - ReactiveCocoa/UI (= 2.5)
-  - ReactiveCocoa/Core (2.5):
-    - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.5)
-  - ReactiveCocoa/UI (2.5):
-    - ReactiveCocoa/Core
+  - Cartography (HEAD based on 0.5.0)
+  - CryptoSwift (HEAD based on 0.0.10)
+  - Kingfisher (HEAD based on 1.4.1)
+  - ObjectMapper (HEAD based on 0.11)
   - Result (0.4):
     - Box (~> 1.2)
-  - Starscream (0.9.3)
-  - SwiftyJSON (2.2.0)
+  - Starscream (HEAD based on 0.9.3)
+  - SwiftyJSON (HEAD based on 2.2.0)
 
 DEPENDENCIES:
-  - Alamofire
-  - AlecrimCoreData (~> 3.0-beta.8)
-  - APIKit
+  - Alamofire (HEAD)
+  - AlecrimCoreData (HEAD)
+  - APIKit (HEAD)
   - Async (from `https://github.com/duemunk/Async.git`)
-  - Cartography
-  - CryptoSwift
-  - Kingfisher
-  - ObjectMapper
-  - ReactiveCocoa
-  - Starscream
-  - SwiftyJSON
+  - Cartography (HEAD)
+  - CryptoSwift (HEAD)
+  - Kingfisher (HEAD)
+  - ObjectMapper (HEAD)
+  - Starscream (HEAD)
+  - SwiftyJSON (HEAD)
 
 EXTERNAL SOURCES:
   Async:
@@ -51,9 +43,8 @@ SPEC CHECKSUMS:
   Box: 3345df1dee5c8cd639a663e368427c51f931d095
   Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6
   CryptoSwift: 3b886d001f50deb65623a8967d68f6b8bf8d9ba1
-  Kingfisher: 0e2128eae7bb2a19018d2623f1a55d526fd74212
+  Kingfisher: 962a21cdc2a7b0fa63be3b2c45ea6f180feda535
   ObjectMapper: fc34b29bb04086ed831174a01c8310b507a6ba25
-  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   Result: 03957bbe943dd96a9f12ff1c6b5ac65c8a6b64aa
   Starscream: b5d9ce738fcf55c23bb2174c368a6490e946d831
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
