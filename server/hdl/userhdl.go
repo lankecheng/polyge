@@ -17,7 +17,7 @@ func Register(w http.ResponseWriter, req *http.Request) {
 	uname := req.FormValue("uname")
 	exists, err := dao.IfUserNameExists(uname)
 	if err != nil {
-		http.Error(w, http.StatusText(500), 500)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
@@ -27,39 +27,45 @@ func Register(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	user := dao.PGUser{Uname: uname}
-	user.Pwd = req.FormValue("pwd")
-	user.Phone = req.FormValue("phone")
-	user.Email = req.FormValue("email")
+	pguser := dao.PGUser{Uname: uname}
+	pguser.Pwd = req.FormValue("pwd")
+	pguser.Phone = req.FormValue("phone")
+	pguser.Email = req.FormValue("email")
 
 	gender, err := strconv.Atoi(req.FormValue("gender"))
-	user.Gender = gender
+	pguser.Gender = gender
 
 	language, err := strconv.Atoi(req.FormValue("language"))
-	user.Language = language
+	pguser.Language = language
 
-	user.Occup = req.FormValue("occup")
+	pguser.Occup = req.FormValue("occup")
 
 	userType, err := strconv.Atoi(req.FormValue("user_type"))
-	user.UserType = userType
+	pguser.UserType = userType
 
-	user.Avatar = req.FormValue("avatar")
-	user.Audio = req.FormValue("audio")
+	pguser.Avatar = req.FormValue("avatar")
+	pguser.Audio = req.FormValue("audio")
 
 	birth, _ := time.Parse("2006-01-02", req.FormValue("birth"))
-	user.Birth = birth
+	pguser.Birth = birth
 
 	country, err := strconv.Atoi(req.FormValue("country"))
-	user.Country = country
+	pguser.Country = country
 
 	province, err := strconv.Atoi(req.FormValue("province"))
-	user.Province = province
+	pguser.Province = province
 
 	city, err := strconv.Atoi(req.FormValue("city"))
-	user.City = city
+	pguser.City = city
 
-	user.Description = req.FormValue("desc")
-	user.Interest = req.FormValue("interest")
+	pguser.Description = req.FormValue("desc")
+	pguser.Interest = req.FormValue("interest")
+
+	if dao.CreateUser(&pguser) != nil {
+		http.Error(w, http.StatusText(500), 500)
+	} else {
+		http.Redirect(w, req, fmt.Sprintf("/login?uname=%v&pwd=%v", pguser.Uname, pguser.Pwd), http.StatusFound)
+	}
 }
 
 func CheckUserName(w http.ResponseWriter, req *http.Request) {
@@ -68,7 +74,7 @@ func CheckUserName(w http.ResponseWriter, req *http.Request) {
 	uname := req.FormValue("uname")
 	exists, err := dao.IfUserNameExists(uname)
 	if err != nil {
-		http.Error(w, http.StatusText(500), 500)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 

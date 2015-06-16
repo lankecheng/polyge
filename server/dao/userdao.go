@@ -1,17 +1,15 @@
 package dao
 
-import "time"
 import (
-	"database/sql"
-	"github.com/cihub/seelog"
-	_ "github.com/go-sql-driver/mysql"
-
 	"fmt"
+	"github.com/cihub/seelog"
 	"github.com/lankecheng/polyge/server/pgpub"
+	"time"
+	"strings"
 )
 
 type PGUser struct {
-	Uid         uint
+	Uid         int
 	Uname       string
 	Pwd         string
 	Phone       string
@@ -31,16 +29,6 @@ type PGUser struct {
 	Interest    string
 }
 
-var db *sql.DB
-
-func init() {
-	var err error
-	db, err = sql.Open("mysql", "root:123456@tcp(192.168.41.45:3306)/lkc_test?charset=utf8")
-	if err != nil {
-		seelog.Criticalf("open mysql %v", err)
-	}
-}
-
 func IfUserNameExists(uname string) (exists bool, err error) {
 	err = db.Ping()
 	if err != nil {
@@ -48,16 +36,18 @@ func IfUserNameExists(uname string) (exists bool, err error) {
 		return
 	}
 
-	rs, err := db.Query("select 1 from user where uname=?", uname)
+	rs, err := db.Query("select 1 from pguser where uname=?", uname)
 	if err != nil {
 		seelog.Errorf("uname %v query %v", uname, err)
+		return
 	}
+	exists = rs.Next()
 
 	if err = rs.Err(); err != nil {
 		seelog.Errorf("uname %v read rows %v", uname, err)
 	}
 
-	return rs.Next(), err
+	return
 }
 
 func CreateUser(pguser *PGUser) (err error) {
@@ -93,7 +83,6 @@ func CreateUser(pguser *PGUser) (err error) {
 	args[11] = pguser.Country
 	args[12] = pguser.Province
 	args[13] = pguser.City
-	//	args[14] = user.CreatedAt.Unix()
 	args[14] = time.Now().Unix()
 	args[15] = pguser.Description
 	args[16] = pguser.Interest
@@ -106,17 +95,15 @@ func CreateUser(pguser *PGUser) (err error) {
 	return
 }
 
-func QueryUserByUname(uname string) (pguser *PGUser, err error) {
+func QueryUserByUname(uname string) (pguser PGUser, err error) {
 	err = db.Ping()
 	if err != nil {
 		seelog.Errorf("uname %v open mysql %v", uname, err)
 		return
 	}
 
-	qrySql := "select "
-	qrySql += "uname,pwd,phone,email,gender,language,occup,user_type,avatar,"
-	qrySql += "audio,birth,country,province,city,created_at,description,interest,uid"
-	qrySql += " from pguser where uname=?"
+	qrySql := "select " + strings.Join(getDBColNamesFromBean(pguser), ",") + " from pguser where uname=?"
+	seelog.Debugf("QueryUserByUname(%v) sql: %v", uname, qrySql)
 
 	rs, err := db.Query(qrySql, uname)
 	if err != nil {
@@ -124,28 +111,10 @@ func QueryUserByUname(uname string) (pguser *PGUser, err error) {
 	}
 
 	if rs.Next() {
-		pguser := PGUser{}
-		args := make([]interface{}, 18)
-		args[0] = &pguser.Uname
-		args[1] = &pguser.Pwd
-		args[2] = &pguser.Phone
-		args[3] = &pguser.Email
-		args[4] = &pguser.Gender
-		args[5] = &pguser.Language
-		args[6] = &pguser.Occup
-		args[7] = &pguser.UserType
-		args[8] = &pguser.Avatar
-		args[9] = &pguser.Audio
-		args[10] = &pguser.Birth
-		args[11] = &pguser.Country
-		args[12] = &pguser.Province
-		args[13] = &pguser.City
-		//	args[14] = user.CreatedAt.Unix()
-		args[14] = &pguser.CreatedAt
-		args[15] = &pguser.Description
-		args[16] = &pguser.Interest
-		args[17] = &pguser.Uid
-		rs.Scan(args...)
+		if err = Scan2Bean(rs, &pguser); err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 
 	if rs.Next() {
@@ -158,3 +127,42 @@ func QueryUserByUname(uname string) (pguser *PGUser, err error) {
 
 	return
 }
+
+//func QueryTest() error {
+//	t_uname := "lankc"
+//	err := db.Ping()
+//	if err != nil {
+//		seelog.Errorf("uname %v open mysql %v", t_uname, err)
+//		return err
+//	}
+//
+//	qrySql := "select uname,birth,created_at from pguser"
+////	qrySql := "select uname,birth,created_at from pguser where uid=?"
+////	qrySql := "select * from pguser where uid=?"
+////	qrySql := "select pid,f_tinyint,f_smallint,f_int,f_float,f_double,f_decimal,f_char,f_varchar" +
+////				",f_date,f_datetime,f_timestamp,f_year from pg_test"
+//
+//	rs, err := db.Query(qrySql)
+//	if err != nil {
+//		seelog.Errorf("uname %v qry sql %v %v", t_uname, qrySql, err)
+//	}
+//
+//	if rs.Next() {
+//		if err = rs.Err(); err != nil {
+//			seelog.Errorf("uname %v read rows %v", t_uname, err)
+//		}
+//		typScan := TypeTestScanner{}
+//		cols, _ := rs.Columns()
+//		dest := make([]interface{}, len(cols))
+//		for i,_ := range dest {
+//			dest[i] = &typScan
+//		}
+//
+//		if err = rs.Scan(dest...); err != nil {
+//			fmt.Println(err)
+//			return err
+//		}
+//	}
+//
+//	return err
+//}

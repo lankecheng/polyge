@@ -1,31 +1,15 @@
 package dao
 
 import (
-	"database/sql"
 	"github.com/cihub/seelog"
-	_ "github.com/go-sql-driver/mysql"
-	"time"
-	"fmt"
-	"github.com/lankecheng/polyge/server/pgpub"
-
 )
 
 type Token struct {
 	OauthToken string
-	ClientID   string
-	Expires    int
+	ClientID   int
+	Expires    int64
 	Scope      string
 	Uid        int
-}
-
-var db *sql.DB
-
-func init() {
-	var err error
-	db, err = sql.Open("mysql", "root:123456@tcp(192.168.41.45:3306)/lkc_test?charset=utf8")
-	if err != nil {
-		seelog.Criticalf("open mysql %v", err)
-	}
 }
 
 func IfTokenExists(token string) (exists bool, err error) {
@@ -81,6 +65,30 @@ func DeleteToken(token string) (err error) {
 	_, err = db.Exec(delSql, delSql)
 	if err != nil {
 		seelog.Errorf("token %v exec sql %v %v", token, delSql, err)
+	}
+
+	return
+}
+
+func QueryTokenByUidClientID(uid int, clientID int) (token Token, err error) {
+	err = db.Ping()
+	if err != nil {
+		seelog.Errorf("uid %v clientID %v ping mysql %v", uid, clientID , err)
+		return
+	}
+
+	qrySql := "select oauth_token,client_id,expires,scope,uid from token where uid=? and client_id=?"
+	rs, err := db.Query(qrySql, uid, clientID)
+	if err != nil {
+		seelog.Errorf("uid %v clientID %v query sql %v", uid, clientID , err)
+	}
+
+	if rs.Next() {
+		rs.Scan(&token.OauthToken, &token.ClientID, &token.Expires, &token.Scope, &token.Uid)
+	}
+
+	if err = rs.Err(); err != nil {
+		seelog.Errorf("uid %v clientID %v read rows %v", uid, clientID , err)
 	}
 
 	return
