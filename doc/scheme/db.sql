@@ -11,13 +11,13 @@ CREATE TABLE `pguser` (
   `user_type`   TINYINT(3) UNSIGNED NOT NULL COMMENT '0:student,1:teacher',
   `avatar`      VARCHAR(255)        NOT NULL DEFAULT '' COMMENT '头像地址',
   `audio`       VARCHAR(255)        NOT NULL DEFAULT '' COMMENT '语音地址',
-  `birth`    DATE DEFAULT NULL,
+  `birth`       DATE DEFAULT NULL,
   `country`     INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `province`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `city`        INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `created_at`  INT(10) UNSIGNED    NOT NULL,
   `description` VARCHAR(200)        NOT NULL DEFAULT '',
-  `interest`   VARCHAR(100)        NOT NULL DEFAULT '',
+  `interest`    VARCHAR(100)        NOT NULL DEFAULT '',
   PRIMARY KEY (`uid`)
 )
   ENGINE = InnoDB
