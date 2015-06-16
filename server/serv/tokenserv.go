@@ -65,7 +65,7 @@ func RefreshOauthToken(uid int, clientID int, oldOauthToken string) (oauthToken 
 //时间戳+随机数+用户ID
 func genOauthToken(uid int) (oauthToken string) {
 	now := time.Now()
-	oauthToken = string(now.Unix())
+	oauthToken = strconv.FormatInt(now.Unix(), 10)
 
 	rand.Seed(now.UnixNano())
 	oauthToken += strconv.Itoa(rand.Int())

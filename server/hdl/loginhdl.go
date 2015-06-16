@@ -22,14 +22,14 @@ func Login(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	} else if user.Uid == 0 {
-		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: false, Msg: "user not found"})
+		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: false, Msg: "user not found", Result: ""})
 		w.Write(respJson)
 		return
 	}
 
 	pwd := req.FormValue("pwd")
 	if !strings.EqualFold(pwd, user.Pwd) {
-		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: false, Msg: "password error"})
+		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: false, Msg: "password error", Result: ""})
 		w.Write(respJson)
 		return
 	}
@@ -50,8 +50,12 @@ func Login(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	rs := fmt.Sprintf("{token:%v,uid:%v,uname:%v,gender:%v,user_type:%v}",
-		oauthToken, user.Uid, user.Uname, user.Gender, user.UserType)
+	rs := make(map[string]interface{})
+	rs["token"] = oauthToken
+	rs["uid"] = user.Uid
+	rs["uname"] = user.Uname
+	rs["gender"] = user.Gender
+	rs["user_type"] = user.UserType
 	respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: true, Result: rs})
 	w.Write(respJson)
 }
@@ -67,21 +71,21 @@ func Logout(w http.ResponseWriter, req *http.Request) {
 	//		return
 	//	}
 
-	io.WriteString(w, fmt.Sprintf("{Success:%v}", true))
+	io.WriteString(w, fmt.Sprintf("{success:%v}", true))
 }
 
 func RefreshToken(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
-	uid, _ := strconv.ParseInt(req.FormValue("uid"), 10, 64)
-	clientId, _ := strconv.ParseInt(req.FormValue("client_id"), 10, 64)
+	uid, _ := strconv.Atoi(req.FormValue("uid"))
+	clientId, _ := strconv.Atoi(req.FormValue("client_id"))
 	oauthToken := req.FormValue("token")
 
 	newToken, err := serv.RefreshOauthToken(uid, clientId, oauthToken)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 	} else {
-		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: true, Msg: newToken})
+		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: true, Result: newToken})
 		w.Write(respJson)
 	}
 }

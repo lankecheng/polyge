@@ -72,13 +72,15 @@ func CheckUserName(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
 	uname := req.FormValue("uname")
+	fmt.Println(uname)
 	exists, err := dao.IfUserNameExists(uname)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
-	respJson, _ := json.Marshal(fmt.Sprintf("{Success:%v}", !exists))
+	respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: true, Result: !exists})
+	fmt.Println(respJson)
 	_, err = w.Write(respJson)
 	if err != nil {
 		seelog.Error(err)
