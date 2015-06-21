@@ -5,14 +5,14 @@ import CoreData
 import Async
 import AlecrimCoreData
 
-class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
+class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate{
     lazy var fetchedResultsController: NSFetchedResultsController = {
         var request = Message.MR_requestAllSortedBy("createDate", ascending: true)
         let count = Message.MR_numberOfEntities()
         if count.integerValue > 100 {
             request.fetchOffset = count.integerValue - 100
         }
-        let frc = Message.MR_fetchController(request, delegate: nil, useFileCache: true, groupedBy: nil, inContext:NSManagedObjectContext.MR_defaultContext())
+        let frc = Message.MR_fetchController(request, delegate: self, useFileCache: true, groupedBy: nil, inContext:NSManagedObjectContext.MR_defaultContext())
         do{
             try frc.performFetch()
         }catch _{
@@ -40,7 +40,7 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     
     //MARK: UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchedResultsController.sections?.count ?? 0
+        return self.fetchedResultsController.sections!.count
     }
 
     
@@ -75,12 +75,6 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     
     func sendMessage(message: Message){//新曾消息记录
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        do{
-            try self.fetchedResultsController.performFetch()
-        }catch _{
-            
-        }
-        reloadData()
         self.scrollToBottom()
     }
     
@@ -101,6 +95,9 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
             }
         }
     }
-
+    //MARK: NSFetchedResultsControllerDelegate
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        reloadData()
+    }
 
 }
