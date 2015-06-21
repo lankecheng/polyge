@@ -9,7 +9,7 @@
 
 import Foundation
 import AlecrimCoreData
-let dataContext = DataContext()!
+let dataContext = DataContext()
 final class DataContext: AlecrimCoreData.Context {
 
     var messages: AlecrimCoreData.Table<Message> { return AlecrimCoreData.Table<Message>(context: self) }

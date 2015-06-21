@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KSTableViewController: UITableViewController,UITableViewDataSource,UITableViewDelegate {
+class KSTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = .None

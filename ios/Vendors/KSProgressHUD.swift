@@ -78,7 +78,7 @@ class KSProgressHUD: UIView {
         UIView.setAnimationRepeatAutoreverses(true)
         if self.edgeImageView != nil{
             self.edgeImageView!.transform = CGAffineTransformMakeRotation(CGFloat(angle)*CGFloat(M_PI/180))
-            var second = (self.centerLabel!.text! as NSString).doubleValue
+            let second = (self.centerLabel!.text! as NSString).doubleValue
             if second < 10.0{
                 self.centerLabel!.textColor = UIColor.redColor()
             }else{

@@ -16,10 +16,10 @@ class KSUserHelper {
    
     static func getUser(userID: Int64) -> User? {
         if self.userID == userID {
-            let user = dataContext.users.createEntity()
+            let user = dataContext!.users.createEntity()
             user.imageUrl = "http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png"
             return user
         }
-        return dataContext.users.filterBy(attribute: "pkUser", value: NSNumber(longLong: userID)).first()
+        return dataContext!.users.filterBy(attribute: "pkUser", value: NSNumber(longLong: userID)).first()
     }
 }

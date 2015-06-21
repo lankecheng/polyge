@@ -22,9 +22,9 @@ class KSPickerView: UIView ,UIPickerViewDataSource, UIPickerViewDelegate {
         let toolBar = UIToolbar(frame: CGRectMake(0, 0, self.frame.width, 44))
         toolBar.barTintColor = UIColor.whiteColor()
         toolBar.translucent = true
-        var cancelBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelButtonClicked:")
+        let cancelBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelButtonClicked:")
         
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
         let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneButtonClicked:")
         
         toolBar.setItems([cancelBtn,flexSpace,doneBtn], animated: true)
@@ -47,14 +47,13 @@ class KSPickerView: UIView ,UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func doneButtonClicked(sender: UIBarButtonItem) {
-        var index = pickerView.selectedRowInComponent(0)
+        let index = pickerView.selectedRowInComponent(0)
         if callBackBlock != nil {
             callBackBlock!(index)
         }
         self.hidden = true
     }
     // MARK - Picker delegate
-    
     func pickerView(_pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
@@ -64,9 +63,8 @@ class KSPickerView: UIView ,UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     
-    func pickerView(_pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        
-        return pickerData[row] as! String
+    func pickerView(_pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[row] as? String
     }
 
 }

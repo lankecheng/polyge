@@ -43,14 +43,14 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
         userLoginBtn.enabled = false
         let userName = userNameTextField.text
         let password = userPassTextField.text
-        if count(userName) == 0 || count(password) == 0 {
+        if userName!.characters.count == 0 || password!.characters.count == 0 {
             userLoginBtn.enabled = true
            return
         }
-        var indicator = WIndicator.showIndicatorAddedTo(self.view, animation: true)
+        let indicator = WIndicator.showIndicatorAddedTo(self.view, animation: true)
         indicator.text = "正在登录"
         
-        LoginModule.loginWithUsername(userName, password: password) { result -> Void in
+        LoginModule.loginWithUsername(userName!, password: password!) { result -> Void in
             if let error = result.error {
                 self.userLoginBtn.enabled = true
                 indicator.removeFromSuperview()

@@ -14,13 +14,13 @@ class LoginModule{
             if let error = result.error {
                 block(Result.failure(error))
             } else if let dic = result.value as? [String:String] {
-                let code = dic["code"]!.toInt()
+                let code = Int(dic["code"]!)
                 if code == 0 {
                     let priorIP = dic["priorIP"]!
-                    let port = dic["port"]!.toInt()!
+                    let port = Int(dic["port"]!)
                     RuntimeStatus.instance.msfs = dic["msfs"]
                     RuntimeStatus.instance.discoverUrl = dic["discovery"]
-                    KSTcpServer.instance.loginTcpServerIP(priorIP, port: port){
+                    KSTcpServer.instance.loginTcpServerIP(priorIP, port: port!){
                         (result) in
                         if let error = result.error {
                             block(Result.failure(error))

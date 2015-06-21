@@ -13,7 +13,6 @@
 		3C315F6A1ADF5F370040FF99 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F691ADF5F370040FF99 /* SearchViewController.swift */; };
 		3C315F6F1ADF5F370040FF99 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C315F6E1ADF5F370040FF99 /* Images.xcassets */; };
 		3C315F721ADF5F370040FF99 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C315F701ADF5F370040FF99 /* LaunchScreen.xib */; };
-		3C315F7E1ADF5F370040FF99 /* PolyGeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F7D1ADF5F370040FF99 /* PolyGeTests.swift */; };
 		3C315F8A1ADF62E70040FF99 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F891ADF62E70040FF99 /* MessageViewController.swift */; };
 		3C315F8C1ADF63020040FF99 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F8B1ADF63020040FF99 /* MeViewController.swift */; };
 		3C315F8F1ADF6D180040FF99 /* KSTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F8E1ADF6D180040FF99 /* KSTableViewController.swift */; };
@@ -72,16 +71,6 @@
 		948B7BFE71AE837CC321AC05 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A4B5444DF40CB6C2FB822 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3C315F781ADF5F370040FF99 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C315F581ADF5F360040FF99 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C315F5F1ADF5F360040FF99;
-			remoteInfo = PolyGe;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		3C1F3C411AE1FE8A009860F5 /* KSTabTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSTabTableViewController.swift; sourceTree = "<group>"; };
 		3C315F601ADF5F360040FF99 /* PolyGe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyGe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,7 +78,6 @@
 		3C315F671ADF5F370040FF99 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3C315F691ADF5F370040FF99 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		3C315F6E1ADF5F370040FF99 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		3C315F771ADF5F370040FF99 /* PolyGeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PolyGeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C315F7C1ADF5F370040FF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C315F7D1ADF5F370040FF99 /* PolyGeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyGeTests.swift; sourceTree = "<group>"; };
 		3C315F891ADF62E70040FF99 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
@@ -166,13 +154,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C315F741ADF5F370040FF99 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -237,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				3C315F601ADF5F360040FF99 /* PolyGe.app */,
-				3C315F771ADF5F370040FF99 /* PolyGeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -479,24 +459,6 @@
 			productReference = 3C315F601ADF5F360040FF99 /* PolyGe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3C315F761ADF5F370040FF99 /* PolyGeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3C315F841ADF5F370040FF99 /* Build configuration list for PBXNativeTarget "PolyGeTests" */;
-			buildPhases = (
-				3C315F731ADF5F370040FF99 /* Sources */,
-				3C315F741ADF5F370040FF99 /* Frameworks */,
-				3C315F751ADF5F370040FF99 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3C315F791ADF5F370040FF99 /* PBXTargetDependency */,
-			);
-			name = PolyGeTests;
-			productName = PolyGeTests;
-			productReference = 3C315F771ADF5F370040FF99 /* PolyGeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -504,16 +466,13 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KS;
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = king;
 				TargetAttributes = {
 					3C315F5F1ADF5F360040FF99 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = K8LND256PA;
-					};
-					3C315F761ADF5F370040FF99 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 3C315F5F1ADF5F360040FF99;
 					};
 				};
 			};
@@ -532,7 +491,6 @@
 			projectRoot = "";
 			targets = (
 				3C315F5F1ADF5F360040FF99 /* PolyGe */,
-				3C315F761ADF5F370040FF99 /* PolyGeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -548,13 +506,6 @@
 				3C33C2531AE2793F003041EB /* Main.storyboard in Resources */,
 				3C315F6F1ADF5F370040FF99 /* Images.xcassets in Resources */,
 				3C97F5B31AE4FA4D00C21849 /* LoginViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3C315F751ADF5F370040FF99 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,23 +622,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C315F731ADF5F370040FF99 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3C315F7E1ADF5F370040FF99 /* PolyGeTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3C315F791ADF5F370040FF99 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C315F5F1ADF5F360040FF99 /* PolyGe */;
-			targetProxy = 3C315F781ADF5F370040FF99 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3C315F701ADF5F370040FF99 /* LaunchScreen.xib */ = {
@@ -740,6 +675,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -821,6 +757,7 @@
 					"$(PROJECT_DIR)/PolyGe",
 				);
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "king.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
@@ -849,43 +786,10 @@
 					"$(PROJECT_DIR)/PolyGe",
 				);
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "king.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
-			};
-			name = Release;
-		};
-		3C315F851ADF5F370040FF99 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PolyGeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PolyGe.app/PolyGe";
-			};
-			name = Debug;
-		};
-		3C315F861ADF5F370040FF99 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PolyGeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PolyGe.app/PolyGe";
 			};
 			name = Release;
 		};
@@ -906,15 +810,6 @@
 			buildConfigurations = (
 				3C315F821ADF5F370040FF99 /* Debug */,
 				3C315F831ADF5F370040FF99 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C315F841ADF5F370040FF99 /* Build configuration list for PBXNativeTarget "PolyGeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C315F851ADF5F370040FF99 /* Debug */,
-				3C315F861ADF5F370040FF99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -31,12 +31,12 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         layer.borderColor = kBorderColor
 
         //切换语音和文字输入框按钮
-        voiceOrTextBtn = UIButton.buttonWithType(.Custom) as! UIButton
+        voiceOrTextBtn = UIButton(type:.Custom) as UIButton
         addSubview(voiceOrTextBtn)
     voiceOrTextBtn.constrainWidth(30).constrainLeading(5).constrainTop(5).constrainCenterY()
 
         voiceOrTextBtn.setBackgroundImage(UIImage(named: "Edit"), forState: UIControlState.Normal)
-        var speechImage = UIImage(named: "Speech")
+        let speechImage = UIImage(named: "Speech")
         let stretchableButtonImage = speechImage?.stretchableImageWithLeftCapWidth(12, topCapHeight: 0)
         voiceOrTextBtn.setBackgroundImage(stretchableButtonImage, forState: UIControlState.Selected)
         voiceOrTextBtn.addTarget(self, action: "didVoiceOrTextBtn:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -51,7 +51,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         
         
         //文字发送按钮
-        sendMessageBtn = UIButton.buttonWithType(.Custom) as! UIButton
+        sendMessageBtn = UIButton(type:.Custom) as UIButton
         addSubview(sendMessageBtn)
         sendMessageBtn.constrainTop(5).constrainTrailing(-5).constrainWidth(30).constrainCenterY()
         sendMessageBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
@@ -61,7 +61,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         getCurBtnShowType()
             sendMessageBtn.addTarget(self, action: "didSendMessageBtn", forControlEvents: UIControlEvents.TouchUpInside)
         //按下开始录音按钮
-        pressstartRecorderBtn = UIButton.buttonWithType(.Custom) as! UIButton
+        pressstartRecorderBtn = UIButton(type: .Custom) as UIButton
         addSubview(pressstartRecorderBtn)
         pressstartRecorderBtn.constrainTop(5).constrainCenterX().constrainCenterY()
         pressstartRecorderBtn.ksconstrain(.Leading,.Equal,voiceOrTextBtn,.Trailing,constant:50)
@@ -84,7 +84,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     
     func getCurBtnShowType(){
         let image: UIImage
-        if count(inputTextView.text)>0 {
+        if inputTextView.text.characters.count>0 {
             sendMessageBtn.setTitle("发送", forState: .Normal)
             sendMessageBtn.setBackgroundImage(nil, forState: .Normal)
             image = KSColor.createImageWithColor(KSColor.tintColor)
@@ -100,11 +100,9 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     var recorderTimer: NSTimer!
     func beginRecordVoice(button: UIButton){
         audioRecorder.startRecord()
-        if audioRecorder.recorder != nil{
             recorderTime = 0
             recorderTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "countVoiceTime", userInfo: nil, repeats: true)
             KSProgressHUD.show(superview!)
-        }
     }
     func endRecordVoice(button: UIButton?){
         if recorderTimer != nil{
@@ -192,14 +190,14 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         }
-        var picker = UIImagePickerController()
+        let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true//设置可编辑
         picker.sourceType = sourceType
         self.viewController()!.presentViewController(picker, animated: true, completion: nil)//进入照相界面
     }
     func getImage(){
-        var pickerImage = UIImagePickerController()
+        let pickerImage = UIImagePickerController()
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
             pickerImage.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             pickerImage.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(pickerImage.sourceType)!
@@ -210,29 +208,29 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     }
     //选择好照片后choose后执行的方法
     // MARK: UIImagePickerControllerDelegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
-        var img = info[UIImagePickerControllerOriginalImage] as! UIImage
-        var smallImg = self.scaleFromImage(img, size: CGSize(width: img.size.width * 0.8,height: img.size.height * 0.8))
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]){
+        let img = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let smallImg = self.scaleFromImage(img, size: CGSize(width: img.size.width * 0.8,height: img.size.height * 0.8))
         var pathExtension = "png"
         if let imgUrl = info[UIImagePickerControllerReferenceURL] as? NSURL{
             pathExtension = imgUrl.pathExtension!
         }
-        var format = NSDateFormatter()
+        let format = NSDateFormatter()
         format.dateFormat="yyyyMMddHHmmss"
-        var currentFileName = "\(format.stringFromDate(NSDate())).\(pathExtension)"//"\(appDelegate.user.id!)-avatar-\(format.stringFromDate(NSDate())).\(pathExtension)"
-        var imageData = UIImagePNGRepresentation(smallImg)
+        let currentFileName = "\(format.stringFromDate(NSDate())).\(pathExtension)"//"\(appDelegate.user.id!)-avatar-\(format.stringFromDate(NSDate())).\(pathExtension)"
+        let imageData = UIImagePNGRepresentation(smallImg)
         var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        var documentsDirectory : AnyObject = paths[0]
-        var fullPathToFile = documentsDirectory.stringByAppendingPathComponent(currentFileName)
+        let documentsDirectory : AnyObject = paths[0]
+        let fullPathToFile = documentsDirectory.stringByAppendingPathComponent(currentFileName)
         let filemanager = NSFileManager.defaultManager()
         if filemanager.fileExistsAtPath(fullPathToFile) {
             // probably won't happen. want to do something about it?
         }else{
             
         }
-        imageData.writeToFile(fullPathToFile, atomically: false)
+        imageData!.writeToFile(fullPathToFile, atomically: false)
         let uploadImgUrl = NSURL(fileURLWithPath: fullPathToFile)
-        var data = NSData(contentsOfFile: uploadImgUrl!.path!)
+        let data = NSData(contentsOfFile: uploadImgUrl.path!)
         
         picker.dismissViewControllerAnimated(true, completion: nil)
         delegate!.sendMessagePhoto(data!, fileName: currentFileName)
@@ -242,7 +240,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     func scaleFromImage(image:UIImage,size:CGSize)->UIImage{
         UIGraphicsBeginImageContext(size)
         image.drawInRect(CGRectMake(0, 0, size.width, size.height))
-        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
     }
@@ -265,7 +263,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
 
     }
     func didSendMessageBtn(){
-        if count(self.inputTextView.text) > 0{
+        if self.inputTextView.text.characters.count > 0{
             self.inputTextView.resignFirstResponder()
             self.delegate?.sendMessageText(self.inputTextView.text)
             self.inputTextView.text = ""
@@ -275,7 +273,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         }else{
             self.inputTextView.resignFirstResponder()
             let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
-            sheet.showInView(self.window)
+            sheet.showInView(self.window!)
         }
         
     }

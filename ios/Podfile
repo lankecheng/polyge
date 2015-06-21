@@ -1,14 +1,16 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform:ios, "8.0"
 use_frameworks!
-pod 'Kingfisher', :head
-pod 'Alamofire', :head
-pod 'Cartography', :head
-pod 'CryptoSwift', :head
-#pod 'ReactiveCocoa', :head
-pod 'APIKit', :head
-pod 'SwiftyJSON', :head
-pod 'ObjectMapper', :head
-pod 'Async', :git => 'https://github.com/duemunk/Async.git'
-pod 'AlecrimCoreData', :head
-pod 'Starscream', :head
+pod 'Result', :head
+pod 'Kingfisher',:git => 'https://github.com/onevcat/Kingfisher.git',:branch => 'swift-2'
+pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git' ,:branch => 'swift-2.0'
+pod 'Cartography', :git => 'https://github.com/robb/Cartography.git' ,:branch => 'swift-2.0'
+#pod 'CryptoSwift', :head
+#pod 'ReactiveCocoa', :git => 'https://github.com/ReactiveCocoa/ReactiveCocoa.git',:branch => 'swift2'
+pod 'APIKit',:git => 'https://github.com/ishkawa/APIKit.git',:branch => 'swift2'
+pod 'SwiftyJSON',:git => 'https://github.com/SwiftyJSON/SwiftyJSON.git',:branch => 'xcode7'
+pod 'ObjectMapper', :git => 'https://github.com/Hearst-DD/ObjectMapper.git',:branch => 'swift-2.0'
+pod 'Async', :git => 'https://github.com/duemunk/Async.git',:branch => 'feature/Swift_2.0'
+pod 'AlecrimCoreData', :git => 'https://github.com/kingslay/AlecrimCoreData.git'
+pod 'Starscream', :git => 'https://github.com/daltoniam/Starscream.git',:branch => 'Swift-2.0'
+pod 'MJExtension'

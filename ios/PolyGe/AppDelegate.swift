@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
 //        self.saveContext()
-        let (success, error) = dataContext.save()
+        let (success, error) = dataContext!.save()
         
         if !success {
             // Replace this implementation with code to handle the error appropriately.

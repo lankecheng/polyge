@@ -11,19 +11,22 @@ import Alamofire
 import Result
 class KSHttpServer {
     class func getMsgIp(block: Result<NSDictionary,NSError> -> Void){
-        Alamofire.request(.GET,
-            NSUserDefaults.standardUserDefaults()["ipaddress"] as! String,
-            parameters:nil)
-            .response { (request, response, data, error) in
-                let result: Result<NSDictionary,NSError>
-                if let responseObject = data as? NSData {
-                    var jsonError: NSError?
-                    let responseDictionary = NSJSONSerialization.JSONObjectWithData(responseObject, options: .MutableContainers, error: &jsonError) as? NSDictionary
-                        result = Result(responseDictionary,failWith:jsonError!)
-                }else{
-                    result = Result.failure(error!)
-                }
-                block(result)
-        }
+//        Alamofire.request(.GET,
+//            URLString: NSUserDefaults.standardUserDefaults()["ipaddress"] as! String,
+//            parameters:nil)
+//            .response { (request, response, data, error) in
+//                let result: Result<NSDictionary,NSError>
+//                if let responseObject = data as? NSData {
+//                    do{
+//                          let responseDictionary =  try NSJSONSerialization.JSONObjectWithData(responseObject, options: .MutableContainers) as? NSDictionary
+//                        return Result(responseDictionary)
+//                    }catch let error as NSError{
+//                        return Result(error: error)
+//                    }
+//                }else{
+//                    result = Result.failure(error!)
+//                }
+//                block(result)
+//        }
     }
 }

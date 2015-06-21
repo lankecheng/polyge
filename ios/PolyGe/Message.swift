@@ -77,7 +77,7 @@ class Message: NSManagedObject {
             return
         }
         
-        var timeInterval = end.timeIntervalSinceDate(start!)
+        let timeInterval = end.timeIntervalSinceDate(start!)
         //相距3分钟显示时间Label
         if fabs(timeInterval) > 3*60{
             self.showDateLabel = true

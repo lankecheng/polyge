@@ -11,7 +11,7 @@ class KSMessageContentView: UIButton {
     
     func initContent(message:Message){//处理三种不同类型的消息界面...
         self.message = message
-        var contentW: CGFloat = kScreenBounds.width - 120
+        let contentW: CGFloat = kScreenBounds.width - 120
         switch message.messageType{
         case .Text:
             self.backLabel = UILabel()
@@ -29,8 +29,8 @@ class KSMessageContentView: UIButton {
             self.backLabel.textColor = UIColor.blackColor()
             self.backLabel.font = UIFont.systemFontOfSize(14)
             self.backLabel.numberOfLines = 0
-            var attributedString = NSMutableAttributedString(string: NSString(data: self.message.messageData, encoding: NSUTF8StringEncoding) as! String)
-            var paragraphStyle = NSMutableParagraphStyle()
+            let attributedString = NSMutableAttributedString(string: NSString(data: self.message.messageData, encoding: NSUTF8StringEncoding) as! String)
+            let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 5
             attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
             self.backLabel.attributedText = attributedString
@@ -44,8 +44,8 @@ class KSMessageContentView: UIButton {
             var width = contentW
             var height = contentW
             if let image = self.backImageView.image {
-                var pH = image.size.height
-                var pW = image.size.width
+                let pH = image.size.height
+                let pW = image.size.width
                 if pH > pW{
                     width = pW * contentW / pH
                 }else{
@@ -115,8 +115,6 @@ class KSMessageContentView: UIButton {
             }
             self.voiceImageView.animationDuration = 1
             self.voiceImageView.animationRepeatCount = 0
-            break
-        default:
             break
         }
     }

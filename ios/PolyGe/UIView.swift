@@ -39,10 +39,10 @@ extension UIView {
     
     @IBInspectable var borderColor: UIColor {
         get {
-            return UIColor(CGColor: layer.borderColor)!
+            return UIColor(CGColor: layer.borderColor!)
         }
         set {
-            layer.borderColor = newValue.CGColor!
+            layer.borderColor = newValue.CGColor
         }
     }
     
@@ -57,7 +57,7 @@ extension UIView {
         }
     }
     /**
-    :returns: true if v is in this view's super view chain
+    - returns: true if v is in this view's super view chain
     */
     public func isSuper(v : UIView) -> Bool
     {
@@ -71,8 +71,8 @@ extension UIView {
     
     public func ksconstrain(attribute: NSLayoutAttribute, _ relation: NSLayoutRelation, _ otherView: UIView, _ otherAttribute: NSLayoutAttribute, constant: CGFloat = 0.0, multiplier : CGFloat = 1.0) -> UIView
     {
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
-        let c = constraint(self, attribute, relation, otherView, otherAttribute, constant: constant, multiplier: multiplier)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let c = constraint(self, attribute1: attribute, relation: relation, item2: otherView, attribute2: otherAttribute, constant: constant, multiplier: multiplier)
         if isSuper(otherView) {
             otherView.addConstraint(c)
             return self
@@ -91,8 +91,8 @@ extension UIView {
     
     public func ksconstrain(attribute: NSLayoutAttribute, _ relation: NSLayoutRelation, constant: CGFloat, multiplier : CGFloat = 1.0) -> UIView
     {
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
-        let c = constraint(self, attribute, relation, constant: constant, multiplier: multiplier)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let c = constraint(self, attribute1: attribute, relation: relation, constant: constant, multiplier: multiplier)
         self.addConstraint(c)
         return self
     }
@@ -122,11 +122,11 @@ extension UIView {
         return ksconstrain(.Trailing,.Equal,self.superview!,.Trailing,constant: constant)
     }
     
-    public func constrainCenterX(_ constant: CGFloat = 0.0) -> UIView{
+    public func constrainCenterX(constant: CGFloat = 0.0) -> UIView{
         return ksconstrain(.CenterX,.Equal,self.superview!,.CenterX,constant: constant)
     }
     
-    public func constrainCenterY(_ constant: CGFloat = 0.0) -> UIView{
+    public func constrainCenterY(constant: CGFloat = 0.0) -> UIView{
         return ksconstrain(.CenterY,.Equal,self.superview!,.CenterY,constant: constant)
     }
     public func viewController() -> UIViewController?{

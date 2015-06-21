@@ -26,7 +26,7 @@ class MessageViewController: KSTabTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.lastMessageCell, forIndexPath: indexPath) as! UITableViewCell
+        return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.lastMessageCell, forIndexPath: indexPath) as UITableViewCell
     }
 
     

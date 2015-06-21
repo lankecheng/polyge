@@ -57,7 +57,7 @@ class MeViewController: KSTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.cell, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.cell, forIndexPath: indexPath) as UITableViewCell
         let data = dataSource[indexPath.section][indexPath.row]
         var image = UIImage(named: data["image"]!)
 

@@ -41,7 +41,7 @@ public class KMPlaceholderTextView: UITextView {
     
     public let placeholderLabel: UILabel = UILabel()
     
-    override public var font: UIFont! {
+    override public var font: UIFont? {
         didSet {
             placeholderLabel.font = font
         }
@@ -71,7 +71,7 @@ public class KMPlaceholderTextView: UITextView {
         }
     }
     
-    var placeholderLabelConstraints = [AnyObject]()
+    var placeholderLabelConstraints = [NSLayoutConstraint]()
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -118,18 +118,18 @@ public class KMPlaceholderTextView: UITextView {
         placeholderLabel.numberOfLines = 0
         placeholderLabel.backgroundColor = UIColor.clearColor()
         addSubview(placeholderLabel)
-        placeholderLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         updateConstraintsForPlaceholderLabel()
         self.textContainerInset = UIEdgeInsetsMake(4.0, 2.0, 4.0, 2.0)
     }
     
     func updateConstraintsForPlaceholderLabel() {
         var newConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-(\(textContainerInset.left + textContainer.lineFragmentPadding))-[placeholder]-(\(textContainerInset.right + textContainer.lineFragmentPadding))-|",
-            options: nil,
+            options: [],
             metrics: nil,
             views: ["placeholder": placeholderLabel])
         newConstraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-(\(textContainerInset.top))-[placeholder]-(>=\(textContainerInset.bottom))-|",
-            options: nil,
+            options: [],
             metrics: nil,
             views: ["placeholder": placeholderLabel])
         removeConstraints(placeholderLabelConstraints)

@@ -44,7 +44,7 @@ class KSPersonViewController: KSTableViewController {
         }else if indexPath.row == 6 {
             identifier = MainStoryboard.TableViewCellIdentifiers.reportAbuseCell
         }
-        var cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "Native language"
