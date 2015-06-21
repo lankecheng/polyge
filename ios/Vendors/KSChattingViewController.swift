@@ -70,7 +70,7 @@ class KSChattingViewController: UIViewController{
 
 extension KSChattingViewController: KSInputMessageViewDelegate{
     func sendMessageText(text: String) {
-        let message = dataContext!.messages.createEntity()
+        let message = Message.MR_createEntity()
         message.createDate = NSDate()
         message.messageData = text.dataUsingEncoding(NSUTF8StringEncoding)!
         message.createUserID = KSUserHelper.userID
@@ -79,7 +79,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
     }
     
     func sendMessagePhoto(data: NSData, fileName: String){
-        let message = dataContext!.messages.createEntity()
+        let message = Message.MR_createEntity()
         message.messageData = data
         message.createDate = NSDate()
         message.createUserID = KSUserHelper.userID
@@ -87,7 +87,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
          chat_tv.sendMessage(message)
     }
     func sendMessageVoice(voiceData: NSData,voiceTime: Int16){
-        let message = dataContext!.messages.createEntity()
+        let message = Message.MR_createEntity()
         message.messageData = voiceData
         message.voiceTime = voiceTime
         message.createDate = NSDate()

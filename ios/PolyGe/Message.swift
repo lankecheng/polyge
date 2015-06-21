@@ -87,28 +87,4 @@ class Message: NSManagedObject {
     }
     
 }
-extension Message {
-    
-    static let createDate = AlecrimCoreData.Attribute<NSDate?>("createDate")
-    static let createUserID = AlecrimCoreData.Attribute<Int64?>("createUserID")
-    static let messageData = AlecrimCoreData.Attribute<NSData?>("messageData")
-    static let messageTypeValue = AlecrimCoreData.Attribute<Int16?>("messageTypeValue")
-    static let pkMessage = AlecrimCoreData.Attribute<String?>("pkMessage")
-    static let voiceTime = AlecrimCoreData.Attribute<Int16?>("voiceTime")
-    
-}
-
-public class MessageAttribute<T>: AlecrimCoreData.SingleEntityAttribute<T> {
-    
-    public override init(_ name: String) { super.init(name) }
-    
-    public lazy var createDate: AlecrimCoreData.Attribute<NSDate?> = { AlecrimCoreData.Attribute<NSDate?>("\(self.___name).createDate") }()
-    public lazy var createUserID: AlecrimCoreData.Attribute<Int64?> = { AlecrimCoreData.Attribute<Int64?>("\(self.___name).createUserID") }()
-    public lazy var messageData: AlecrimCoreData.Attribute<NSData?> = { AlecrimCoreData.Attribute<NSData?>("\(self.___name).messageData") }()
-    public lazy var messageTypeValue: AlecrimCoreData.Attribute<Int16?> = { AlecrimCoreData.Attribute<Int16?>("\(self.___name).messageTypeValue") }()
-    public lazy var pkMessage: AlecrimCoreData.Attribute<String?> = { AlecrimCoreData.Attribute<String?>("\(self.___name).pkMessage") }()
-    public lazy var voiceTime: AlecrimCoreData.Attribute<Int16?> = { AlecrimCoreData.Attribute<Int16?>("\(self.___name).voiceTime") }()
-    
-}
-
 

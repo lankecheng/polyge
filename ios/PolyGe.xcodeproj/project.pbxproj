@@ -22,7 +22,6 @@
 		3C5694811AF7AF6F00E9BCB6 /* PolyGe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C56947F1AF7AF6E00E9BCB6 /* PolyGe.xcdatamodeld */; };
 		3C5694891AF7B67D00E9BCB6 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5694881AF7B67D00E9BCB6 /* Message.swift */; };
 		3C56948B1AF7B67E00E9BCB6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C56948A1AF7B67E00E9BCB6 /* User.swift */; };
-		3C7A0B4B1AFF14BF00A369C1 /* DataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A0B4A1AFF14BF00A369C1 /* DataContext.swift */; };
 		3C7A7CC41AE63F9F00426583 /* TcpClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A7CC31AE63F9F00426583 /* TcpClientManager.swift */; };
 		3C7A7CC61AE6407D00426583 /* NSStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A7CC51AE6407D00426583 /* NSStream.swift */; };
 		3C7A7CC81AE64BE000426583 /* KSPlayAudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A7CC71AE64BE000426583 /* KSPlayAudioTableViewCell.swift */; };
@@ -89,7 +88,6 @@
 		3C5694801AF7AF6F00E9BCB6 /* PolyGe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PolyGe.xcdatamodel; sourceTree = "<group>"; };
 		3C5694881AF7B67D00E9BCB6 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3C56948A1AF7B67E00E9BCB6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		3C7A0B4A1AFF14BF00A369C1 /* DataContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataContext.swift; sourceTree = "<group>"; };
 		3C7A7CC31AE63F9F00426583 /* TcpClientManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TcpClientManager.swift; sourceTree = "<group>"; };
 		3C7A7CC51AE6407D00426583 /* NSStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSStream.swift; sourceTree = "<group>"; };
 		3C7A7CC71AE64BE000426583 /* KSPlayAudioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSPlayAudioTableViewCell.swift; sourceTree = "<group>"; };
@@ -349,7 +347,6 @@
 		3C9970671ADFEECB00AF10E1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3C7A0B4A1AFF14BF00A369C1 /* DataContext.swift */,
 				3C56947F1AF7AF6E00E9BCB6 /* PolyGe.xcdatamodeld */,
 				3C56948A1AF7B67E00E9BCB6 /* User.swift */,
 				3C5694881AF7B67D00E9BCB6 /* Message.swift */,
@@ -599,7 +596,6 @@
 				3CB3DDDC1AF5F4AE00289E8B /* KSChatTableView.swift in Sources */,
 				3C9970601ADF9D4800AF10E1 /* Color.swift in Sources */,
 				3C9970711AE0159E00AF10E1 /* KSMessageListTableViewCell.swift in Sources */,
-				3C7A0B4B1AFF14BF00A369C1 /* DataContext.swift in Sources */,
 				3CB3DDDA1AF5F4AE00289E8B /* KSAVAudioPlayer.swift in Sources */,
 				3C315F8A1ADF62E70040FF99 /* MessageViewController.swift in Sources */,
 				3C9970641ADFBFBE00AF10E1 /* MainStoryboard.swift in Sources */,

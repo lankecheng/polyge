@@ -1,12 +1,12 @@
 PODS:
   - Alamofire (1.2.3)
-  - AlecrimCoreData (3.1)
   - APIKit (0.8.0):
     - Result (~> 0.4)
   - Async (1.2.1)
   - Box (1.2.2)
   - Cartography (0.5.0)
   - Kingfisher (1.4.1)
+  - MagicalRecord (2.3.0)
   - MJExtension (2.3.6)
   - ObjectMapper (0.12)
   - Result (HEAD based on 0.4.4):
@@ -16,11 +16,11 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
-  - AlecrimCoreData (from `https://github.com/kingslay/AlecrimCoreData.git`)
   - APIKit (from `https://github.com/ishkawa/APIKit.git`, branch `swift2`)
   - Async (from `https://github.com/duemunk/Async.git`, branch `feature/Swift_2.0`)
   - Cartography (from `https://github.com/robb/Cartography.git`, branch `swift-2.0`)
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2`)
+  - MagicalRecord
   - MJExtension
   - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-2.0`)
   - Result (HEAD)
@@ -31,8 +31,6 @@ EXTERNAL SOURCES:
   Alamofire:
     :branch: swift-2.0
     :git: https://github.com/Alamofire/Alamofire.git
-  AlecrimCoreData:
-    :git: https://github.com/kingslay/AlecrimCoreData.git
   APIKit:
     :branch: swift2
     :git: https://github.com/ishkawa/APIKit.git
@@ -59,9 +57,6 @@ CHECKOUT OPTIONS:
   Alamofire:
     :commit: fd71afb3a0af2042b9f05a6b9f29317ad4903703
     :git: https://github.com/Alamofire/Alamofire.git
-  AlecrimCoreData:
-    :commit: b6a02b3356984b5729f1412e64e0650af82f5ccf
-    :git: https://github.com/kingslay/AlecrimCoreData.git
   APIKit:
     :commit: 465c00759f7019865106d2e026639dc79b851e39
     :git: https://github.com/ishkawa/APIKit.git
@@ -86,12 +81,12 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
-  AlecrimCoreData: cd9e0c6d8818099a98966323d410dd690a02980b
   APIKit: 82c21586bca23e67711d2dd4a3b6658c0bf8076a
   Async: d9ee6fc9c415d44fcb892f4c289d1e79ce8ae92d
   Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
   Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6
   Kingfisher: 962a21cdc2a7b0fa63be3b2c45ea6f180feda535
+  MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
   MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
   ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
   Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8

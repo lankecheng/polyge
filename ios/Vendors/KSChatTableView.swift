@@ -6,14 +6,18 @@ import Async
 import AlecrimCoreData
 
 class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
-    lazy var fetchedResultsController: FetchedResultsController<Message> = {
-        var query = dataContext!.messages.orderByAscending("createDate")
-        let count = query.count()
-        if count > 100 {
-            query = query.skip(count-100)
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        var request = Message.MR_requestAllSortedBy("createDate", ascending: true)
+        let count = Message.MR_numberOfEntities()
+        if count.integerValue > 100 {
+            request.fetchOffset = count.integerValue - 100
         }
-        let frc = query.toFetchedResultsController()
-        frc.bindToTableView(self)
+        let frc = Message.MR_fetchController(request, delegate: nil, useFileCache: true, groupedBy: nil, inContext:NSManagedObjectContext.MR_defaultContext())
+        do{
+            try frc.performFetch()
+        }catch _{
+            
+        }
         return frc
     }()
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -36,19 +40,19 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     
     //MARK: UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchedResultsController.sections.count
+        return self.fetchedResultsController.sections?.count ?? 0
     }
 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return self.fetchedResultsController.sections[section].numberOfEntities
+        return self.fetchedResultsController.sections![section].numberOfObjects
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let cell = KSMessageCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CellId")
-        let curMessage = self.fetchedResultsController.entityAtIndexPath(indexPath)
+        let curMessage = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Message
         if indexPath.row > 0{
-            curMessage.minuteOffSetStart(self.fetchedResultsController.entityAtIndexPath(NSIndexPath(forRow: indexPath.row-1, inSection: indexPath.section)).createDate, end: curMessage.createDate)
+            curMessage.minuteOffSetStart((self.fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row-1, inSection: indexPath.section)) as! Message).createDate, end: curMessage.createDate)
         }else{
             curMessage.minuteOffSetStart(nil, end: curMessage.createDate)
         }
@@ -70,11 +74,13 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate{
     }
     
     func sendMessage(message: Message){//新曾消息记录
-        let (success, error) = dataContext!.save()
-        if !success {
-            // Replace this implementation with code to handle the error appropriately.
-            NSLog("Unresolved error \(error), \(error?.userInfo)")
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        do{
+            try self.fetchedResultsController.performFetch()
+        }catch _{
+            
         }
+        reloadData()
         self.scrollToBottom()
     }
     
