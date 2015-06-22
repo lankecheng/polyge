@@ -16,4 +16,17 @@ extension NSUserDefaults {
             setObject(newValue, forKey: key)
         }
     }
+    class var loginType: LoginType{
+        get{
+            return standardUserDefaults()["loginType"] as? LoginType ?? LoginType.None
+        }
+        set{
+            standardUserDefaults()["loginType"] = newValue.rawValue
+        }
+    }
+    class var hasLogin: Bool{
+        get{
+            return loginType != LoginType.None
+        }
+    }
 }

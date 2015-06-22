@@ -14,7 +14,6 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userLoginBtn: UIButton!
     var isRelogin = false
     
-    
     override func viewDidLoad() {
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults["ipaddress"] == nil {
@@ -32,13 +31,24 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             if username != nil && password != nil {
                 if let autologin = defaults["autologin"] as? Bool {
                     if autologin.boolValue {
-                        login(nil)
+                        self.login(self.userLoginBtn)
                     }
                 }
             }
         }
     }
+    //MARK: UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.userNameTextField {
+            self.userNameTextField.resignFirstResponder()
+            self.userPassTextField.becomeFirstResponder()
+        }else if textField == self.userPassTextField {
+            self.login(self.userLoginBtn)
+        }
+        return true
+    }
     
+    //MARK: action
     @IBAction func login(sender: UIButton?) {
         userLoginBtn.enabled = false
         let userName = userNameTextField.text

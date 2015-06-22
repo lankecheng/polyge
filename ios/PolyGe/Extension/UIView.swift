@@ -145,5 +145,12 @@ extension UIView {
         }
         return nil
     }
+    class public func loadXib() -> UIView? {
+        let name = NSStringFromClass(self.self)
+        return UIView.loadXib(name.pathExtension)
+    }
+    class public func loadXib(name: String) -> UIView?{
+        return NSBundle.mainBundle().loadNibNamed(name, owner: nil, options: nil).first as? UIView
+    }
     
 }

@@ -15,7 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.tintColor = KSColor.tintColor
+        if NSUserDefaults.hasLogin {
+            window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+        }else{
+            window?.rootViewController = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
+        }
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         let navBar = UINavigationBar.appearance()
         navBar.barTintColor = KSColor.tintColor
