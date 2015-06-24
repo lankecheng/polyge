@@ -20,19 +20,22 @@ class KSAVAudioPlayer: NSObject, AVAudioPlayerDelegate{
         }
 
         NSNotificationCenter.defaultCenter().postNotificationName("VoicePlayHasInterrupt", object: nil)
-        var playerError: NSError?
-        self.player = AVAudioPlayer(data: songData, error: &playerError)
-        self.player!.volume = 1.0
-        if self.player == nil{
-            NSLog("Error creating player: \(playerError?.description)")
-        }else{
-             AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        do {
+            self.player = try AVAudioPlayer(data: songData)
+            self.player!.volume = 1.0
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            } catch _ {
+            }
             self.player!.delegate = self
             self.player!.play()
             self.delegate?.KSAVAudioPlayerBeiginPlay()
+        } catch let error as NSError {
+            NSLog("Error creating player: \(error.description)")
+            self.player = nil
         }
     }
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         self.delegate?.KSAVAudioPlayerDidFinishPlay()
     }
     func stopSound(){

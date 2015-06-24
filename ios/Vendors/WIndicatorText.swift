@@ -39,8 +39,8 @@ class WIndicatorText: UIView {
         })
         
 
-        var time = UInt64(interval) * NSEC_PER_SEC
-        var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(time));
+        let time = UInt64(interval) * NSEC_PER_SEC
+        let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(time));
 
         dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
             
@@ -74,10 +74,10 @@ class WIndicatorText: UIView {
     
     override func layoutSubviews () {
         
-        var frame = self.bounds
-        var tempString = NSString(string: self.labelText)
+        let frame = self.bounds
+        let tempString = NSString(string: self.labelText)
 
-        var maxLabelSize = CGSize(width: 200, height: Int.max)
+        let maxLabelSize = CGSize(width: 200, height: Int.max)
 
         let rect:CGRect = tempString.boundingRectWithSize(maxLabelSize,
             options: NSStringDrawingOptions.UsesLineFragmentOrigin,
@@ -87,13 +87,13 @@ class WIndicatorText: UIView {
         let stringWidth:Float = Float(rect.size.width)
         let stringHeight:Float = Float(rect.size.height)
 
-        var bgViewWidth = stringWidth + 2 * margin
-        var bgViewHeight = stringHeight + 2 * margin
-        var bgViewX:Float = (Float(frame.size.width) - ( bgViewWidth )) / 2
-        var bgViewY:Float = (Float(frame.size.height) - (bgViewHeight )) / 2
+        let bgViewWidth = stringWidth + 2 * margin
+        let bgViewHeight = stringHeight + 2 * margin
+        let bgViewX:Float = (Float(frame.size.width) - ( bgViewWidth )) / 2
+        let bgViewY:Float = (Float(frame.size.height) - (bgViewHeight )) / 2
         
-        var labelX:Float = (bgViewWidth - stringWidth)/2
-        var labelY:Float = (bgViewHeight - stringHeight)/2
+        let labelX:Float = (bgViewWidth - stringWidth)/2
+        let labelY:Float = (bgViewHeight - stringHeight)/2
 
         bgView!.frame = CGRect(x: CGFloat(bgViewX), y: CGFloat(bgViewY), width: CGFloat(bgViewWidth), height: CGFloat(bgViewHeight))
         label!.frame = CGRect(x: CGFloat(labelX), y: CGFloat(labelY), width: CGFloat(stringWidth), height: CGFloat(stringHeight))

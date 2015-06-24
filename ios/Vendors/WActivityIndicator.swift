@@ -94,7 +94,7 @@ class WActivityIndicator: UIView {
     
     override func layoutSubviews () {
         
-        var frame = self.bounds
+        let frame = self.bounds
         var indicatorFrame = self.indicator?.bounds
         var contentViewFrame = self.contentView?.bounds
         
@@ -102,18 +102,18 @@ class WActivityIndicator: UIView {
         self.height = Float(indicatorFrame!.size.height) + (2.0 * margin)
         
         var contentViewFrameX = floor((Float(frame.size.width) - self.width) / 2 )
-        var contentViewFrameY = floor((Float(frame.size.height) - self.height) / 2 )
+        let contentViewFrameY = floor((Float(frame.size.height) - self.height) / 2 )
         
         contentViewFrame = CGRect(x: CGFloat(contentViewFrameX), y: CGFloat(contentViewFrameY), width: CGFloat(self.width), height: CGFloat(self.height))
         
         indicatorFrame?.origin.x = floor(( contentViewFrame!.size.width - indicatorFrame!.size.width ) / 2)
         indicatorFrame?.origin.y = floor(( contentViewFrame!.size.height - indicatorFrame!.size.height ) / 2)
         
-        if count(labelText) != 0 {
+        if labelText.characters.count != 0 {
             
             label!.text = self.labelText;
             
-            var tempString = NSString(string: self.labelText)
+            let tempString = NSString(string: self.labelText)
             let dict = [NSFontAttributeName:UIFont.systemFontOfSize(labelFontSize)]
             let size:CGSize = tempString.sizeWithAttributes(dict)
             let stringHeight:Float = Float(size.height)
@@ -137,9 +137,9 @@ class WActivityIndicator: UIView {
             
             
             // 设置 文字位置
-            var labelX:Float = floor((Float(contentViewFrame!.size.width) - stringWidth) / 2)
-            var labelY:Float = floor(Float(indicatorFrame!.origin.y) + Float(indicatorFrame!.size.height) + padding * 2)
-            var labelFrame = CGRect(x: CGFloat(labelX), y: CGFloat(labelY), width: CGFloat(stringWidth), height: CGFloat(stringHeight))
+            let labelX:Float = floor((Float(contentViewFrame!.size.width) - stringWidth) / 2)
+            let labelY:Float = floor(Float(indicatorFrame!.origin.y) + Float(indicatorFrame!.size.height) + padding * 2)
+            let labelFrame = CGRect(x: CGFloat(labelX), y: CGFloat(labelY), width: CGFloat(stringWidth), height: CGFloat(stringHeight))
             
             label?.frame = labelFrame;
         }
@@ -148,10 +148,10 @@ class WActivityIndicator: UIView {
         contentView!.frame = contentViewFrame!
         indicator?.frame = indicatorFrame!
         
-        var bgViewFrameX = contentViewFrame!.origin.x - CGFloat(padding)
-        var bgViewFrameY = contentViewFrame!.origin.y - CGFloat(padding)
-        var bgViewFrameWidth = contentViewFrame!.size.width + CGFloat(padding * 2)
-        var bgViewFrameHeight = contentViewFrame!.size.height + CGFloat(padding * 2)
+        let bgViewFrameX = contentViewFrame!.origin.x - CGFloat(padding)
+        let bgViewFrameY = contentViewFrame!.origin.y - CGFloat(padding)
+        let bgViewFrameWidth = contentViewFrame!.size.width + CGFloat(padding * 2)
+        let bgViewFrameHeight = contentViewFrame!.size.height + CGFloat(padding * 2)
         
         bgView?.frame = CGRect(x: bgViewFrameX, y: bgViewFrameY, width: bgViewFrameWidth, height: bgViewFrameHeight)
         

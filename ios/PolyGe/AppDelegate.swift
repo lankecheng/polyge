@@ -8,14 +8,20 @@
 
 import UIKit
 import CoreData
-
+import MagicalRecord
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.tintColor = KSColor.tintColor
+        if NSUserDefaults.hasLogin {
+            window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+        }else{
+            window?.rootViewController = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
+        }
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         let navBar = UINavigationBar.appearance()
         navBar.barTintColor = KSColor.tintColor
@@ -28,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
+        MagicalRecord.setupCoreDataStack()
         return true
     }
     
@@ -50,18 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-//        self.saveContext()
-        let (success, error) = dataContext.save()
-        
-        if !success {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
-            abort()
-        }
-
+        MagicalRecord.cleanUp()
     }
     
 }
