@@ -14,3 +14,7 @@ enum LoginType : Int {
     case Email
     case Mobile
 }
+enum PersonType {
+    case Professional
+    case Partner
+}

@@ -8,6 +8,8 @@
 
 import Foundation
 extension String {
+    static let phoneRegex = NSPredicate(format: "SELF MATCHES %@", "^1[34578]\\d{9}$")
+    static let  emailRegex = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
     subscript (i: Int) -> Character {
         return self[advance(self.startIndex, i)]
     }
@@ -18,5 +20,11 @@ extension String {
     
     subscript (r: Range<Int>) -> String {
         return substringWithRange(Range(start: advance(startIndex, r.startIndex), end: advance(startIndex, r.endIndex)))
+    }
+    func checkMobileNumble() -> Bool {
+        return String.phoneRegex.evaluateWithObject(self)
+    }
+    func checkEmail() -> Bool {
+        return String.emailRegex.evaluateWithObject(self)
     }
 }

@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import MBProgressHUD
+import Alamofire
 class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var userPassTextField: UITextField!
@@ -16,9 +17,6 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
     
     override func viewDidLoad() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults["ipaddress"] == nil {
-            defaults["ipaddress"] = "http://access.teamtalk.im:8080/msg_server"
-        }
         let username = defaults["username"] as? String
         if username != nil {
             userNameTextField.text = username
@@ -43,6 +41,7 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             self.userNameTextField.resignFirstResponder()
             self.userPassTextField.becomeFirstResponder()
         }else if textField == self.userPassTextField {
+            self.userPassTextField.resignFirstResponder()
             self.login(self.userLoginBtn)
         }
         return true
@@ -50,6 +49,19 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
     
     //MARK: action
     @IBAction func login(sender: UIButton?) {
+        guard self.userNameTextField.text?.characters.count > 0 else{
+            self.view.showTextHUD("手机号码或邮箱不能为空")
+            return
+        }
+        guard self.userNameTextField.text!.checkMobileNumble() || self.userNameTextField.text!.checkEmail() else{
+            self.view.showTextHUD("输入的手机号码或邮箱输入有误")
+            return
+        }
+        guard self.userPassTextField.text?.characters.count > 0 else{
+            self.view.showTextHUD("密码不能为空")
+            return
+        }
+
         userLoginBtn.enabled = false
         let userName = userNameTextField.text
         let password = userPassTextField.text
@@ -57,32 +69,26 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             userLoginBtn.enabled = true
            return
         }
-        let indicator = WIndicator.showIndicatorAddedTo(self.view, animation: true)
-        indicator.text = "正在登录"
-        
-        LoginModule.loginWithUsername(userName!, password: password!) { result -> Void in
-            if let error = result.error {
-                self.userLoginBtn.enabled = true
-                indicator.removeFromSuperview()
-                let alert = UIAlertController(title: "错误", message: error.domain, preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "确定", style: .Default, handler: nil)
-                alert.addAction(okAction)
-                self.presentViewController(alert,animated:true,completion:nil)
-
-            } else if let user = result.value {
-                RuntimeStatus.instance.user = user
-                if RuntimeStatus.instance.pushToken != nil {
-                    
-                }
-                if self.isRelogin {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }else{
-                    
-                }
-            }
-            
+        var parameters = ["pwd":self.userPassTextField.text!,"client_id":"123"]
+        if self.userNameTextField.text!.checkMobileNumble() {
+            parameters["phone"] = self.userNameTextField.text!
+        }else{
+            parameters["email"] = self.userNameTextField.text!
         }
-        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "正在登录"
+        Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
+            (request, response, json, error) in
+            hud.removeFromSuperview()
+            guard json["sucess"].boolValue  else{
+                self.view.showTextHUD(json["msg"].string!)
+                return
+            }
+            NSUserDefaults.token = json["result"]["token"].string!
+            
+            self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()!, animated: true)
+        })
+
     }
 
 }

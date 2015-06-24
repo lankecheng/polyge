@@ -253,7 +253,7 @@ extension ImageCache {
                 if options.shouldDecode {
                     dispatch_async(self.processQueue, { () -> Void in
                         let result = image.kf_decodedImage()
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        dispatch_async(options.queue, { () -> Void in
                             completionHandler?(result, .Memory)
                             return
                         })
@@ -272,14 +272,14 @@ extension ImageCache {
                                 let result = image.kf_decodedImage()
                                 self.storeImage(result!, forKey: key, toDisk: false, completionHandler: nil)
                                 
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                dispatch_async(options.queue, { () -> Void in
                                     completionHandler?(result, .Memory)
                                     return
                                 })
                             })
                         } else {
                             self.storeImage(image, forKey: key, toDisk: false, completionHandler: nil)
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            dispatch_async(options.queue, { () -> Void in
                                 if let completionHandler = completionHandler {
                                     completionHandler(image, .Disk)
                                 }
@@ -287,7 +287,7 @@ extension ImageCache {
                         }
                     } else {
                         // No image found from either memory or disk
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        dispatch_async(options.queue, { () -> Void in
                             if let completionHandler = completionHandler {
                                 completionHandler(nil, nil)
                             }
@@ -297,7 +297,7 @@ extension ImageCache {
             }
         }
         
-        dispatch_async(dispatch_get_main_queue(), block)
+        dispatch_async(options.queue, block)
         return block
     }
     
@@ -445,19 +445,21 @@ extension ImageCache {
                     })
                     
                     for fileURL in sortedFiles {
+                        
                         do {
                             try self.fileManager.removeItemAtURL(fileURL)
-                            URLsToDelete.append(fileURL)
+                        } catch {
                             
-                            if let fileSize = cachedFiles[fileURL]?[NSURLTotalFileAllocatedSizeKey] as? NSNumber {
-                                diskCacheSize -= fileSize.unsignedLongValue
-                            }
-                            
-                            if diskCacheSize < targetSize {
-                                break
-                            }
-                        } catch _ {
-                            
+                        }
+                        
+                        URLsToDelete.append(fileURL)
+                        
+                        if let fileSize = cachedFiles[fileURL]?[NSURLTotalFileAllocatedSizeKey] as? NSNumber {
+                            diskCacheSize -= fileSize.unsignedLongValue
+                        }
+                        
+                        if diskCacheSize < targetSize {
+                            break
                         }
                     }
                 }
@@ -558,39 +560,39 @@ public extension ImageCache {
         dispatch_async(ioQueue, { () -> Void in
             let diskCacheURL = NSURL(fileURLWithPath: self.diskCachePath)
                 
-                let resourceKeys = [NSURLIsDirectoryKey, NSURLTotalFileAllocatedSizeKey]
-                var diskCacheSize: UInt = 0
-                
-                if let fileEnumerator = self.fileManager.enumeratorAtURL(diskCacheURL,
-                    includingPropertiesForKeys: resourceKeys,
-                    options: NSDirectoryEnumerationOptions.SkipsHiddenFiles,
-                    errorHandler: nil) {
+            let resourceKeys = [NSURLIsDirectoryKey, NSURLTotalFileAllocatedSizeKey]
+            var diskCacheSize: UInt = 0
+            
+            if let fileEnumerator = self.fileManager.enumeratorAtURL(diskCacheURL,
+                includingPropertiesForKeys: resourceKeys,
+                options: NSDirectoryEnumerationOptions.SkipsHiddenFiles,
+                errorHandler: nil) {
+                    
+                    for fileURL in fileEnumerator.allObjects as! [NSURL] {
                         
-                        for fileURL in fileEnumerator.allObjects as! [NSURL] {
-                            
-                            do {
-                                let resourceValues = try fileURL.resourceValuesForKeys(resourceKeys)
-                                // If it is a Directory. Continue to next file URL.
-                                if let isDirectory = resourceValues[NSURLIsDirectoryKey]?.boolValue {
-                                    if isDirectory {
-                                        continue
-                                    }
+                        do {
+                            let resourceValues = try fileURL.resourceValuesForKeys(resourceKeys)
+                            // If it is a Directory. Continue to next file URL.
+                            if let isDirectory = resourceValues[NSURLIsDirectoryKey]?.boolValue {
+                                if isDirectory {
+                                    continue
                                 }
-                                
-                                if let fileSize = resourceValues[NSURLTotalFileAllocatedSizeKey] as? NSNumber {
-                                    diskCacheSize += fileSize.unsignedLongValue
-                                }
-                            } catch _ {
                             }
                             
+                            if let fileSize = resourceValues[NSURLTotalFileAllocatedSizeKey] as? NSNumber {
+                                diskCacheSize += fileSize.unsignedLongValue
+                            }
+                        } catch _ {
                         }
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if let completionHandler = completionHandler {
-                        completionHandler(size: diskCacheSize)
+                        
                     }
-                })
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let completionHandler = completionHandler {
+                    completionHandler(size: diskCacheSize)
+                }
+            })
         })
     }
 }
@@ -635,12 +637,12 @@ extension Dictionary {
     func keysSortedByValue(isOrderedBefore:(Value, Value) -> Bool) -> [Key] {
         var array = Array(self)
         array.sortInPlace {
-            let (lk, lv) = $0
-            let (rk, rv) = $1
+            let (_, lv) = $0
+            let (_, rv) = $1
             return isOrderedBefore(lv, rv)
         }
         return array.map {
-            let (k, v) = $0
+            let (k, _) = $0
             return k
         }
     }

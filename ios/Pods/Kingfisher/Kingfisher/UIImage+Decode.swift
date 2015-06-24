@@ -28,17 +28,18 @@ import Foundation
 
 extension UIImage {
     func kf_decodedImage() -> UIImage? {
-//        let imageRef = self.CGImage
-//        let colorSpace = CGColorSpaceCreateDeviceRGB()
-//        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-//        let context = CGBitmapContextCreate(nil, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef), 8, 0, colorSpace, bitmapInfo)
-//        if let context = context {
-//            let rect = CGRectMake(0, 0, CGFloat(CGImageGetWidth(imageRef)), CGFloat(CGImageGetHeight(imageRef)))
-//            CGContextDrawImage(context, rect, imageRef)
-//            let decompressedImageRef = CGBitmapContextCreateImage(context)
-//            return UIImage(CGImage: decompressedImageRef)
-//        } else {
+        let imageRef = self.CGImage
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue).rawValue
+        let contextHolder = UnsafeMutablePointer<Void>()
+        let context = CGBitmapContextCreate(contextHolder, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef), 8, 0, colorSpace, bitmapInfo)
+        if let context = context {
+            let rect = CGRectMake(0, 0, CGFloat(CGImageGetWidth(imageRef)), CGFloat(CGImageGetHeight(imageRef)))
+            CGContextDrawImage(context, rect, imageRef)
+            let decompressedImageRef = CGBitmapContextCreateImage(context)
+            return UIImage(CGImage: decompressedImageRef)
+        } else {
             return nil
-//        }
+        }
     }
 }

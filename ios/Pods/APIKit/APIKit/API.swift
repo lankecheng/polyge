@@ -37,7 +37,7 @@ public class API {
         task.request = Box(request)
         task.completionHandler = { data, URLResponse, connectionError in
             if let error = connectionError {
-                notifyError(.ConnectionError(error: error))
+                notifyError(.ConnectionError(error))
                 return
             }
 
@@ -49,25 +49,18 @@ public class API {
             do {
                 let object = try request.responseBodyParser.parseData(data)
                 if !request.acceptableStatusCodes.contains(HTTPURLResponse.statusCode) {
-                    do {
-                        let error = try request.errorFromObject(object, URLResponse: HTTPURLResponse)
-                        notifyError(.ResponseError(error: error))
-                    } catch {
-                        notifyError(.UnexpectedResponse)
-                    }
-                    return
+                    let responseError = try request.errorFromObject(object, URLResponse: HTTPURLResponse)
+                    throw APIKitError.ResponseError(responseError)
                 }
 
                 let response = try request.responseFromObject(object, URLResponse: HTTPURLResponse)
                 dispatch_async(dispatch_get_main_queue()) {
                     handler(.success(response))
                 }
+            } catch let error as APIKitError {
+                notifyError(error)
             } catch {
-                if let e = error as? APIKitError {
-                    notifyError(e)
-                } else {
-                    notifyError(.UnexpectedResponse)
-                }
+                notifyError(.UnexpectedResponse)
             }
         }
 
@@ -155,9 +148,9 @@ private extension NSURLSessionDataTask {
         
         set {
             if let value = newValue {
-                objc_setAssociatedObject(self, &taskRequestKey, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &taskRequestKey, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             } else {
-                objc_setAssociatedObject(self, &taskRequestKey, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &taskRequestKey, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }
@@ -167,7 +160,7 @@ private extension NSURLSessionDataTask {
             return responseBuffer
         } else {
             let responseBuffer = NSMutableData()
-            objc_setAssociatedObject(self, &dataTaskResponseBufferKey, responseBuffer, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &dataTaskResponseBufferKey, responseBuffer, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return responseBuffer
         }
     }
@@ -179,9 +172,9 @@ private extension NSURLSessionDataTask {
         
         set {
             if let value = newValue  {
-                objc_setAssociatedObject(self, &dataTaskCompletionHandlerKey, Box(value), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &dataTaskCompletionHandlerKey, Box(value), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             } else {
-                objc_setAssociatedObject(self, &dataTaskCompletionHandlerKey, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &dataTaskCompletionHandlerKey, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }
@@ -195,9 +188,9 @@ extension NSURLSessionDownloadTask {
         
         set {
             if let value = newValue {
-                objc_setAssociatedObject(self, &taskRequestKey, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &taskRequestKey, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             } else {
-                objc_setAssociatedObject(self, &taskRequestKey, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &taskRequestKey, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }

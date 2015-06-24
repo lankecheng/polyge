@@ -236,7 +236,7 @@ extension WKInterfaceImage {
         }
         
         let imageKey = WKInterfaceImage.kf_cacheKeyForURLString(URL.absoluteString)
-
+        
         if forceRefresh {
             WKInterfaceDevice.currentDevice().removeCachedImageWithName(imageKey)
         }

@@ -123,6 +123,14 @@ public class ImageDownloader: NSObject {
         barrierQueue = dispatch_queue_create(downloaderBarrierName + name, DISPATCH_QUEUE_CONCURRENT)
         processQueue = dispatch_queue_create(imageProcessQueueName + name, DISPATCH_QUEUE_CONCURRENT)
     }
+    
+    func fetchLoadForKey(key: NSURL) -> ImageFetchLoad? {
+        var fetchLoad: ImageFetchLoad?
+        dispatch_sync(barrierQueue, { () -> Void in
+            fetchLoad = self.fetchLoads[key]
+        })
+        return fetchLoad
+    }
 }
 
 // MARK: - Download method
@@ -182,14 +190,16 @@ public extension ImageDownloader {
         }
         
         setupProgressBlock(progressBlock, completionHandler: completionHandler, forURL: request.URL!) {(session, fetchLoad) -> Void in
-            if let task = session.dataTaskWithRequest(request) {
-                task.priority = options.lowPriority ? NSURLSessionTaskPriorityLow : NSURLSessionTaskPriorityDefault
-                task.resume()
-                
-                fetchLoad.shouldDecode = options.shouldDecode
-                
-                retrieveImageTask?.downloadTask = task
+            guard let task = session.dataTaskWithRequest(request) else {
+                return
             }
+            
+            task.priority = options.lowPriority ? NSURLSessionTaskPriorityLow : NSURLSessionTaskPriorityDefault
+            task.resume()
+            
+            fetchLoad.shouldDecode = options.shouldDecode
+            
+            retrieveImageTask?.downloadTask = task
         }
     }
     
@@ -230,8 +240,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
     This method is exposed since the compiler requests. Do not call it.
     */
     public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-        
-        if let URL = dataTask.originalRequest!.URL, callbackPairs = fetchLoads[URL]?.callbacks {
+        if let URL = dataTask.originalRequest?.URL, callbackPairs = fetchLoadForKey(URL)?.callbacks {
             for callbackPair in callbackPairs {
                 callbackPair.progressBlock?(receivedSize: 0, totalSize: response.expectedContentLength)
             }
@@ -244,7 +253,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
     */
     public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
 
-        if let URL = dataTask.originalRequest!.URL, fetchLoad = fetchLoads[URL] {
+        if let URL = dataTask.originalRequest?.URL, fetchLoad = fetchLoadForKey(URL) {
             fetchLoad.responseData.appendData(data)
             for callbackPair in fetchLoad.callbacks {
                 callbackPair.progressBlock?(receivedSize: Int64(fetchLoad.responseData.length), totalSize: dataTask.response!.expectedContentLength)
@@ -253,7 +262,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
     }
     
     private func callbackWithImage(image: UIImage?, error: NSError?, imageURL: NSURL) {
-        if let callbackPairs = self.fetchLoads[imageURL]?.callbacks {
+        if let callbackPairs = fetchLoadForKey(imageURL)?.callbacks {
             
             self.cleanForURL(imageURL)
             
@@ -268,7 +277,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
     */
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
         
-        if let URL = task.originalRequest!.URL {
+        if let URL = task.originalRequest?.URL {
             if let error = error { // Error happened
                 callbackWithImage(nil, error: error, imageURL: URL)
             } else { //Download finished without error
@@ -276,7 +285,7 @@ extension ImageDownloader: NSURLSessionDataDelegate {
                 // We are on main queue when receiving this.
                 dispatch_async(processQueue, { () -> Void in
                     
-                    if let fetchLoad = self.fetchLoads[URL] {
+                    if let fetchLoad = self.fetchLoadForKey(URL) {
                         if let image = UIImage(data: fetchLoad.responseData) {
                             
                             self.delegate?.imageDownloader?(self, didDownloadImage: image, forURL: URL, withResponse: task.response!)

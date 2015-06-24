@@ -7,6 +7,7 @@ PODS:
   - Cartography (0.5.0)
   - Kingfisher (1.4.1)
   - MagicalRecord (2.3.0)
+  - MBProgressHUD (0.9.1)
   - MJExtension (2.3.6)
   - ObjectMapper (0.12)
   - Result (HEAD based on 0.4.4):
@@ -19,8 +20,9 @@ DEPENDENCIES:
   - APIKit (from `https://github.com/ishkawa/APIKit.git`, branch `swift2`)
   - Async (from `https://github.com/duemunk/Async.git`, branch `feature/Swift_2.0`)
   - Cartography (from `https://github.com/robb/Cartography.git`, branch `swift-2.0`)
-  - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2`)
+  - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2.0`)
   - MagicalRecord
+  - MBProgressHUD
   - MJExtension
   - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-2.0`)
   - Result (HEAD)
@@ -41,7 +43,7 @@ EXTERNAL SOURCES:
     :branch: swift-2.0
     :git: https://github.com/robb/Cartography.git
   Kingfisher:
-    :branch: swift-2
+    :branch: swift-2.0
     :git: https://github.com/onevcat/Kingfisher.git
   ObjectMapper:
     :branch: swift-2.0
@@ -58,7 +60,7 @@ CHECKOUT OPTIONS:
     :commit: fd71afb3a0af2042b9f05a6b9f29317ad4903703
     :git: https://github.com/Alamofire/Alamofire.git
   APIKit:
-    :commit: 465c00759f7019865106d2e026639dc79b851e39
+    :commit: ef3d410840cfe27fc26756162a9d4d91d282ba1d
     :git: https://github.com/ishkawa/APIKit.git
   Async:
     :commit: 23aaf8d7f2e4dc593e87db739b68c58ecb9d19ac
@@ -67,7 +69,7 @@ CHECKOUT OPTIONS:
     :commit: 7c0bdca4b6f0be4e14f9179de59473306227c714
     :git: https://github.com/robb/Cartography.git
   Kingfisher:
-    :commit: 77b3d0bfd825b96fb9943471813b9c943bb56f40
+    :commit: 65015e6549fd40eb72957facb136b7b016404992
     :git: https://github.com/onevcat/Kingfisher.git
   ObjectMapper:
     :commit: 813c3be393307c4c27a5cbc7b3223073bea1f21d
@@ -87,6 +89,7 @@ SPEC CHECKSUMS:
   Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6
   Kingfisher: 962a21cdc2a7b0fa63be3b2c45ea6f180feda535
   MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
   ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
   Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8

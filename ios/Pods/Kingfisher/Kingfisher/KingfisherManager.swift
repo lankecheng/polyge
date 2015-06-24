@@ -65,11 +65,11 @@ public class KingfisherManager {
     /**
     *	Options to control some downloader and cache behaviors.
     */
-    public typealias Options = (forceRefresh: Bool, lowPriority: Bool, cacheMemoryOnly: Bool, shouldDecode: Bool)
+    public typealias Options = (forceRefresh: Bool, lowPriority: Bool, cacheMemoryOnly: Bool, shouldDecode: Bool, queue: dispatch_queue_t!)
     
     /// A preset option tuple with all value set to `false`.
     public static var OptionsNone: Options = {
-        return (forceRefresh: false, lowPriority: false, cacheMemoryOnly: false, shouldDecode: false)
+        return (forceRefresh: false, lowPriority: false, cacheMemoryOnly: false, shouldDecode: false, queue: dispatch_get_main_queue())
     }()
     
     /// Shared manager used by the extensions across Kingfisher.
@@ -117,12 +117,15 @@ public class KingfisherManager {
                 options = (forceRefresh: (optionsInOptionsInfo & KingfisherOptions.ForceRefresh) != KingfisherOptions.None,
                     lowPriority: (optionsInOptionsInfo & KingfisherOptions.LowPriority) != KingfisherOptions.None,
                     cacheMemoryOnly: (optionsInOptionsInfo & KingfisherOptions.CacheMemoryOnly) != KingfisherOptions.None,
-                    shouldDecode: (optionsInOptionsInfo & KingfisherOptions.BackgroundDecode) != KingfisherOptions.None)
+                    shouldDecode: (optionsInOptionsInfo & KingfisherOptions.BackgroundDecode) != KingfisherOptions.None,
+                    queue: dispatch_get_main_queue())
             } else {
                 options = (forceRefresh: false,
                     lowPriority: false,
                     cacheMemoryOnly: false,
-                    shouldDecode: false)
+                    shouldDecode: false,
+                    queue: dispatch_get_main_queue()
+                    )
             }
             
             let targetCache = optionsInfo?[.TargetCache] as? ImageCache ?? self.cache
@@ -138,10 +141,9 @@ public class KingfisherManager {
         let parsedOptions = parseOptionsInfo(optionsInfo)
         let (options, targetCache, downloader) = (parsedOptions.0, parsedOptions.1, parsedOptions.2)
         
-        let key = URL.absoluteString
         if options.forceRefresh {
             downloadAndCacheImageWithURL(URL,
-                forKey: key,
+                forKey: URL.absoluteString,
                 retrieveImageTask: task,
                 progressBlock: progressBlock,
                 completionHandler: completionHandler,
@@ -149,12 +151,12 @@ public class KingfisherManager {
                 targetCache: targetCache,
                 downloader: downloader)
         } else {
-            let diskTask = targetCache.retrieveImageForKey(key, options: options, completionHandler: { (image, cacheType) -> () in
+            let diskTask = targetCache.retrieveImageForKey(URL.absoluteString, options: options, completionHandler: { (image, cacheType) -> () in
                 if image != nil {
                     completionHandler?(image: image, error: nil, cacheType:cacheType, imageURL: URL)
                 } else {
                     self.downloadAndCacheImageWithURL(URL,
-                        forKey: key,
+                        forKey: URL.absoluteString,
                         retrieveImageTask: task,
                         progressBlock: progressBlock,
                         completionHandler: completionHandler,

@@ -5,9 +5,9 @@
 //  Created by king on 15/4/19.
 //  Copyright (c) 2015年 king. All rights reserved.
 //
-
 import UIKit
-
+import MBProgressHUD
+import Async
 func constraint(item1: UIView, attribute1: NSLayoutAttribute, relation: NSLayoutRelation, item2: UIView, attribute2: NSLayoutAttribute, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0) -> NSLayoutConstraint
 {
     return NSLayoutConstraint(item: item1, attribute: attribute1, relatedBy: relation, toItem: item2, attribute: attribute2, multiplier: multiplier, constant: constant)
@@ -151,6 +151,28 @@ extension UIView {
     }
     class public func loadXib(name: String) -> UIView?{
         return NSBundle.mainBundle().loadNibNamed(name, owner: nil, options: nil).first as? UIView
+    }
+    func showTextHUD(text: String)
+    {
+        guard NSThread.isMainThread() else {
+            Async.main({ () -> Void in
+                self.showTextHUD(text)
+            })
+            return
+        }
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+        hud.labelText = text
+        hud.mode = .Text
+        var duration = Double(text.characters.count)*0.08+0.3
+        duration = min(3, max(1, duration))
+        Async.main(after: duration) { () -> Void in
+            if hud.superview != nil {
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true)
+            }
+        }
+        
     }
     
 }

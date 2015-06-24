@@ -9,7 +9,7 @@
 import UIKit
 
 class KSPersonViewController: KSTableViewController {
-    var person = KSUserEntity()
+    var person = User()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableHeaderView?.backgroundColor = KSColor.tintColor

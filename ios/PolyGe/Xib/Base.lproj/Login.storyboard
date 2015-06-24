@@ -146,7 +146,7 @@
         <!--注册-->
         <scene sceneID="PTT-7d-2Hg">
             <objects>
-                <viewController title="注册" id="ivh-4B-2uz" customClass="KSRegistViewController" customModule="PolyGe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="注册" id="ivh-4B-2uz" customClass="KSRegisterViewController" customModule="PolyGe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3lE-gE-Gd1"/>
                         <viewControllerLayoutGuide type="bottom" id="wlw-yS-72m"/>
@@ -230,6 +230,9 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="register:" destination="ivh-4B-2uz" eventType="touchUpInside" id="MPt-Jx-JFh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -253,9 +256,10 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="userLoginBtn" destination="Ifv-vf-xqT" id="E3t-4x-cDe"/>
+                        <outlet property="confirmUserPassTextField" destination="jrU-0b-rQ8" id="e5Z-BN-xMp"/>
                         <outlet property="userNameTextField" destination="Ekv-uT-Zv3" id="UpH-vZ-sKV"/>
                         <outlet property="userPassTextField" destination="9OJ-NU-ypG" id="ydp-M5-AHB"/>
+                        <outlet property="userRegisterButton" destination="Ifv-vf-xqT" id="ijo-Ga-XUd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vLO-L3-W6M" userLabel="First Responder" sceneMemberID="firstResponder"/>

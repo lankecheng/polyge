@@ -10,10 +10,9 @@ import UIKit
 
 class MeViewController: KSTableViewController {
 
-    var personStatu = PersonStatu.onLine
     var dataSource: [[[String:String]]] {
         get{
-            if personStatu == .offLine {
+            if !NSUserDefaults.hasLogin {
                 return [
                     [["image":"User","title":"Longin"],
                         ["image":"Settings","title":"Settings"]],

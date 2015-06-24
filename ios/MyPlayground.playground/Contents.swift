@@ -3,15 +3,16 @@
 import UIKit
 class SomeBaseClass {
     class func printClassName() {
-        println("SomeBaseClass")
+        print("SomeBaseClass")
     }
 }
 class SomeSubClass: SomeBaseClass {
     override class func printClassName() {
-        println("SomeSubClass")
+        print("SomeSubClass")
     }
 }
 let someInstance: SomeBaseClass = SomeSubClass()
 // someInstance is of type SomeBaseClass at compile time, but
 // someInstance is of type SomeSubClass at runtime
 SomeBaseClass.self
+Float("abc".characters.count)*0.9

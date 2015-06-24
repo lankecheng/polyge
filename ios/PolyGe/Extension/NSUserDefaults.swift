@@ -14,6 +14,7 @@ extension NSUserDefaults {
         }
         set(newValue){
             setObject(newValue, forKey: key)
+            synchronize()
         }
     }
     class var loginType: LoginType{
@@ -29,4 +30,29 @@ extension NSUserDefaults {
             return loginType != LoginType.None
         }
     }
+    class var host: String{
+        get{
+            return standardUserDefaults()["host"] as? String ?? "http://120.26.212.134"
+        }
+        set{
+            standardUserDefaults()["host"] = newValue
+        }
+    }
+    class var token: String{
+        get{
+            return standardUserDefaults()["token"] as? String ?? "virtualtoken"
+        }
+        set{
+            standardUserDefaults()["token"] = newValue
+        }
+    }
+    class var userID: String?{
+        get{
+        return standardUserDefaults()["userID"] as? String
+        }
+        set{
+            standardUserDefaults()["userID"] = newValue
+        }
+    }
+    
 }
