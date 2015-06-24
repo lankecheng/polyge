@@ -68,6 +68,7 @@
        	"Success": true,
   		"Msg": "",
   		"Result": {
+  			"avatar": ""
     		"token": "14344422025049569583096408908100",
 		    "uid": 1,
 		    "uname": "lankc",
