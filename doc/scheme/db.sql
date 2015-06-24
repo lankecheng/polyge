@@ -1,21 +1,21 @@
-DROP TABLE IF EXISTS `pguser`;
-CREATE TABLE `pguser` (
+DROP TABLE IF EXISTS `pg_user`;
+CREATE TABLE `pg_user` (
   `uid`         INT(10) UNSIGNED AUTO_INCREMENT,
-  `uname`       VARCHAR(30)         NOT NULL,
+  `uname`       VARCHAR(30)         NOT NULL DEFAULT '',
   `pwd`         VARCHAR(30)         NOT NULL,
   `phone`       VARCHAR(50)         NOT NULL DEFAULT '',
   `email`       VARCHAR(100)        NOT NULL DEFAULT '',
-  `gender`      TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
-  `language`    INT(10) UNSIGNED    NOT NULL,
+  `gender`      TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `language`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `occup`       VARCHAR(20)         NOT NULL DEFAULT '',
-  `user_type`   TINYINT(3) UNSIGNED NOT NULL COMMENT '0:student,1:teacher',
+  `user_type`   TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '1:student,2:teacher',
   `avatar`      VARCHAR(255)        NOT NULL DEFAULT '' COMMENT '头像地址',
   `audio`       VARCHAR(255)        NOT NULL DEFAULT '' COMMENT '语音地址',
-  `birth`       DATE DEFAULT NULL,
+  `birth`       INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `country`     INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `province`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `city`        INT(10) UNSIGNED    NOT NULL DEFAULT '0',
-  `created_at`  INT(10) UNSIGNED    NOT NULL,
+  `created_at`  INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `description` VARCHAR(200)        NOT NULL DEFAULT '',
   `interest`    VARCHAR(100)        NOT NULL DEFAULT '',
   PRIMARY KEY (`uid`)
@@ -23,10 +23,10 @@ CREATE TABLE `pguser` (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-DROP TABLE IF EXISTS `token`;
-CREATE TABLE `token` (
+DROP TABLE IF EXISTS `pg_token`;
+CREATE TABLE `pg_token` (
   `oauth_token` CHAR(32)         NOT NULL,
-  `client_id`   INT(10) UNSIGNED NOT NULL,
+  `client_id`   VARCHAR(64)      NOT NULL,
   `expires`     INT(11)          NOT NULL,
   `scope`       VARCHAR(200)     NOT NULL DEFAULT '',
   `uid`         INT(10) UNSIGNED NOT NULL,
@@ -34,4 +34,4 @@ CREATE TABLE `token` (
   KEY `uid` (`uid`, `client_id`) USING BTREE
 )
   ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;

@@ -7,128 +7,171 @@ import (
 	"github.com/cihub/seelog"
 	_ "github.com/go-sql-driver/mysql"
 	"reflect"
-	"strings"
 	"time"
-	"strconv"
 	"bytes"
+	"github.com/lankecheng/polyge/server/pgpub"
 )
 
 var db *sql.DB
 
 func init() {
 	var err error
-	db, err = sql.Open("mysql", "root:123456@tcp(192.168.41.45:3306)/lkc_test?charset=utf8&parseTime=true")
+	db, err = sql.Open("mysql", "root:root@tcp(120.26.212.134:3306)/polyge?charset=utf8&parseTime=true")
 	if err != nil {
 		seelog.Criticalf("open mysql %v", err)
 	}
 }
 
-//implements databas/sql.Scanner
-type ReflectScanner struct {
-	Value *reflect.Value
+func DBCreateIncludeFlds(stru interface{}, inclStruFlds ...string) error {
+	return dbCreate(stru, true, inclStruFlds...)
 }
 
-func (scanner *ReflectScanner) Scan(src interface{}) error {
-	if src == nil {
-		return nil
-	}
+func DBCreateExcludeFlds(stru interface{}, exclStruFlds ...string) (err error) {
+	return dbCreate(stru, false, exclStruFlds...)
+}
 
-	if timeVal, ok:= src.(time.Time); ok {
-		scanner.Value.Set(reflect.ValueOf(timeVal))
-	} else if bytes, ok := src.([]byte); ok {
-		timemills, err := strconv.ParseInt(string(bytes),10, 64)
-		if err != nil {
-			return fmt.Errorf("RflValScanner error getting timemils %v", err)
+func dbCreate(stru interface{}, include bool, flds ...string) error {
+	//ensure struct
+	struVal := reflect.ValueOf(stru)
+	if struVal.Kind() == reflect.Ptr {
+		struVal = struVal.Elem()
+	}
+	if struVal.Kind() != reflect.Struct {
+		return errors.New("DBCreate arg stru isn't struct!")
+	}
+	//get effective fields
+	var effFlds []string
+	if include && len(flds) == 0 {
+		effFlds = getStructCols(stru)
+	} else if !include && len(flds) > 0 {
+		dbCols := make([]string, 0)
+		struFlds := getStructFldsExceptPK(stru)
+		for _, struFld := range struFlds {
+			if pgpub.SearchStringArray(flds, struFld) == -1 {
+				dbCols = append(dbCols, convertFldName2ColName(struFld))
+			}
 		}
-		scanner.Value.Set(reflect.ValueOf(time.Unix(timemills, 0)))
-	} else if timemills, ok := src.(int64); ok {
-		scanner.Value.Set(reflect.ValueOf(time.Unix(timemills, 0)))
 	} else {
-		panic(fmt.Sprintf("RflValScanner %v not support", scanner.Value.Type().String()))
+		effFlds = flds
 	}
-
-	return nil
-}
-
-//implements databas/sql.Scanner, just for test
-type TypeTestScanner struct {
-}
-
-func (scanner *TypeTestScanner) Scan(src interface{}) error {
-	val := src
-	switch s := src.(type) {
-		case []byte:
-		val = string(s)
+	//assemble insert sql
+	insertSql := bytes.NewBufferString("insert into ")
+	insertSql.WriteString(getTableFromStruct(stru))
+	insertSql.WriteString("(")
+	for i, effFld := range effFlds {
+		insertSql.WriteString(convertFldName2ColName(effFld))
+		if i < len(effFlds) - 1 {
+			insertSql.WriteString(",")
+		}
 	}
-	fmt.Printf("Type Scan %v:%v\n", reflect.TypeOf(src), val)
-	return nil
-}
+	insertSql.WriteString(") values(")
+	insertSql.WriteString(pgpub.RepeatChar("?", ",", len(effFlds)))
+	insertSql.WriteString(")")
+	//assemble sql params
+	args := make([]interface{}, len(effFlds))
+	struType := struVal.Type()
+	for i, effFld := range effFlds {
+		struFld, exsits := struType.FieldByName(effFld)
+		if !exsits {
+			return fmt.Errorf("DBCreate struct field [%v] not exists!", effFld)
+		}
 
-func Scan2Bean(rows *sql.Rows, bean interface{}) error {
-	beanVal := reflect.ValueOf(bean)
-	if beanVal.Kind() != reflect.Ptr {
-		return errors.New("Scan2Bean bean not a pointer")
+		fldVal := struVal.FieldByName(effFld)
+		if struFld.Tag == "" {
+			args[i] = fldVal.Interface()
+		} else if timeVal, ok:= fldVal.Interface().(time.Time); ok {
+			//FIXME: more type convert
+			args[i] = timeVal.Unix()
+		}
 	}
-	beanVal = beanVal.Elem()
-
-	cols, err := rows.Columns()
+	//db operate
+	err := db.Ping()
 	if err != nil {
+		seelog.Errorf("insert %v ping mysql %v", stru, err)
 		return err
 	}
 
-	dest := make([]interface{}, len(cols))
-	for i, col := range cols {
-		fldName := convertDBColName2PropName(col)
-		fldVal := beanVal.FieldByName(fldName)
-		if fldVal.Kind() != reflect.Struct && fldVal.Kind() != reflect.Ptr {
-			dest[i] = fldVal.Addr().Interface()
-		} else if fldVal.Type().String() == "time.Time" {
-			dest[i] = &ReflectScanner{Value: &fldVal}
-//			dest[i] = &TypeTestScanner{}
-		} else {
-			panic(fmt.Sprintf("Scan2Bean %v %v not support", fldName, fldVal.Type().String()))
+	execSql := insertSql.String()
+	_, err = db.Exec(execSql, args...)
+	if err != nil {
+		seelog.Errorf("insert %v exec sql %v %v", stru, execSql, err)
+	}
+
+	return err
+}
+
+
+func DBUpdateIncludeFlds(stru interface{}, inclFlds ...string) error {
+	return dbUpdate(stru, true, inclFlds...)
+}
+
+func DBUpdateExcludeFlds(stru interface{}, exclFlds ...string) (err error) {
+	return dbUpdate(stru, false, exclFlds...)
+}
+
+func dbUpdate(stru interface{}, include bool, flds ...string) error {
+	//ensure struct
+	struVal := reflect.ValueOf(stru).Elem()
+	if struVal.Kind() != reflect.Struct {
+		return errors.New("DBCreate arg stru isn't struct!")
+	}
+	//get effective fields
+	effFlds := make([]string, 0)
+	if include && len(flds) == 0 {
+		effFlds = getStructFldsExceptPK(stru)
+	} else if !include {
+		struFlds := getStructFldsExceptPK(stru)
+		for _, struFld := range struFlds {
+			if pgpub.SearchStringArray(flds, struFld) == -1 {
+				effFlds = append(effFlds, struFld)
+			}
 		}
 	}
-
-	return rows.Scan(dest...)
-}
-
-func convertDBColName2PropName(dbColName string) string {
-	parts := strings.Split(dbColName, "_")
-	var fld string
-	for _, part := range parts {
-		partAry := []rune(strings.ToLower(part))
-		partAry[0] = partAry[0] - 32
-		fld += string(partAry)
-	}
-	return fld
-}
-
-func getDBColNamesFromBean(bean interface{}) []string{
-	beanType := reflect.TypeOf(bean)
-	if beanType.Kind() == reflect.Ptr {
-		beanType = beanType.Elem()
-	}
-
-	dbCols := make([]string, beanType.NumField())
-	for i := 0; i < beanType.NumField(); i++ {
-		dbCols[i] = convertPropName2DBColName(beanType.Field(i).Name)
-	}
-
-	return dbCols
-}
-
-func convertPropName2DBColName(propName string) string {
-	buf := bytes.NewBufferString(strings.ToLower(string(propName[0])))
-	for i := 1; i < len(propName); i++ {
-		c := propName[i]
-		if c >= 65 && c <= 90 {
-			buf.WriteString("_")
-			buf.WriteString(strings.ToLower(string(c)))
-		} else {
-			buf.WriteString(string(c))
+	//assemble insert sql
+	updateSql := bytes.NewBufferString("update ")
+	updateSql.WriteString(getTableFromStruct(stru))
+	updateSql.WriteString(" set ")
+	for i, effFld := range effFlds {
+		updateSql.WriteString(effFld)
+		updateSql.WriteString("=?")
+		if i < len(effFlds) - 1 {
+			updateSql.WriteString(",")
 		}
 	}
+	updateSql.WriteString(" where ")
+	pkFld := GetStructPKFld(stru)
+	updateSql.WriteString(convertFldName2ColName(pkFld))
+	updateSql.WriteString("=?")
+	//assemble sql params
+	args := make([]interface{}, len(effFlds) + 1)
+	struType := reflect.TypeOf(stru)
+	for i, effFld := range effFlds {
+		struFld, exsits := struType.FieldByName(effFld)
+		if !exsits {
+			return fmt.Errorf("DBCreate struct field [%v] not exists!", effFld)
+		}
 
-	return buf.String()
+		fldVal := struVal.FieldByName(effFld)
+		if struFld.Tag == "" {
+			args[i] = fldVal.Interface()
+		} else if timeVal, ok:= fldVal.Interface().(time.Time); ok {
+			//FIXME: more type convert
+			args[i] = timeVal.Unix()
+		}
+	}
+	args[len(args) - 1] = struVal.FieldByName(pkFld).Interface()
+	//db operate
+	err := db.Ping()
+	if err != nil {
+		seelog.Errorf("user %v ping mysql %v", stru, err)
+		return err
+	}
+
+	execSql := updateSql.String()
+	_, err = db.Exec(execSql, args...)
+	if err != nil {
+		seelog.Errorf("update %v exec sql %v %v", stru, execSql, err)
+	}
+
+	return err
 }

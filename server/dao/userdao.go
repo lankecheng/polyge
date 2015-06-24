@@ -3,9 +3,8 @@ package dao
 import (
 	"fmt"
 	"github.com/cihub/seelog"
-	"github.com/lankecheng/polyge/server/pgpub"
-	"time"
 	"strings"
+	"time"
 )
 
 type PGUser struct {
@@ -20,149 +19,100 @@ type PGUser struct {
 	UserType    int
 	Avatar      string
 	Audio       string
-	Birth       time.Time
+	Birth       time.Time `sql:"int"`
 	Country     int
 	Province    int
 	City        int
-	CreatedAt   time.Time
+	CreatedAt   time.Time `sql:"int"`
 	Description string
 	Interest    string
 }
 
-func IfUserNameExists(uname string) (exists bool, err error) {
+func IfUnameExists(uname string) (exists bool, err error) {
+	return ifUserExists("uname", uname)
+}
+
+func IfPhoneExists(phone string) (exists bool, err error) {
+	return ifUserExists("phone", phone)
+}
+
+func IfEmailExists(email string) (exists bool, err error) {
+	return ifUserExists("email", email)
+}
+
+func ifUserExists(colName string, val string) (exists bool, err error) {
 	err = db.Ping()
 	if err != nil {
-		seelog.Errorf("uname %v ping mysql %v", uname, err)
+		seelog.Errorf("uname %v ping mysql %v", val, err)
 		return
 	}
 
-	rs, err := db.Query("select 1 from pguser where uname=?", uname)
+	sql := fmt.Sprintf("select 1 from pg_user where %v=?", colName)
+	rs, err := db.Query(sql, val)
 	if err != nil {
-		seelog.Errorf("uname %v query %v", uname, err)
+		seelog.Errorf("IfUserExists(%v, %v) query : %v", colName, val, err)
 		return
 	}
 	exists = rs.Next()
 
 	if err = rs.Err(); err != nil {
-		seelog.Errorf("uname %v read rows %v", uname, err)
+		seelog.Errorf("IfUserExists(%v, %v) read rows : %v", colName, val, err)
 	}
 
 	return
 }
 
-func CreateUser(pguser *PGUser) (err error) {
-	err = db.Ping()
-	if err != nil {
-		seelog.Errorf("user %v ping mysql %v", pguser, err)
-		return
-	}
+func CreateUser(pguser *PGUser, struFlds ...string) error {
+	pguser.CreatedAt = time.Now()
+	newStruFlds := append(struFlds, "CreatedAt")
+	return DBCreateIncludeFlds(pguser, newStruFlds...)
+}
 
-	insertSql := "insert into pguser"
-	insertSql += "(uname,pwd,phone,email,gender,language,occup,user_type,avatar,audio,"
-	insertSql += "birth,country,province,city,created_at,description,interest)"
-	insertSql += " values(%v)"
-	insertSql = fmt.Sprintf(insertSql, pgpub.RepeatChar("?", ",", 17))
-	//	stmt, err := db.Prepare(insertSql)
-	//	if err != nil {
-	//		seelog.Errorf("user %v prepare insert sql %v %v", user, insertSql, err)
-	//	}
-	//	defer stmt.Close()
-	//	var args []interface{}
-	args := make([]interface{}, 17)
-	args[0] = pguser.Uname
-	args[1] = pguser.Pwd
-	args[2] = pguser.Phone
-	args[3] = pguser.Email
-	args[4] = pguser.Gender
-	args[5] = pguser.Language
-	args[6] = pguser.Occup
-	args[7] = pguser.UserType
-	args[8] = pguser.Avatar
-	args[9] = pguser.Audio
-	args[10] = pguser.Birth
-	args[11] = pguser.Country
-	args[12] = pguser.Province
-	args[13] = pguser.City
-	args[14] = time.Now().Unix()
-	args[15] = pguser.Description
-	args[16] = pguser.Interest
-
-	_, err = db.Exec(insertSql, args...)
-	if err != nil {
-		seelog.Errorf("user %v exec sql %v %v", pguser, insertSql, err)
-	}
-
-	return
+func UpdateUser(pguser *PGUser) (err error) {
+	return DBUpdateExcludeFlds(pguser, "phone", "email")
 }
 
 func QueryUserByUname(uname string) (pguser PGUser, err error) {
+	return queryUser("uname", uname)
+}
+
+func QueryUserByPhone(phone string) (pguser PGUser, err error) {
+	return queryUser("phone", phone)
+}
+
+func QueryUserByEmail(email string) (pguser PGUser, err error) {
+	return queryUser("email", email)
+}
+
+func queryUser(colName string, val string) (pguser PGUser, err error) {
 	err = db.Ping()
 	if err != nil {
-		seelog.Errorf("uname %v open mysql %v", uname, err)
+		seelog.Errorf("queryUser(%v, %v) open db: %v", colName, val, err)
 		return
 	}
 
-	qrySql := "select " + strings.Join(getDBColNamesFromBean(pguser), ",") + " from pguser where uname=?"
-	seelog.Debugf("QueryUserByUname(%v) sql: %v", uname, qrySql)
+	qrySql := "select " + strings.Join(getStructCols(pguser), ",") + " from pg_user where " + colName + "=?"
+	seelog.Debugf("queryUser(%v, %v) sql: %v", colName, val, qrySql)
 
-	rs, err := db.Query(qrySql, uname)
+	rs, err := db.Query(qrySql, val)
 	if err != nil {
-		seelog.Errorf("uname %v qry sql %v %v", uname, qrySql, err)
+		seelog.Errorf("queryUser(%v, %v) qry %v %v", colName, val, qrySql, err)
 	}
 
 	if rs.Next() {
-		if err = Scan2Bean(rs, &pguser); err != nil {
+		if err = Scan2Struct(rs, &pguser); err != nil {
 			fmt.Println(err)
 			return
 		}
 	}
 
 	if rs.Next() {
-		err = fmt.Errorf("uname %d more than one", uname)
+		err = fmt.Errorf("queryUser(%v, %v) result more than one", val)
 	}
 
 	if err = rs.Err(); err != nil {
-		seelog.Errorf("uname %v read rows %v", uname, err)
+		seelog.Errorf("queryUser(%v, %v) read rows %v", colName, val, err)
 	}
 
 	return
 }
-
-//func QueryTest() error {
-//	t_uname := "lankc"
-//	err := db.Ping()
-//	if err != nil {
-//		seelog.Errorf("uname %v open mysql %v", t_uname, err)
-//		return err
-//	}
-//
-//	qrySql := "select uname,birth,created_at from pguser"
-////	qrySql := "select uname,birth,created_at from pguser where uid=?"
-////	qrySql := "select * from pguser where uid=?"
-////	qrySql := "select pid,f_tinyint,f_smallint,f_int,f_float,f_double,f_decimal,f_char,f_varchar" +
-////				",f_date,f_datetime,f_timestamp,f_year from pg_test"
-//
-//	rs, err := db.Query(qrySql)
-//	if err != nil {
-//		seelog.Errorf("uname %v qry sql %v %v", t_uname, qrySql, err)
-//	}
-//
-//	if rs.Next() {
-//		if err = rs.Err(); err != nil {
-//			seelog.Errorf("uname %v read rows %v", t_uname, err)
-//		}
-//		typScan := TypeTestScanner{}
-//		cols, _ := rs.Columns()
-//		dest := make([]interface{}, len(cols))
-//		for i,_ := range dest {
-//			dest[i] = &typScan
-//		}
-//
-//		if err = rs.Scan(dest...); err != nil {
-//			fmt.Println(err)
-//			return err
-//		}
-//	}
-//
-//	return err
-//}

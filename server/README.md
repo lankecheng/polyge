@@ -10,31 +10,23 @@
 
 	| ARG       |TYPE  | NULL | MEMO |
 	| --------- |----  |----- | ---- |
-	| uname     |string| N    |      |
+	| user_name |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| phone     |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| email     |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| user_type |int   | N    | 1:student 2:teacher |
 	| pwd       |string| N    |      |
-	| phone     |string| Y    |      |
-	| email     |string| Y    |      |
-	| gender    |int   | N    |1:male 2:female|
-	| language  |int   | N    |母语 参考polyge/doc/resources/languages_cn.json |
-	| occup     |string| N    |职业,目前先手填了      |
-	| user_type |int   | N    |1:student 2:teacher |	| avatar    |string| N    |头像地址,没有就给一个默认的|
-	| audio     |string| Y    |声音文件地址      |
-	| birth     |string| Y    |格式 yyyy-MM-dd|
-	| country   |int   | Y    |参考polyge/doc/resources/locations_cn.json |
-	| province  |int   | Y    |参考polyge/doc/resources/locations_cn.json |
-	| city      |int   | Y    |参考polyge/doc/resources/locations_cn.json |
-	| description|string| Y   | 个人介绍     |
-	| interest  |string| Y    | 兴趣爱好     |
 
 
 * return:
  	
-	 302 跳转至login
+	 {"success":true}
+	 
+	 {"success":false, "msg":"xxxxx"}
 	
 ---
-## 2. 校验用户是否合法
+## 2. 校验用户是否存在
 
-* URL http://www.polyge.com/login
+* URL http://www.polyge.com/check_user_exists
 
 * Method Get
 
@@ -42,11 +34,15 @@
 
 	| ARG       |TYPE  | NULL | MEMO |
 	| --------- |----  |----- | ---- |
-	| uname     |string| N    |      |
+	| user_name |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| phone     |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| email     |string| Y    | uname/phone/email 三选一,优先级从上到下     |
 	
 * return:
  	
-	 {"success":true,"msg":"","rs":false}
+	 {"result":true}
+	 
+     {"result":false}
 	
 	
 ---

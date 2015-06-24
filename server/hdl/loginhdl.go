@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	//	"github.com/cihub/seelog"
-	"github.com/lankecheng/polyge/server/dao"
 	"github.com/lankecheng/polyge/server/pgpub"
 	"github.com/lankecheng/polyge/server/serv"
 	"io"
@@ -16,19 +15,22 @@ import (
 func Login(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
-	uname := req.FormValue("uname")
-	user, err := dao.QueryUserByUname(uname)
+	uname := req.FormValue("user_name")
+	phone := req.FormValue("phone")
+	email := req.FormValue("phone")
+
+	pguser, err := serv.QueryUser(uname, phone, email)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
-	} else if user.Uid == 0 {
+	} else if pguser.Uid == 0 {
 		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: false, Msg: "user not found", Result: ""})
 		w.Write(respJson)
 		return
 	}
 
 	pwd := req.FormValue("pwd")
-	if !strings.EqualFold(pwd, user.Pwd) {
+	if !strings.EqualFold(pwd, pguser.Pwd) {
 		respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: false, Msg: "password error", Result: ""})
 		w.Write(respJson)
 		return
@@ -43,7 +45,7 @@ func Login(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	oauthToken, err := serv.GetOauthToken(user.Uid, clientID)
+	oauthToken, err := serv.GetOauthToken(pguser.Uid, clientID)
 	if err != nil {
 		fmt.Println(err)
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
@@ -52,10 +54,10 @@ func Login(w http.ResponseWriter, req *http.Request) {
 
 	rs := make(map[string]interface{})
 	rs["token"] = oauthToken
-	rs["uid"] = user.Uid
-	rs["uname"] = user.Uname
-	rs["gender"] = user.Gender
-	rs["user_type"] = user.UserType
+	rs["uid"] = pguser.Uid
+	rs["uname"] = pguser.Uname
+	rs["gender"] = pguser.Gender
+	rs["user_type"] = pguser.UserType
 	respJson, _ := json.Marshal(pgpub.ResponseMsg{Success: true, Result: rs})
 	w.Write(respJson)
 }

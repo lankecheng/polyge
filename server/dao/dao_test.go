@@ -5,6 +5,15 @@ import (
 	"testing"
 )
 
+func Test_GetColNamesFromStruct(t *testing.T) {
+	user := PGUser{}
+	fmt.Println(getTableFromStruct(user))
+	fmt.Println(getStructCols(user))
+}
+
+func Test_meta(t *testing.T) {
+	fmt.Printf(getTableFromStruct(PGUser{}))
+}
 //func Test_IfUserNameExists(t *testing.T) {
 //	_, err := IfUserNameExists("lankc")
 //	if err != nil {
@@ -33,16 +42,16 @@ import (
 //	}
 //}
 
-func Test_QueryUser(t *testing.T) {
-	pguser, err := QueryUserByUname("lankc")
-	if err != nil {
-		t.Error(err)
-	} else {
-		fmt.Println(pguser)
-	}
+//func Test_QueryUser(t *testing.T) {
+//	pguser, err := QueryUserByUname("lankc")
+//	if err != nil {
+//		t.Error(err)
+//	} else {
+//		fmt.Println(pguser)
+//	}
 //	fmt.Println("---------")
 //	err := QueryTest()
 //	if err != nil {
 //		t.Error(err)
 //	}
-}
+//}
