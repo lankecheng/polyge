@@ -7,7 +7,6 @@ import (
 	//	"path/filepath"
 	//	"strings"
 	"fmt"
-	"gitlab.meitu.com/platform/gocommons/io"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -62,7 +61,7 @@ func init() {
 	for i := 0; i < 2; i++ {
 		ConfPath = path.Join(ApplicationPath, ConfigFolderName)
 		LogsPath = path.Join(ApplicationPath, LogsFolderName)
-		if exists, _ := io.IsFileExist(ConfPath); exists == true {
+		if exists, _ := IsFileExist(ConfPath); exists == true {
 			break
 		} else {
 			ApplicationPath = path.Dir(ApplicationPath)
