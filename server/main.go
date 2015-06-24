@@ -16,7 +16,7 @@ func init() {
 	if exists, _:= pgpub.IsFileExist("/Users/lankc/dev/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"); exists {
 		path = "/Users/lankc/dev/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"
 	} else {
-		path = "/home/lankc/dev/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"
+		path = "/home/lankc/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"
 	}
 
 	logger, err := seelog.LoggerFromConfigAsFile(path)
