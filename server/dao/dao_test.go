@@ -9,10 +9,12 @@ func Test_GetColNamesFromStruct(t *testing.T) {
 	user := PGUser{}
 	fmt.Println(getTableFromStruct(user))
 	fmt.Println(getStructCols(user))
+	fmt.Println(getStruFldsExceptAutoPK(PGToken{}))
+	fmt.Println(getStructCols(PGToken{}))
 }
 
 func Test_meta(t *testing.T) {
-	fmt.Printf(getTableFromStruct(PGUser{}))
+	fmt.Printf(getTableFromStruct(PGToken{}))
 }
 //func Test_IfUserNameExists(t *testing.T) {
 //	_, err := IfUserNameExists("lankc")

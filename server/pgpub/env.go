@@ -47,6 +47,7 @@ func init() {
 	//如果是在temp目录下运行，说明是用go run运行，直接用 ./ 来作为 ApplicationPath
 	if strings.HasPrefix(ExecutablePath, os.TempDir()) {
 		ApplicationPath, err = filepath.Abs("./")
+		fmt.Println("###", ApplicationPath)
 		if err != nil {
 			fmt.Println(err)
 		}

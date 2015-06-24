@@ -8,12 +8,18 @@ import (
 	"os"
 
 	"github.com/lankecheng/polyge/server/hdl"
-	"path"
 	"github.com/lankecheng/polyge/server/pgpub"
 )
 
 func init() {
-	logger, err := seelog.LoggerFromConfigAsFile(path.Join(pgpub.ConfPath, "seelog.xml"))
+	var path string
+	if exists, _:= pgpub.IsFileExist("/Users/lankc/dev/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"); exists {
+		path = "/Users/lankc/dev/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"
+	} else {
+		path = "/home/lankc/dev/projects/src/github.com/lankecheng/polyge/server/conf/seelog.xml"
+	}
+
+	logger, err := seelog.LoggerFromConfigAsFile(path)
 	if err == nil {
 		seelog.ReplaceLogger(logger)
 		seelog.Info("start server...")

@@ -56,9 +56,11 @@
 
 	| ARG       |TYPE  | NULL | MEMO |
 	| --------- |----  |----- | ---- |
-	| uname     |string| N    |      |
+	| user_name |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| phone     |string| Y    | uname/phone/email 三选一,优先级从上到下     |
+	| email     |string| Y    | uname/phone/email 三选一,优先级从上到下     |
 	| pwd       |string| N    |      |
-	| client_id |int   | N    | 目前传123即可 |
+	| client_id |string| N    | 目前传123即可 |
 	
 * return:
  	

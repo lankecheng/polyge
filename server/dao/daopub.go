@@ -42,17 +42,23 @@ func dbCreate(stru interface{}, include bool, flds ...string) error {
 	//get effective fields
 	var effFlds []string
 	if include && len(flds) == 0 {
-		effFlds = getStructCols(stru)
+		effFlds = getStruFldsExceptAutoPK(stru)
+
+	} else if include && len(flds) > 0 {
+		effFlds = flds
+
 	} else if !include && len(flds) > 0 {
 		dbCols := make([]string, 0)
-		struFlds := getStructFldsExceptPK(stru)
+		struFlds := getStruFldsExceptAutoPK(stru)
 		for _, struFld := range struFlds {
 			if pgpub.SearchStringArray(flds, struFld) == -1 {
 				dbCols = append(dbCols, convertFldName2ColName(struFld))
 			}
 		}
-	} else {
-		effFlds = flds
+
+	} else if !include && len(flds) == 0 {
+		effFlds = getStruFldsExceptAutoPK(stru)
+
 	}
 	//assemble insert sql
 	insertSql := bytes.NewBufferString("insert into ")
@@ -71,30 +77,32 @@ func dbCreate(stru interface{}, include bool, flds ...string) error {
 	args := make([]interface{}, len(effFlds))
 	struType := struVal.Type()
 	for i, effFld := range effFlds {
-		struFld, exsits := struType.FieldByName(effFld)
+		_, exsits := struType.FieldByName(effFld)
 		if !exsits {
-			return fmt.Errorf("DBCreate struct field [%v] not exists!", effFld)
+			err := fmt.Errorf("dbCreate struct field [%v] not exists!", effFld)
+			seelog.Error(err)
+			return err
 		}
 
 		fldVal := struVal.FieldByName(effFld)
-		if struFld.Tag == "" {
-			args[i] = fldVal.Interface()
-		} else if timeVal, ok:= fldVal.Interface().(time.Time); ok {
+		if timeVal, ok:= fldVal.Interface().(time.Time); ok {
 			//FIXME: more type convert
 			args[i] = timeVal.Unix()
+		} else {
+			args[i] = fldVal.Interface()
 		}
 	}
 	//db operate
 	err := db.Ping()
 	if err != nil {
-		seelog.Errorf("insert %v ping mysql %v", stru, err)
+		seelog.Errorf("dbcreate:insert %v ping mysql %v", stru, err)
 		return err
 	}
 
 	execSql := insertSql.String()
 	_, err = db.Exec(execSql, args...)
 	if err != nil {
-		seelog.Errorf("insert %v exec sql %v %v", stru, execSql, err)
+		seelog.Errorf("dbcreate: insert %v exec sql %v %v", stru, execSql, err)
 	}
 
 	return err
@@ -118,9 +126,9 @@ func dbUpdate(stru interface{}, include bool, flds ...string) error {
 	//get effective fields
 	effFlds := make([]string, 0)
 	if include && len(flds) == 0 {
-		effFlds = getStructFldsExceptPK(stru)
+		effFlds = getStruFldsExceptAutoPK(stru)
 	} else if !include {
-		struFlds := getStructFldsExceptPK(stru)
+		struFlds := getStruFldsExceptAutoPK(stru)
 		for _, struFld := range struFlds {
 			if pgpub.SearchStringArray(flds, struFld) == -1 {
 				effFlds = append(effFlds, struFld)

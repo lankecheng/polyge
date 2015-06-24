@@ -45,16 +45,21 @@ func convertColName2FldName(dbColName string) string {
 	return fld
 }
 
-func getStructFldsExceptPK(s interface{}) []string {
+//excep AUTO_INCREMENT pk
+func getStruFldsExceptAutoPK(s interface{}) []string {
 	struType := reflect.TypeOf(s)
 	if struType.Kind() == reflect.Ptr {
 		struType = struType.Elem()
 	}
+	dbCols := make([]string, 1)
+	//if string, consider as not AUTO_INCREMENT
+	if struType.Field(0).Type.Kind() == reflect.String {
+		dbCols[0] = struType.Field(0).Name
+	}
 
-	dbCols := make([]string, struType.NumField())
 	//the first field is PK
 	for i := 1; i < struType.NumField(); i++ {
-		dbCols[i] = struType.Field(i).Name
+		dbCols = append(dbCols, struType.Field(i).Name)
 	}
 
 	return dbCols

@@ -47,15 +47,26 @@ func CheckUserExists(uname string, phone string, email string) (exists bool, err
 	return
 }
 
-func QueryUser(uname string, phone string, email string) (pguser dao.PGUser, err error){
+func Login(uname string, phone string, email string, pwd string) (pguser dao.PGUser, err error){
 	if uname != "" {
-		return dao.QueryUserByUname(uname)
+		pguser, err = dao.QueryUserByUname(uname)
 	} else if phone != "" {
-		return dao.QueryUserByPhone(phone)
+		pguser, err = dao.QueryUserByPhone(phone)
 	} else if email != "" {
-		return dao.QueryUserByEmail(email)
+		pguser, err = dao.QueryUserByEmail(email)
+	} else {
+		err = errors.New("serv.QueryUser args are all empty string")
+		return
 	}
 
-	err = errors.New("serv.QueryUser args are all empty string")
+	if err != nil {
+		return
+	}
+
+	if pguser.Pwd != pwd {
+		err = pgpub.ErrPwdWrong
+		return
+	}
+
 	return
 }

@@ -9,13 +9,13 @@ import (
 	"fmt"
 )
 
-func GetOauthToken(uid int, clientID int) (oauthToken string, err error) {
+func GetOauthToken(uid int, clientID string) (oauthToken string, err error) {
 	token, err := dao.QueryTokenByUidClientID(uid, clientID)
-	if err != nil {
+	if err != nil && err != pgpub.ErrNotExist {
 		return
 	}
 
-	if token.OauthToken != "" && time.Now().Unix() > token.Expires {
+	if err != pgpub.ErrNotExist && time.Now().Unix() > token.Expires {
 		err = dao.DeleteToken(token.OauthToken)
 		if err != nil {
 			return
@@ -24,10 +24,10 @@ func GetOauthToken(uid int, clientID int) (oauthToken string, err error) {
 
 	oauthToken = token.OauthToken
 
-	if token.OauthToken == "" || time.Now().Unix() > token.Expires {
-		newToken := dao.Token{
+	if err == pgpub.ErrNotExist || time.Now().Unix() > token.Expires {
+		newToken := dao.PGToken{
 			OauthToken: genOauthToken(uid),
-			ClientID:   clientID,
+			ClientId:   clientID,
 			Expires:    time.Now().Add(7 * 24 * time.Hour).Unix(),
 			Uid:        uid,
 		}
@@ -43,7 +43,7 @@ func GetOauthToken(uid int, clientID int) (oauthToken string, err error) {
 	return
 }
 
-func RefreshOauthToken(uid int, clientID int, oldOauthToken string) (oauthToken string, err error) {
+func RefreshOauthToken(uid int, clientID string, oldOauthToken string) (oauthToken string, err error) {
 	token, err := dao.QueryToken(oldOauthToken)
 	if err != nil {
 		return

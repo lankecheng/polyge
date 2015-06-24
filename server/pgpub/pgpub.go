@@ -1,12 +1,9 @@
 package pgpub
+
 import "errors"
 
 var (
-	ErrUserExist      = errors.New("file already exists")
+	ErrUserExist    = errors.New("user already exists")
+	ErrPwdWrong     = errors.New("password is wrong")
+	ErrNotExist = errors.New("target not exists")
 )
-
-type ResponseMsg struct {
-	Success bool        `json:"success"`
-	Msg     string      `json:"msg"`
-	Result  interface{} `json:"rs"`
-}

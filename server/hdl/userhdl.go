@@ -18,15 +18,13 @@ func Register(w http.ResponseWriter, req *http.Request) {
 	userType, _ := strconv.Atoi(req.FormValue("user_type"))
 
 	success, err := serv.Register(uname, phone, email, pwd, userType)
-	if err != nil {
-		if err == pgpub.ErrUserExist {
-			w.Write(pgpub.CreateDoJson(false, "user_name/phone/email has already existed!"))
-			return
-		} else {
-			seelog.Errorf("error register %v", err)
-			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-			return
-		}
+	if err == pgpub.ErrUserExist {
+		w.Write(pgpub.CreateDoJson(false, "user_name/phone/email has already existed!"))
+		return
+	} else if err != nil {
+		seelog.Errorf("error register %v", err)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
 
 	w.Write(pgpub.CreateDoJson(success, ""))

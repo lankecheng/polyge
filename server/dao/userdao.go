@@ -5,6 +5,7 @@ import (
 	"github.com/cihub/seelog"
 	"strings"
 	"time"
+	"github.com/lankecheng/polyge/server/pgpub"
 )
 
 type PGUser struct {
@@ -100,18 +101,17 @@ func queryUser(colName string, val string) (pguser PGUser, err error) {
 	}
 
 	if rs.Next() {
-		if err = Scan2Struct(rs, &pguser); err != nil {
-			fmt.Println(err)
+		if err = rs.Err(); err != nil {
+			seelog.Errorf("queryUser(%v, %v) read rows %v", colName, val, err)
 			return
 		}
-	}
 
-	if rs.Next() {
-		err = fmt.Errorf("queryUser(%v, %v) result more than one", val)
-	}
-
-	if err = rs.Err(); err != nil {
-		seelog.Errorf("queryUser(%v, %v) read rows %v", colName, val, err)
+		if err = Scan2Struct(rs, &pguser); err != nil {
+			seelog.Error(err)
+			return
+		}
+	} else {
+		err = pgpub.ErrNotExist
 	}
 
 	return
