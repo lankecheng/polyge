@@ -8,10 +8,12 @@ import (
 	"os"
 
 	"github.com/lankecheng/polyge/server/hdl"
+	"path"
+	"github.com/lankecheng/polyge/server/pgpub"
 )
 
 func init() {
-	logger, err := seelog.LoggerFromConfigAsFile("/Users/lankc/dev/projects/src/github.com/lankecheng/polyge/server/seelog.xml")
+	logger, err := seelog.LoggerFromConfigAsFile(path.Join(pgpub.ConfPath, "seelog.xml"))
 	if err == nil {
 		seelog.ReplaceLogger(logger)
 		seelog.Info("start server...")
