@@ -1,7 +1,5 @@
 PODS:
   - Alamofire (1.2.3)
-  - APIKit (0.8.0):
-    - Result (~> 0.4)
   - Async (1.2.1)
   - Box (1.2.2)
   - Cartography (0.5.0)
@@ -17,7 +15,6 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
-  - APIKit (from `https://github.com/ishkawa/APIKit.git`, branch `swift2`)
   - Async (from `https://github.com/duemunk/Async.git`, branch `feature/Swift_2.0`)
   - Cartography (from `https://github.com/robb/Cartography.git`, branch `swift-2.0`)
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2.0`)
@@ -33,9 +30,6 @@ EXTERNAL SOURCES:
   Alamofire:
     :branch: swift-2.0
     :git: https://github.com/Alamofire/Alamofire.git
-  APIKit:
-    :branch: swift2
-    :git: https://github.com/ishkawa/APIKit.git
   Async:
     :branch: feature/Swift_2.0
     :git: https://github.com/duemunk/Async.git
@@ -59,9 +53,6 @@ CHECKOUT OPTIONS:
   Alamofire:
     :commit: fd71afb3a0af2042b9f05a6b9f29317ad4903703
     :git: https://github.com/Alamofire/Alamofire.git
-  APIKit:
-    :commit: ef3d410840cfe27fc26756162a9d4d91d282ba1d
-    :git: https://github.com/ishkawa/APIKit.git
   Async:
     :commit: 23aaf8d7f2e4dc593e87db739b68c58ecb9d19ac
     :git: https://github.com/duemunk/Async.git
@@ -69,7 +60,7 @@ CHECKOUT OPTIONS:
     :commit: 7c0bdca4b6f0be4e14f9179de59473306227c714
     :git: https://github.com/robb/Cartography.git
   Kingfisher:
-    :commit: 65015e6549fd40eb72957facb136b7b016404992
+    :commit: 2283c950d5c85f189f4ed35858245d109f3de5e0
     :git: https://github.com/onevcat/Kingfisher.git
   ObjectMapper:
     :commit: 813c3be393307c4c27a5cbc7b3223073bea1f21d
@@ -83,7 +74,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
-  APIKit: 82c21586bca23e67711d2dd4a3b6658c0bf8076a
   Async: d9ee6fc9c415d44fcb892f4c289d1e79ce8ae92d
   Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
   Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6

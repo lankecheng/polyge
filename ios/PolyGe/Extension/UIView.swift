@@ -162,9 +162,9 @@ extension UIView {
         }
         
         let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-        hud.labelText = text
+        hud.labelText =  LocalizedString(text)
         hud.mode = .Text
-        var duration = Double(text.characters.count)*0.08+0.3
+        var duration = Double( LocalizedString(text).characters.count)*0.08+0.3
         duration = min(3, max(1, duration))
         Async.main(after: duration) { () -> Void in
             if hud.superview != nil {

@@ -57,14 +57,14 @@ class KSPersonViewController: KSTableViewController {
             cell.detailTextLabel?.text = person.occupation
         case 3:
             cell.textLabel?.text = "Hobbies & interests"
-            cell.detailTextLabel?.text = person.interests
+            cell.detailTextLabel?.text = person.interest
         case 4:
             let playAudioCell = cell as! KSPlayAudioTableViewCell
             playAudioCell.titleLable.text = "About me"
             playAudioCell.subTitleLable.text = "about"
         case 5:
             cell.textLabel?.text = "User comments"
-            cell.detailTextLabel?.text = person.comments
+            cell.detailTextLabel?.text = person.about
         case 6:
            break
 

@@ -9,6 +9,9 @@
 import UIKit
 import MBProgressHUD
 import Alamofire
+import SwiftyJSON
+import MagicalRecord
+
 class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var userPassTextField: UITextField!
@@ -76,19 +79,21 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             parameters["email"] = self.userNameTextField.text!
         }
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = "正在登录"
+        hud.labelText = LocalizedString("正在登录")
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
             (request, response, json, error) in
             hud.removeFromSuperview()
-            guard json["sucess"].boolValue  else{
+            guard json["success"].boolValue  else{
                 self.view.showTextHUD(json["msg"].string!)
+                self.userLoginBtn.enabled = true
                 return
             }
             NSUserDefaults.token = json["result"]["token"].string!
-            
-            self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()!, animated: true)
+            let user = User(keyValues: json["result"].object,context:  NSManagedObjectContext.MR_defaultContext())
+            NSUserDefaults.userID = user.uid
+           NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            APP_DELEGATE.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()!
         })
-
     }
 
 }

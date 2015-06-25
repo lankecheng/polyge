@@ -8,20 +8,27 @@
 
 import Foundation
 import CoreData
+import MJExtension
 
 @objc(User)
 class User: NSManagedObject {
-
-    @NSManaged var pkUser: NSNumber
-    @NSManaged var userName: String
-    @NSManaged var country: String
-    @NSManaged var language: String
-    @NSManaged var comments: String
-    @NSManaged var audio: NSData
-    @NSManaged var about: String
-    @NSManaged var imageUrl: String
-    @NSManaged var interests: String
-    @NSManaged var occupation: String
+    
+    @NSManaged var about: String?
+    @NSManaged var audio: String?
+    @NSManaged var country: String?
+    @NSManaged var avatar: String?
+    @NSManaged var interest: String?
+    @NSManaged var language: String?
+    @NSManaged var occupation: String?
+    @NSManaged var uid: Int64
+    @NSManaged var uname: String?
+    @NSManaged var gender: NSNumber?
+    @NSManaged var user_type: NSNumber?
+    
+    override static func replacedKeyFromPropertyName() -> [NSObject : AnyObject]! {
+        return ["about":"description",
+                    "occupation":"occup"]
+    }
     
 
 }

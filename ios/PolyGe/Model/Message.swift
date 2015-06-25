@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import AlecrimCoreData
 enum MessageType : Int16{//当前消息的类型
     case Text = 0//文字
     case Picture = 1//图片
@@ -46,20 +45,20 @@ class Message: NSManagedObject {
     var userIcon: String? {
         get{
             let user = KSUserHelper.getUser(createUserID)
-            return user?.imageUrl
+            return user?.avatar
         }
     }
     var userName: String?{
         get{
             let user = KSUserHelper.getUser(createUserID)
-            return user?.userName
+            return user?.avatar
         }
     }
     
     
     var from: MessageFrom {
         get{
-            if self.createUserID == KSUserHelper.userID {
+            if self.createUserID == NSUserDefaults.userID {
                 return .Me
             }
             return .Other

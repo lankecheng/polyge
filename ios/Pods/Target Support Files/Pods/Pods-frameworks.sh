@@ -48,7 +48,6 @@ code_sign() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework 'APIKit.framework'
   install_framework 'Alamofire.framework'
   install_framework 'Async.framework'
   install_framework 'Cartography.framework'
@@ -62,7 +61,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'SwiftyJSON.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework 'APIKit.framework'
   install_framework 'Alamofire.framework'
   install_framework 'Async.framework'
   install_framework 'Cartography.framework'

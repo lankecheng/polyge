@@ -3,7 +3,6 @@ import UIKit
 import AVFoundation
 import CoreData
 import Async
-import AlecrimCoreData
 
 class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate{
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -96,8 +95,16 @@ class KSChatTableView: UITableView, UITableViewDataSource, UITableViewDelegate,N
         }
     }
     //MARK: NSFetchedResultsControllerDelegate
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        if type == .Insert {
+            insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        }
+    }
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        beginUpdates()
+    }
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        reloadData()
+        endUpdates()
     }
 
 }

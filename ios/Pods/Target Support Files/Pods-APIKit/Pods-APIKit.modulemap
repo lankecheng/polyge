@@ -1,6 +1,0 @@
-framework module APIKit {
-  umbrella header "Pods-APIKit-umbrella.h"
-
-  export *
-  module * { export * }
-}

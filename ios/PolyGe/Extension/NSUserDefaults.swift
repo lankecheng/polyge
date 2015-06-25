@@ -32,7 +32,7 @@ extension NSUserDefaults {
     }
     class var host: String{
         get{
-            return standardUserDefaults()["host"] as? String ?? "http://120.26.212.134"
+            return standardUserDefaults()["host"] as? String ?? "http://120.26.212.134:5918"
         }
         set{
             standardUserDefaults()["host"] = newValue
@@ -46,12 +46,12 @@ extension NSUserDefaults {
             standardUserDefaults()["token"] = newValue
         }
     }
-    class var userID: String?{
+    class var userID: Int64?{
         get{
-        return standardUserDefaults()["userID"] as? String
+        return (standardUserDefaults()["userID"] as? NSNumber)?.longLongValue
         }
         set{
-            standardUserDefaults()["userID"] = newValue
+            standardUserDefaults()["userID"] = NSNumber(longLong: newValue!)
         }
     }
     

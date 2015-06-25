@@ -73,7 +73,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
         let message = Message.MR_createEntity()
         message.createDate = NSDate()
         message.messageData = text.dataUsingEncoding(NSUTF8StringEncoding)!
-        message.createUserID = KSUserHelper.userID
+        message.createUserID = NSUserDefaults.userID!
         message.messageType = .Text
         chat_tv.sendMessage(message)
     }
@@ -82,7 +82,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
         let message = Message.MR_createEntity()
         message.messageData = data
         message.createDate = NSDate()
-        message.createUserID = KSUserHelper.userID
+        message.createUserID = NSUserDefaults.userID!
         message.messageType = .Picture
          chat_tv.sendMessage(message)
     }
@@ -91,7 +91,7 @@ extension KSChattingViewController: KSInputMessageViewDelegate{
         message.messageData = voiceData
         message.voiceTime = voiceTime
         message.createDate = NSDate()
-        message.createUserID = KSUserHelper.userID
+        message.createUserID = NSUserDefaults.userID!
         message.messageType = .Voice
         chat_tv.sendMessage(message)
     }
