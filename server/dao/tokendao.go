@@ -20,16 +20,17 @@ func IfTokenExists(token string) (exists bool, err error) {
 		return
 	}
 
-	rs, err := db.Query("select 1 from token where oauth_token=?", token)
+	rs, err := db.Query("select 1 from pg_token where oauth_token=?", token)
 	if err != nil {
 		seelog.Errorf("token %v query %v", token, err)
 	}
 
+	exists = rs.Next()
 	if err = rs.Err(); err != nil {
 		seelog.Errorf("token %v read rows %v", token, err)
 	}
 
-	return rs.Next(), err
+	return
 }
 
 func CreateToken(token *PGToken) (err error) {
@@ -43,10 +44,10 @@ func DeleteToken(token string) (err error) {
 		return
 	}
 
-	delSql := "delete from token where oauth_token=?"
-	_, err = db.Exec(delSql, delSql)
+	delSql := "delete from pg_token where oauth_token=?"
+	_, err = db.Exec(delSql, token)
 	if err != nil {
-		seelog.Errorf("token %v exec sql %v %v", token, delSql, err)
+		seelog.Errorf("token %v exec sql[%v] %v", token, delSql, err)
 	}
 
 	return

@@ -69,6 +69,6 @@ func RefreshToken(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 	} else {
-		w.Write(pgpub.CreateQueryJson(newToken))
+		w.Write(pgpub.CreateComplexJson(true, "", newToken))
 	}
 }

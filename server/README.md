@@ -65,9 +65,9 @@
 * return:
  	
 	 {
-       	"Success": true,
-  		"Msg": "",
-  		"Result": {
+       	"success": true,
+  		"msg": "",
+  		"result": {
   			"avatar": ""
     		"token": "14344422025049569583096408908100",
 		    "uid": 1,
@@ -81,13 +81,13 @@
 	{
   		"success": false,
   		"msg": "user not found",
-		"rs": ""
+		"result": ""
 	}
 	
 	{
   		"success": false,
   		"msg": "password error",
-  		"rs": ""
+  		"result": ""
 	}
 
 ---
@@ -120,12 +120,12 @@
 	| ARG       |TYPE  | NULL | MEMO |
 	| --------- |----  |----- | ---- |
 	| uid       |string| N    |      |
-	| client_id |int   | N    | 目前传123即可 |
-	| token     |string| N    |旧的token      |
+	| client_id |string| N    | 目前传123即可 |
+	| token     |string| N    |  旧的token      |
 	
 * return:
  	
-	{"success": true, "msg": "","rs": "14344491154788223115033674944100"}
+	{"success": true, "msg": "","result": "14344491154788223115033674944100"}
 	
 	
 ---

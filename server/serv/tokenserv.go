@@ -79,13 +79,3 @@ func genOauthToken(uid int) (oauthToken string) {
 
 	return oauthToken
 }
-
-func CheckOauthToken(oauthToken string) (ok bool, err error) {
-	token, err := dao.QueryToken(oauthToken)
-	if err != nil {
-		return
-	}
-
-	ok = time.Now().Unix() <= token.Expires
-	return
-}
