@@ -21,7 +21,7 @@ class User: NSManagedObject {
     @NSManaged var language: String?
     @NSManaged var occupation: String?
     @NSManaged var uid: Int64
-    @NSManaged var uname: String?
+    @NSManaged var uname: String
     @NSManaged var gender: NSNumber?
     @NSManaged var user_type: NSNumber?
     

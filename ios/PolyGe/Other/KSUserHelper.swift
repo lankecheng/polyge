@@ -9,11 +9,18 @@
 import Foundation
 import CoreData
 class KSUserHelper {
-    
     static let sharedInstance = KSUserHelper()
-    var userIcon: String? = "http://sys.bansuikj.com/uploads/idcard/1428054233-0de32994c23efd12dfa2afaf5c6ae6d6.png"
-   
+    var avatar : String?
+    var uname: String
     static func getUser(userID: Int64) -> User? {
         return User.MR_findByAttribute("uid", withValue: NSNumber(longLong: userID))[0] as? User
+    }
+    init() {
+        if let user = KSUserHelper.getUser(NSUserDefaults.userID!) {
+            avatar = user.avatar
+            uname = user.uname
+        }else{
+            uname = "xxx"
+        }
     }
 }

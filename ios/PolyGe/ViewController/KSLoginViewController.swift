@@ -53,13 +53,17 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
     //MARK: action
     @IBAction func login(sender: UIButton?) {
         guard self.userNameTextField.text?.characters.count > 0 else{
-            self.view.showTextHUD("手机号码或邮箱不能为空")
+            self.view.showTextHUD("用户名不能为空")
             return
         }
-        guard self.userNameTextField.text!.checkMobileNumble() || self.userNameTextField.text!.checkEmail() else{
-            self.view.showTextHUD("输入的手机号码或邮箱输入有误")
-            return
-        }
+//        guard self.userNameTextField.text?.characters.count > 0 else{
+//            self.view.showTextHUD("手机号码或邮箱不能为空")
+//            return
+//        }
+//        guard self.userNameTextField.text!.checkMobileNumble() || self.userNameTextField.text!.checkEmail() else{
+//            self.view.showTextHUD("输入的手机号码或邮箱输入有误")
+//            return
+//        }
         guard self.userPassTextField.text?.characters.count > 0 else{
             self.view.showTextHUD("密码不能为空")
             return
@@ -72,12 +76,12 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             userLoginBtn.enabled = true
            return
         }
-        var parameters = ["pwd":self.userPassTextField.text!,"client_id":"123"]
-        if self.userNameTextField.text!.checkMobileNumble() {
-            parameters["phone"] = self.userNameTextField.text!
-        }else{
-            parameters["email"] = self.userNameTextField.text!
-        }
+        var parameters = ["pwd":self.userPassTextField.text!,"client_id":"123","user_name":self.userNameTextField.text!]
+//        if self.userNameTextField.text!.checkMobileNumble() {
+//            parameters["phone"] = self.userNameTextField.text!
+//        }else{
+//            parameters["email"] = self.userNameTextField.text!
+//        }
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = LocalizedString("正在登录")
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
@@ -91,6 +95,11 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             NSUserDefaults.token = json["result"]["token"].string!
             let user = User(keyValues: json["result"].object,context:  NSManagedObjectContext.MR_defaultContext())
             NSUserDefaults.userID = user.uid
+            if parameters["phone"] != nil {
+                NSUserDefaults.loginType = .Mobile
+            }else{
+                NSUserDefaults.loginType = .Email
+            }
            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             APP_DELEGATE.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()!
         })

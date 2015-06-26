@@ -9,36 +9,35 @@
 import UIKit
 
 class MeViewController: KSTableViewController {
+    var dataSource: [[[String:String]]] = []
+    
 
-    var dataSource: [[[String:String]]] {
-        get{
-            if !NSUserDefaults.hasLogin {
-                return [
-                    [["image":"User","title":"Longin"],
-                        ["image":"Settings","title":"Settings"]],
-                    [["image":"How it works","title":"How it works"],
-                        ["image":"Feedback","title":"Feedback"],
-                        ["image":"Help","title":"Help"]]
-                ]
-            }else {
-                return [
-                    [["image":"User","title":"Longin"],
-                        ["image":"Friends","title":"Friends"],
-                        ["image":"Settings","title":"Settings"],
-                        ["image":"Tracking","title":"Tracking"],
-                        ["image":"Credit","title":"Credit"],
-                        ["image":"Schedule","title":"Schedule"]],
-                    [["image":"How it works","title":"How it works"],
-                        ["image":"Feedback","title":"Feedback"],
-                        ["image":"Help","title":"Help"]]
-                ]
-            }
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerClass(UITableViewCell.classForCoder(),forCellReuseIdentifier:MainStoryboard.TableViewCellIdentifiers.cell)
-        // Do any additional setup after loading the view.
+        if NSUserDefaults.hasLogin {
+            dataSource = [
+                [["image":KSUserHelper.sharedInstance.avatar ?? "User","title":KSUserHelper.sharedInstance.uname],
+                    ["image":"Friends","title":LocalizedString("Friends")],
+                    ["image":"Settings","title":LocalizedString("Settings")],
+                    ["image":"Tracking","title":LocalizedString("Tracking")],
+                    ["image":"Credit","title":LocalizedString("Credit")],
+                    ["image":"Schedule","title":LocalizedString("Schedule")]],
+                [["image":"How it works","title":LocalizedString("How it works")],
+                    ["image":"Feedback","title":LocalizedString("Feedback")],
+                    ["image":"Help","title":LocalizedString("Help")]]
+            ]
+        }else {
+            dataSource = [
+                [["image":"User","title":LocalizedString("Longin or Signup")],
+                    ["image":"Settings","title":LocalizedString("Settings")]],
+                [["image":"How it works","title":LocalizedString("How it works")],
+                    ["image":"Feedback","title":LocalizedString("Feedback")],
+                    ["image":"Help","title":LocalizedString("Help")]]
+            ]
+        }
+
+        
     }
 
     override func didReceiveMemoryWarning() {

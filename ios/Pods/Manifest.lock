@@ -8,6 +8,13 @@ PODS:
   - MBProgressHUD (0.9.1)
   - MJExtension (2.3.6)
   - ObjectMapper (0.12)
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
+    - ReactiveCocoa/Core
   - Result (HEAD based on 0.4.4):
     - Box (~> 1.2)
   - Starscream (0.9.4)
@@ -22,6 +29,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJExtension
   - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-2.0`)
+  - ReactiveCocoa
   - Result (HEAD)
   - Starscream (from `https://github.com/daltoniam/Starscream.git`, branch `Swift-2.0`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `xcode7`)
@@ -82,6 +90,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
   ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8
   Starscream: 0ad8f312bb826c3d7610bd842d66528eee34ad81
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c

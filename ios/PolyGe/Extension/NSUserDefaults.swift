@@ -19,7 +19,7 @@ extension NSUserDefaults {
     }
     class var loginType: LoginType{
         get{
-            return standardUserDefaults()["loginType"] as? LoginType ?? LoginType.None
+            return LoginType(rawValue: standardUserDefaults()["loginType"] as? Int ?? LoginType.None.rawValue)!
         }
         set{
             standardUserDefaults()["loginType"] = newValue.rawValue

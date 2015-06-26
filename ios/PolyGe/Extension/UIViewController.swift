@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Aspects
 extension UIViewController {
     class public func loadXib() -> UIViewController? {
         let name = NSStringFromClass(self.self)
@@ -14,6 +15,5 @@ extension UIViewController {
     }
     class public func loadXib(name: String) -> UIViewController?{
         return NSBundle.mainBundle().loadNibNamed(name, owner: nil, options: nil).first as? UIViewController
-    }
-    
+    }    
 }

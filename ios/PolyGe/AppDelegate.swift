@@ -9,12 +9,14 @@
 import UIKit
 import CoreData
 import MagicalRecord
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        MagicalRecord.setupCoreDataStack()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.tintColor = KSColor.tintColor
         if NSUserDefaults.hasLogin {
@@ -34,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
-        MagicalRecord.setupCoreDataStack()
         return true
     }
     
