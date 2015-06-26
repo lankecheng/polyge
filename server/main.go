@@ -46,6 +46,7 @@ func main() {
 	http.HandleFunc("/login", hdl.Login)
 	http.HandleFunc("/logout", hdl.Logout)
 	http.HandleFunc("/refresh_token", hdl.RefreshToken)
+	http.HandleFunc("/show_teachers", hdl.ShowTeachers)
 	http.HandleFunc("/wsconn", hdl.WebsocketConnect)
 	err := http.ListenAndServe(":5918", nil)
 	if err != nil {

@@ -85,6 +85,46 @@ func QueryUserByEmail(email string) (pguser PGUser, err error) {
 	return queryUser("email", email)
 }
 
+func QueryUsersByType(userType int, struFlds ...string) (pgusers []PGUser, err error) {
+	err = db.Ping()
+	if err != nil {
+		seelog.Errorf("QueryUsersByType(%v) open db: %v", userType, err)
+		return
+	}
+
+	var cols []string
+	if len(struFlds) == 0 {
+		cols = getStructCols(PGUser{})
+	} else {
+		cols = convertFldNames2ColNames(struFlds)
+	}
+
+	qrySql := "select " + strings.Join(cols, ",") + " from pg_user where user_type=?"
+	seelog.Debugf("QueryUsersByType(%v) sql: %v", userType, qrySql)
+
+	rs, err := db.Query(qrySql, userType)
+	if err != nil {
+		seelog.Errorf("QueryUsersByType(%v) sql: %v err: %v", userType, qrySql, err)
+		return
+	}
+
+	for rs.Next() {
+		if err = rs.Err(); err != nil {
+			seelog.Errorf("QueryUsersByType(%v) read rows %v", userType, err)
+			return
+		}
+		pguser := PGUser{}
+		if err = Scan2Struct(rs, &pguser); err != nil {
+			seelog.Error(err)
+			return
+		}
+		pgusers = append(pgusers, pguser)
+	}
+
+	return
+}
+
+
 func queryUser(colName string, val string) (pguser PGUser, err error) {
 	err = db.Ping()
 	if err != nil {

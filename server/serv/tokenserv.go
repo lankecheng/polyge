@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"time"
 	"fmt"
+	"strings"
+	"github.com/cihub/seelog"
 )
 
 func GetOauthToken(uid int, clientID string) (oauthToken string, err error) {
@@ -68,8 +70,7 @@ func genOauthToken(uid int) (oauthToken string) {
 	oauthToken = strconv.FormatInt(now.Unix(), 10)
 
 	rand.Seed(now.UnixNano())
-	oauthToken += strconv.Itoa(rand.Int())
-	oauthToken += strconv.Itoa(uid)
+	oauthToken = fmt.Sprintf("%v#%v#", rand.Int(), uid)
 
 	if len(oauthToken) < 32 {
 		oauthToken += pgpub.RepeatChar("0", "", 32-len(oauthToken))
@@ -78,4 +79,16 @@ func genOauthToken(uid int) (oauthToken string) {
 	}
 
 	return oauthToken
+}
+
+func GetUidFromToken(token string) (int64, error) {
+	uid, err := strconv.ParseInt(strings.Split(token, "#")[1], 10, 64)
+	if err != nil {
+		seelog.Error(err)
+	}
+	return uid, err
+}
+
+func CheckToken(oauthToken string) (bool, error) {
+	return dao.IfTokenExists(oauthToken)
 }

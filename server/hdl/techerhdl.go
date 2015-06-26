@@ -1,17 +1,15 @@
 package hdl
 
 import (
-	//	"github.com/cihub/seelog"
-	"net/http"
-	"github.com/lankecheng/polyge/server/serv/im"
 	"github.com/lankecheng/polyge/server/serv"
+	"net/http"
+	"github.com/lankecheng/polyge/server/pgpub"
 )
 
-func WebsocketConnect(w http.ResponseWriter, req *http.Request) {
+func ShowTeachers(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
-	oauthToken := req.FormValue("token")
-	ok, err := serv.CheckToken(oauthToken)
+	ok, err := serv.CheckToken(req.FormValue("token"))
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
@@ -20,11 +18,11 @@ func WebsocketConnect(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	uid, err := serv.GetUidFromToken(oauthToken)
+	teachers, err := serv.ShowTeachers()
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
-	err = im.EstablishConnect(uid, w, req)
+	w.Write(pgpub.CreateQueryJson(teachers))
 }

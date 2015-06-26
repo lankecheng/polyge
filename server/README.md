@@ -119,7 +119,6 @@
 
 	| ARG       |TYPE  | NULL | MEMO |
 	| --------- |----  |----- | ---- |
-	| uid       |string| N    |      |
 	| client_id |string| N    | 目前传123即可 |
 	| token     |string| N    |  旧的token      |
 	
@@ -129,8 +128,49 @@
 	
 	
 ---
+## 6. 获取教师列表
+
+* URL http://www.polyge.com/show_teachers
+
+* Method Get
+
+* args:
+
+	| ARG       |TYPE  | NULL | MEMO |
+	| --------- |----  |----- | ---- |
+	| token     |string| N    |      |
 	
-## 6. websocket连接
+* return:
+ 	
+	{
+  "result": [
+    {
+      "Audio": "",
+      "Avatar": "",
+      "Country": 0,
+      "Description": "",
+      "Gender": 0,
+      "Interest": "",
+      "Occup": "",
+      "Uid": 9,
+      "Uname": "teacher_1"
+    },
+    {
+      "Audio": "",
+      "Avatar": "",
+      "Country": 0,
+      "Description": "",
+      "Gender": 0,
+      "Interest": "",
+      "Occup": "",
+      "Uid": 10,
+      "Uname": "teacher_2"
+    }
+  ]
+}
+---
+	
+## 7. websocket连接
 
 * URL ws://www.polyge.com/wsconn
 
@@ -140,7 +180,6 @@
 
 	| ARG       |TYPE  | NULL | MEMO |
 	| --------- |----  |----- | ---- |
-	| uid       |string| N    |      |
 	| token     |string| N    |      |
 	
 * return:

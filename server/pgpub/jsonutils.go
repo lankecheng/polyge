@@ -7,13 +7,19 @@ import (
 	"fmt"
 )
 
-func ConvertStruct2Map(stru *interface{}) map[string]interface{} {
-	retMap := make(map[string]interface{})
-	struType := reflect.TypeOf(stru)
+func ConvertStruct2Map(stru interface{}, flds ...string) map[string]interface{} {
 	struVal := reflect.ValueOf(stru)
+	if struVal.Kind() == reflect.Ptr {
+		struVal = struVal.Elem()
+	}
+	struType := struVal.Type()
+
+	retMap := make(map[string]interface{})
 	for i := 0; i < struType.NumField(); i++ {
 		fldName := struType.Field(i).Name
-		retMap[fldName] = struVal.FieldByName(fldName).Interface()
+		if SearchStringArray(flds, fldName) != -1 {
+			retMap[fldName] = struVal.FieldByName(fldName).Interface()
+		}
 	}
 	return retMap
 }

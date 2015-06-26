@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"strconv"
 )
 
 const (
@@ -30,13 +29,7 @@ var upgrader = websocket.Upgrader{
 
 var wsConnCache = make(map[int64]*websocket.Conn)
 
-func EstablishConnect(w http.ResponseWriter, req *http.Request) error {
-	req.ParseForm()
-	uid, err := strconv.ParseInt(req.FormValue("uid"), 10, 64)
-	if err != nil {
-		return err
-	}
-
+func EstablishConnect(uid int64, w http.ResponseWriter, req *http.Request) error {
 	if _, exists := wsConnCache[uid]; exists {
 		delete(wsConnCache, uid)
 		//TODO:close ws...
