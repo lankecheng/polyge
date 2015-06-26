@@ -67,10 +67,8 @@ func RefreshOauthToken(uid int, clientID string, oldOauthToken string) (oauthTok
 //时间戳+随机数+用户ID
 func genOauthToken(uid int) (oauthToken string) {
 	now := time.Now()
-	oauthToken = strconv.FormatInt(now.Unix(), 10)
-
 	rand.Seed(now.UnixNano())
-	oauthToken = fmt.Sprintf("%v#%v#", rand.Int(), uid)
+	oauthToken = fmt.Sprintf("%v#%v#%v", now.Unix(), uid, rand.Int())
 
 	if len(oauthToken) < 32 {
 		oauthToken += pgpub.RepeatChar("0", "", 32-len(oauthToken))
