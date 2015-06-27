@@ -20,6 +20,10 @@ const (
 
 // Maximum message size allowed from peer.
 	maxMessageSize = 512
+
+	msgTypeText = 0
+	msgTypeVoice = 1
+	msgTypePic = 2
 )
 
 var upgrader = websocket.Upgrader{
