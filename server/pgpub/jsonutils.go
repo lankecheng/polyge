@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"github.com/cihub/seelog"
 	"fmt"
+	"strings"
 )
 
 func ConvertStruct2Map(stru interface{}, flds ...string) map[string]interface{} {
@@ -18,7 +19,7 @@ func ConvertStruct2Map(stru interface{}, flds ...string) map[string]interface{} 
 	for i := 0; i < struType.NumField(); i++ {
 		fldName := struType.Field(i).Name
 		if SearchStringArray(flds, fldName) != -1 {
-			retMap[fldName] = struVal.FieldByName(fldName).Interface()
+			retMap[strings.ToLower(fldName)] = struVal.FieldByName(fldName).Interface()
 		}
 	}
 	return retMap
