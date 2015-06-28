@@ -186,9 +186,8 @@
  	
 	根据statuscode判断是否连接成功
 	
-	msg 格式(大端序) uid(8位)+目标uid(8位)+msgID(8位)+时间戳毫秒(8位)+数据(N位)+CRC32校验码(4位)
+	msg 格式(大端序) uid(8B)+目标uid(8B)+msgType(1B)+时间戳毫秒(8B)+数据(NB)+CRC32校验码(4B)
 	
-	msgID目前没用到,先设为0吧
 	
 ---
  
