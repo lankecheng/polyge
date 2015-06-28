@@ -29,7 +29,7 @@ func Encode(msgInfo MsgInfo) ([]byte, error) {
 	binary.BigEndian.PutUint64(tgtIDBytes, uint64(msgInfo.TargetID))
 	_, err = buf.Write(tgtIDBytes)
 
-	_, err = buf.Write([1]byte{msgInfo.MsgType})
+	_, err = buf.Write([]byte{msgInfo.MsgType})
 
 	timeBytes := make([]byte, 8)
 	binary.BigEndian.PutUint64(timeBytes, uint64(msgInfo.CreatedAt.Unix()))
