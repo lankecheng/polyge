@@ -36,7 +36,7 @@ class KSChatTableView: UITableView, UITableViewDelegate{
         }
     }
     
-    func sendMessage(message: Message){//新曾消息记录
+    func sendMessage(message: Message){//新增消息记录
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         self.scrollToBottom()
     }

@@ -65,7 +65,7 @@ CHECKOUT OPTIONS:
     :commit: 7c0bdca4b6f0be4e14f9179de59473306227c714
     :git: https://github.com/robb/Cartography.git
   CryptoSwift:
-    :commit: 875cc81f63f3c75e6ab322b10e5871557050fe6f
+    :commit: 674cc15c32db9f45b17e8cf90b1dd25e16f12bc4
     :git: https://github.com/krzyzanowskim/CryptoSwift
   Kingfisher:
     :commit: 2283c950d5c85f189f4ed35858245d109f3de5e0
