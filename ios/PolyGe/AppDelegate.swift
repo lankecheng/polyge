@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.tintColor = KSColor.tintColor
         if NSUserDefaults.hasLogin {
-            window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+            window?.rootViewController = KSStoryboard.mainViewController
         }else{
-            window?.rootViewController = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
+            window?.rootViewController = KSStoryboard.loginNavigationController
         }
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         let navBar = UINavigationBar.appearance()

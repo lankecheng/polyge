@@ -17,7 +17,7 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userPassTextField: UITextField!
     @IBOutlet weak var userLoginBtn: UIButton!
     var isRelogin = false
-    
+
     override func viewDidLoad() {
         let defaults = NSUserDefaults.standardUserDefaults()
         let username = defaults["username"] as? String
@@ -83,7 +83,7 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
 //            parameters["email"] = self.userNameTextField.text!
 //        }
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = LocalizedString("正在登录")
+        hud.labelText = KSLocalizedString("正在登录")
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
             (request, response, json, error) in
             hud.removeFromSuperview()
@@ -101,7 +101,9 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
                 NSUserDefaults.loginType = .Email
             }
            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-            APP_DELEGATE.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()!
+//            APP_DELEGATE.window?.rootViewController? =  UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UITabBarController
+            APP_DELEGATE.window?.rootViewController?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
+            
         })
     }
 

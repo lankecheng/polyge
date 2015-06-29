@@ -6,8 +6,7 @@
 //  Copyright (c) 2015年 king. All rights reserved.
 //
 import UIKit
-import MBProgressHUD
-import Async
+
 func constraint(item1: UIView, attribute1: NSLayoutAttribute, relation: NSLayoutRelation, item2: UIView, attribute2: NSLayoutAttribute, constant: CGFloat = 0.0, multiplier: CGFloat = 1.0) -> NSLayoutConstraint
 {
     return NSLayoutConstraint(item: item1, attribute: attribute1, relatedBy: relation, toItem: item2, attribute: attribute2, multiplier: multiplier, constant: constant)
@@ -130,49 +129,21 @@ extension UIView {
         return ksconstrain(.CenterY,.Equal,self.superview!,.CenterY,constant: constant)
     }
     public func viewController() -> UIViewController?{
-        for var next = self.nextResponder(); next != nil ;next = next?.nextResponder(){
-            if next!.isKindOfClass(UIViewController.classForCoder()) {
-                return next as? UIViewController
+        if let window = self as? UIWindow {
+            return window.rootViewController
+        }else{
+            for var next = self.nextResponder(); next != nil ;next = next?.nextResponder(){
+                if let viewController = next as? UIViewController {
+                    return viewController
+                }
             }
+            return nil
         }
-        return nil
-    }
-    public func navigationController() -> UINavigationController?{
-        if let viewController = navigationController() {
-            if let nav = viewController.navigationController {
-                return nav
-            }
-        }
-        return nil
     }
     class public func loadXib() -> UIView? {
-        let name = NSStringFromClass(self.self)
-        return UIView.loadXib(name.pathExtension)
+        return UIView.loadXib(self.className())
     }
     class public func loadXib(name: String) -> UIView?{
         return NSBundle.mainBundle().loadNibNamed(name, owner: nil, options: nil).first as? UIView
-    }
-    func showTextHUD(text: String)
-    {
-        guard NSThread.isMainThread() else {
-            Async.main({ () -> Void in
-                self.showTextHUD(text)
-            })
-            return
-        }
-        
-        let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-        hud.labelText =  LocalizedString(text)
-        hud.mode = .Text
-        var duration = Double( LocalizedString(text).characters.count)*0.08+0.3
-        duration = min(3, max(1, duration))
-        Async.main(after: duration) { () -> Void in
-            if hud.superview != nil {
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true)
-            }
-        }
-        
-    }
-    
+    }    
 }

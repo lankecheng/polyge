@@ -65,7 +65,7 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
 //        }
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = LocalizedString("注册中")
+        hud.labelText = KSLocalizedString("注册中")
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/register", parameters: parameters).responseSwiftyJSON({
             (request, response, json, error) in
             guard json["success"].boolValue else{
@@ -73,7 +73,7 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
                 self.view.showTextHUD(json["msg"].string!)
                 return
             }
-            hud.labelText = LocalizedString("登录中")
+            hud.labelText = KSLocalizedString("登录中")
             Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
                 (request, response, json, error) in
                 hud.removeFromSuperview()
@@ -91,7 +91,7 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
                     NSUserDefaults.loginType = .Email
                 }
                 NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-                APP_DELEGATE.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()!
+                APP_DELEGATE.window?.rootViewController?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
             })
         })
 

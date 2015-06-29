@@ -11,8 +11,8 @@ import UIKit
 class MessageViewController: KSTabTableViewController {
 
     override func viewDidLoad() {
-        firstTabTitle = NSLocalizedString("Friends", comment: "")
-        secondTabTitle = NSLocalizedString("Notes", comment: "")
+        firstTabTitle = KSLocalizedString("Friends")
+        secondTabTitle = KSLocalizedString("Notes")
         super.viewDidLoad()
     }
 
@@ -26,7 +26,7 @@ class MessageViewController: KSTabTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.lastMessageCell, forIndexPath: indexPath) as UITableViewCell
+        return tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.lastMessageCell, forIndexPath: indexPath) as UITableViewCell
     }
 
     

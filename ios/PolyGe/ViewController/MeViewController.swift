@@ -14,26 +14,26 @@ class MeViewController: KSTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerClass(UITableViewCell.classForCoder(),forCellReuseIdentifier:MainStoryboard.TableViewCellIdentifiers.cell)
+        tableView.registerClass(UITableViewCell.classForCoder(),forCellReuseIdentifier:KSStoryboard.TableViewCellIdentifiers.cell)
         if NSUserDefaults.hasLogin {
             dataSource = [
                 [["image":KSUserHelper.sharedInstance.avatar ?? "User","title":KSUserHelper.sharedInstance.uname],
-                    ["image":"Friends","title":LocalizedString("Friends")],
-                    ["image":"Settings","title":LocalizedString("Settings")],
-                    ["image":"Tracking","title":LocalizedString("Tracking")],
-                    ["image":"Credit","title":LocalizedString("Credit")],
-                    ["image":"Schedule","title":LocalizedString("Schedule")]],
-                [["image":"How it works","title":LocalizedString("How it works")],
-                    ["image":"Feedback","title":LocalizedString("Feedback")],
-                    ["image":"Help","title":LocalizedString("Help")]]
+                    ["image":"Friends","title":KSLocalizedString("Friends")],
+                    ["image":"Settings","title":KSLocalizedString("Settings")],
+                    ["image":"Tracking","title":KSLocalizedString("Tracking")],
+                    ["image":"Credit","title":KSLocalizedString("Credit")],
+                    ["image":"Schedule","title":KSLocalizedString("Schedule")]],
+                [["image":"How it works","title":KSLocalizedString("How it works")],
+                    ["image":"Feedback","title":KSLocalizedString("Feedback")],
+                    ["image":"Help","title":KSLocalizedString("Help")]]
             ]
         }else {
             dataSource = [
-                [["image":"User","title":LocalizedString("Longin or Signup")],
-                    ["image":"Settings","title":LocalizedString("Settings")]],
-                [["image":"How it works","title":LocalizedString("How it works")],
-                    ["image":"Feedback","title":LocalizedString("Feedback")],
-                    ["image":"Help","title":LocalizedString("Help")]]
+                [["image":"User","title":KSLocalizedString("Longin or Signup")],
+                    ["image":"Settings","title":KSLocalizedString("Settings")]],
+                [["image":"How it works","title":KSLocalizedString("How it works")],
+                    ["image":"Feedback","title":KSLocalizedString("Feedback")],
+                    ["image":"Help","title":KSLocalizedString("Help")]]
             ]
         }
 
@@ -55,7 +55,7 @@ class MeViewController: KSTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.cell, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.cell, forIndexPath: indexPath) as UITableViewCell
         let data = dataSource[indexPath.section][indexPath.row]
         var image = UIImage(named: data["image"]!)
 
@@ -67,9 +67,26 @@ class MeViewController: KSTableViewController {
         return cell
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 55
+        if indexPath.section == 0 && indexPath.row == 0 {
+            return 70
+        }else{
+            return 55
+        }
     }
-
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            if let uid = NSUserDefaults.userID {
+                let viewController =  UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier(KSStoryboard.XIBIdentifiers.KSPersonViewController) as! KSPersonViewController
+                viewController.person = KSUserHelper.getUser(uid)
+                self.navigationController?.pushViewController(
+                    viewController, animated: true)
+                
+            }else{
+                let viewController =  UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+                self.navigationController?.pushViewController(viewController!, animated: true)
+            }
+        }
+    }
     //MARK: UITableViewDelegate
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {

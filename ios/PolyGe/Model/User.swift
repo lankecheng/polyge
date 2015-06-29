@@ -12,7 +12,6 @@ import MJExtension
 
 @objc(User)
 class User: NSManagedObject {
-    
     @NSManaged var about: String?
     @NSManaged var audio: String?
     @NSManaged var country: String?
@@ -20,7 +19,7 @@ class User: NSManagedObject {
     @NSManaged var interest: String?
     @NSManaged var language: String?
     @NSManaged var occupation: String?
-    @NSManaged var uid: Int64
+    @NSManaged var uid: UInt64
     @NSManaged var uname: String
     @NSManaged var gender: NSNumber?
     @NSManaged var user_type: NSNumber?

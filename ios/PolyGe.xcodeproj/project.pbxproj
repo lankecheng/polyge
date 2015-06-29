@@ -43,12 +43,15 @@
 		3C63D9371B3859C000EF6196 /* KSUserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63D9331B3859C000EF6196 /* KSUserHelper.swift */; };
 		3C63D9451B385A0900EF6196 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63D93D1B385A0900EF6196 /* Message.swift */; };
 		3C63D9471B385A0900EF6196 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63D93F1B385A0900EF6196 /* User.swift */; };
-		3C63D94B1B385A5B00EF6196 /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63D9491B385A5B00EF6196 /* MainStoryboard.swift */; };
+		3C63D94B1B385A5B00EF6196 /* KSStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63D9491B385A5B00EF6196 /* KSStoryboard.swift */; };
 		3C63D94C1B385A7B00EF6196 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C63D94E1B385A7B00EF6196 /* Login.storyboard */; };
 		3C63D9511B385AE900EF6196 /* PolyGe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C63D94F1B385AE900EF6196 /* PolyGe.xcdatamodeld */; };
 		3C63D9541B385B6700EF6196 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C63D9521B385B6700EF6196 /* Main.storyboard */; };
 		3C63D9571B385BD100EF6196 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C63D9551B385BD100EF6196 /* LaunchScreen.xib */; };
 		3C63D9581B385BD100EF6196 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C63D9561B385BD100EF6196 /* Localizable.strings */; };
+		3C7E36FB1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */; };
+		3C7E36FD1B3E7E4000B7B272 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */; };
+		3C7E37011B3E898D00B7B272 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E37001B3E898D00B7B272 /* NSObject.swift */; };
 		3C7FBCF61B3C374B000DF45B /* MJConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCE61B3C374B000DF45B /* MJConst.m */; };
 		3C7FBCF71B3C374B000DF45B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCE91B3C374B000DF45B /* MJFoundation.m */; };
 		3C7FBCF81B3C374B000DF45B /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCEB1B3C374B000DF45B /* MJProperty.m */; };
@@ -68,6 +71,9 @@
 		3CB3DDE21AF5F4AE00289E8B /* KSProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD91AF5F4AE00289E8B /* KSProgressHUD.swift */; };
 		3CB3DDE41AF5F4CC00289E8B /* AF+Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDE31AF5F4CC00289E8B /* AF+Date+Extension.swift */; };
 		3CB3DDFD1AF5F4EE00289E8B /* KMPlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDFC1AF5F4EE00289E8B /* KMPlaceholderTextView.swift */; };
+		3CF54C401B3EFF3100D431E5 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF54C3F1B3EFF3100D431E5 /* NSMutableData.swift */; };
+		3CF770161B3D7EF300671944 /* KSPersonListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF770151B3D7EF300671944 /* KSPersonListViewModel.swift */; };
+		3CF770191B3D822600671944 /* KSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF770181B3D822600671944 /* KSViewModel.swift */; };
 		948B7BFE71AE837CC321AC05 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A4B5444DF40CB6C2FB822 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -111,12 +117,15 @@
 		3C63D9331B3859C000EF6196 /* KSUserHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSUserHelper.swift; path = Other/KSUserHelper.swift; sourceTree = "<group>"; };
 		3C63D93D1B385A0900EF6196 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Model/Message.swift; sourceTree = "<group>"; };
 		3C63D93F1B385A0900EF6196 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Model/User.swift; sourceTree = "<group>"; };
-		3C63D9491B385A5B00EF6196 /* MainStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainStoryboard.swift; path = Xib/MainStoryboard.swift; sourceTree = "<group>"; };
+		3C63D9491B385A5B00EF6196 /* KSStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSStoryboard.swift; path = Xib/KSStoryboard.swift; sourceTree = "<group>"; };
 		3C63D94D1B385A7B00EF6196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		3C63D9501B385AE900EF6196 /* PolyGe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PolyGe.xcdatamodel; sourceTree = "<group>"; };
 		3C63D9531B385B6700EF6196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Xib/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3C63D9551B385BD100EF6196 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = Xib/LaunchScreen.xib; sourceTree = "<group>"; };
 		3C63D9561B385BD100EF6196 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Xib/Localizable.strings; sourceTree = "<group>"; };
+		3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSPlayReportOrSwitchTableViewCell.swift; path = View/KSPlayReportOrSwitchTableViewCell.swift; sourceTree = "<group>"; };
+		3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIWindow.swift; path = Extension/UIWindow.swift; sourceTree = "<group>"; };
+		3C7E37001B3E898D00B7B272 /* NSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSObject.swift; path = Extension/NSObject.swift; sourceTree = "<group>"; };
 		3C7FBCE51B3C374B000DF45B /* MJConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJConst.h; sourceTree = "<group>"; };
 		3C7FBCE61B3C374B000DF45B /* MJConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJConst.m; sourceTree = "<group>"; };
 		3C7FBCE71B3C374B000DF45B /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
@@ -145,8 +154,11 @@
 		3CB3DDD91AF5F4AE00289E8B /* KSProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSProgressHUD.swift; path = Vendors/KSProgressHUD.swift; sourceTree = SOURCE_ROOT; };
 		3CB3DDE31AF5F4CC00289E8B /* AF+Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AF+Date+Extension.swift"; path = "Vendors/AF+Date+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		3CB3DDFC1AF5F4EE00289E8B /* KMPlaceholderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMPlaceholderTextView.swift; path = Vendors/KMPlaceholderTextView.swift; sourceTree = SOURCE_ROOT; };
-		3CBB19761AE14D440073B4C7 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		3CC3B8401AE89CF20017227D /* PolyGe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PolyGe-Bridging-Header.h"; sourceTree = "<group>"; };
+		3CF54C3F1B3EFF3100D431E5 /* NSMutableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSMutableData.swift; path = Extension/NSMutableData.swift; sourceTree = "<group>"; };
+		3CF54C421B3F9E9C00D431E5 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		3CF770151B3D7EF300671944 /* KSPersonListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSPersonListViewModel.swift; path = ViewModel/KSPersonListViewModel.swift; sourceTree = "<group>"; };
+		3CF770181B3D822600671944 /* KSViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSViewModel.swift; path = ViewModel/KSViewModel.swift; sourceTree = "<group>"; };
 		579B045C10844C1DCF15FCF1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		751A4B5444DF40CB6C2FB822 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB89FF9BC148D0677E9181B0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -210,8 +222,8 @@
 		3C315F571ADF5F360040FF99 = {
 			isa = PBXGroup;
 			children = (
+				3CF54C421B3F9E9C00D431E5 /* MyPlayground.playground */,
 				3C315F651ADF5F370040FF99 /* AppDelegate.swift */,
-				3CBB19761AE14D440073B4C7 /* MyPlayground.playground */,
 				3C315F621ADF5F360040FF99 /* PolyGe */,
 				3CB3DDD01AF5F41800289E8B /* Vendors */,
 				3C315F631ADF5F360040FF99 /* Supporting Files */,
@@ -233,13 +245,14 @@
 		3C315F621ADF5F360040FF99 /* PolyGe */ = {
 			isa = PBXGroup;
 			children = (
+				3C9970671ADFEECB00AF10E1 /* Model */,
+				3C315F881ADF62440040FF99 /* View */,
+				3C315F871ADF622D0040FF99 /* ViewController */,
+				3CF770171B3D7F0F00671944 /* ViewModel */,
 				3C63D8EE1B37AF0C00EF6196 /* BaseClass */,
 				3CE4FFF11AE60023005C200E /* Http */,
 				3CE4FFF61AE61F20005C200E /* Other */,
 				3CBB196F1AE0B8C10073B4C7 /* Extension */,
-				3C9970671ADFEECB00AF10E1 /* Model */,
-				3C315F881ADF62440040FF99 /* View */,
-				3C315F871ADF622D0040FF99 /* ViewController */,
 				3C99705C1ADF9CFD00AF10E1 /* UI */,
 				3C315F8D1ADF6CA10040FF99 /* xib */,
 			);
@@ -298,6 +311,7 @@
 				3C63D9111B3858E400EF6196 /* KSPersonListTableViewCell.swift */,
 				3C63D9121B3858E400EF6196 /* KSPickerView.swift */,
 				3C63D9131B3858E400EF6196 /* KSPlayAudioTableViewCell.swift */,
+				3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -307,7 +321,7 @@
 			children = (
 				3C63D9521B385B6700EF6196 /* Main.storyboard */,
 				3C63D94E1B385A7B00EF6196 /* Login.storyboard */,
-				3C63D9491B385A5B00EF6196 /* MainStoryboard.swift */,
+				3C63D9491B385A5B00EF6196 /* KSStoryboard.swift */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -421,6 +435,7 @@
 		3CBB196F1AE0B8C10073B4C7 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				3C7E37001B3E898D00B7B272 /* NSObject.swift */,
 				3C63D91A1B38591A00EF6196 /* Color.swift */,
 				3C63D91B1B38591A00EF6196 /* NSStream.swift */,
 				3C63D91C1B38591A00EF6196 /* NSUserDefaults.swift */,
@@ -429,6 +444,8 @@
 				3C63D91F1B38591A00EF6196 /* UIView.swift */,
 				3C63D9201B38591A00EF6196 /* UIViewController.swift */,
 				3C3A39891B3AB4940039D248 /* Request.swift */,
+				3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */,
+				3CF54C3F1B3EFF3100D431E5 /* NSMutableData.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -449,6 +466,15 @@
 				3C63D9331B3859C000EF6196 /* KSUserHelper.swift */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		3CF770171B3D7F0F00671944 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3CF770151B3D7EF300671944 /* KSPersonListViewModel.swift */,
+				3CF770181B3D822600671944 /* KSViewModel.swift */,
+			);
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		E340C85846FE769743832EAE /* Pods */ = {
@@ -605,23 +631,28 @@
 				3CB3DDE11AF5F4AE00289E8B /* KSMessageContentView.swift in Sources */,
 				3C63D9161B3858E400EF6196 /* KSMessageListTableViewCell.swift in Sources */,
 				3C63D9371B3859C000EF6196 /* KSUserHelper.swift in Sources */,
+				3CF54C401B3EFF3100D431E5 /* NSMutableData.swift in Sources */,
 				3C63D9261B38591A00EF6196 /* UIView.swift in Sources */,
 				3C63D9151B3858E400EF6196 /* KSLanguageTableViewCell.swift in Sources */,
 				3C7FBCFC1B3C374B000DF45B /* NSObject+MJProperty.m in Sources */,
 				3C315F661ADF5F370040FF99 /* AppDelegate.swift in Sources */,
 				3CB3DDDD1AF5F4AE00289E8B /* KSChattingViewController.swift in Sources */,
 				3C7FBCFA1B3C374B000DF45B /* NSObject+MJCoding.m in Sources */,
+				3C7E36FD1B3E7E4000B7B272 /* UIWindow.swift in Sources */,
 				3C7FBCFD1B3C374B000DF45B /* NSString+MJExtension.m in Sources */,
 				3C63D9191B3858E400EF6196 /* KSPlayAudioTableViewCell.swift in Sources */,
 				3C63D90B1B3858B900EF6196 /* MessageViewController.swift in Sources */,
 				3C63D9211B38591A00EF6196 /* Color.swift in Sources */,
+				3CF770161B3D7EF300671944 /* KSPersonListViewModel.swift in Sources */,
 				3C7FBCF81B3C374B000DF45B /* MJProperty.m in Sources */,
-				3C63D94B1B385A5B00EF6196 /* MainStoryboard.swift in Sources */,
+				3CF770191B3D822600671944 /* KSViewModel.swift in Sources */,
+				3C63D94B1B385A5B00EF6196 /* KSStoryboard.swift in Sources */,
 				3CB3DDDC1AF5F4AE00289E8B /* KSChatTableView.swift in Sources */,
 				3CB3DDDA1AF5F4AE00289E8B /* KSAVAudioPlayer.swift in Sources */,
 				3C63D9171B3858E400EF6196 /* KSPersonListTableViewCell.swift in Sources */,
 				3C63D90D1B3858CC00EF6196 /* MeViewController.swift in Sources */,
 				3C63D8FB1B38582C00EF6196 /* KSTabBarViewController.swift in Sources */,
+				3C7E36FB1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift in Sources */,
 				3CB3DDDB1AF5F4AE00289E8B /* KSAVAudioRecorder.swift in Sources */,
 				3C63D92E1B38599000EF6196 /* KSTableViewController.swift in Sources */,
 				3C63D92F1B38599000EF6196 /* KSTabTableViewController.swift in Sources */,
@@ -641,6 +672,7 @@
 				3C7FBCF91B3C374B000DF45B /* MJType.m in Sources */,
 				3C63D9031B38589B00EF6196 /* HomeViewController.swift in Sources */,
 				3C63D9141B3858E400EF6196 /* KSFrendListTableViewCell.swift in Sources */,
+				3C7E37011B3E898D00B7B272 /* NSObject.swift in Sources */,
 				3C63D92B1B38596900EF6196 /* KSColor.swift in Sources */,
 				3C63D8FE1B38585200EF6196 /* KSLoginViewController.swift in Sources */,
 			);
@@ -774,9 +806,9 @@
 					"$(PROJECT_DIR)/PolyGe",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "king.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.king.PolyGe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ded8a02a-10f9-41d5-a844-e942f35cf53c";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -805,10 +837,11 @@
 					"$(PROJECT_DIR)/PolyGe",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "king.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.king.PolyGe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ded8a02a-10f9-41d5-a844-e942f35cf53c";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};

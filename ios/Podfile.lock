@@ -3,18 +3,12 @@ PODS:
   - Async (1.2.1)
   - Box (1.2.2)
   - Cartography (0.5.0)
+  - CryptoSwift (0.0.11)
   - Kingfisher (1.4.1)
   - MagicalRecord (2.3.0)
   - MBProgressHUD (0.9.1)
   - MJExtension (2.3.6)
   - ObjectMapper (0.12)
-  - ReactiveCocoa (2.5):
-    - ReactiveCocoa/UI (= 2.5)
-  - ReactiveCocoa/Core (2.5):
-    - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.5)
-  - ReactiveCocoa/UI (2.5):
-    - ReactiveCocoa/Core
   - Result (HEAD based on 0.4.4):
     - Box (~> 1.2)
   - Starscream (0.9.4)
@@ -24,12 +18,12 @@ DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
   - Async (from `https://github.com/duemunk/Async.git`, branch `feature/Swift_2.0`)
   - Cartography (from `https://github.com/robb/Cartography.git`, branch `swift-2.0`)
+  - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `swift20`)
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2.0`)
   - MagicalRecord
   - MBProgressHUD
   - MJExtension
   - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-2.0`)
-  - ReactiveCocoa
   - Result (HEAD)
   - Starscream (from `https://github.com/daltoniam/Starscream.git`, branch `Swift-2.0`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `xcode7`)
@@ -44,6 +38,9 @@ EXTERNAL SOURCES:
   Cartography:
     :branch: swift-2.0
     :git: https://github.com/robb/Cartography.git
+  CryptoSwift:
+    :branch: swift20
+    :git: https://github.com/krzyzanowskim/CryptoSwift
   Kingfisher:
     :branch: swift-2.0
     :git: https://github.com/onevcat/Kingfisher.git
@@ -67,6 +64,9 @@ CHECKOUT OPTIONS:
   Cartography:
     :commit: 7c0bdca4b6f0be4e14f9179de59473306227c714
     :git: https://github.com/robb/Cartography.git
+  CryptoSwift:
+    :commit: 875cc81f63f3c75e6ab322b10e5871557050fe6f
+    :git: https://github.com/krzyzanowskim/CryptoSwift
   Kingfisher:
     :commit: 2283c950d5c85f189f4ed35858245d109f3de5e0
     :git: https://github.com/onevcat/Kingfisher.git
@@ -85,14 +85,14 @@ SPEC CHECKSUMS:
   Async: d9ee6fc9c415d44fcb892f4c289d1e79ce8ae92d
   Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
   Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6
+  CryptoSwift: 0ab68b71eaff076bddb1de4e5ac9f85f61c023e2
   Kingfisher: 962a21cdc2a7b0fa63be3b2c45ea6f180feda535
   MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJExtension: eb9d381740563b520fbabdfa6caf92d666314467
   ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
-  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8
   Starscream: 0ad8f312bb826c3d7610bd842d66528eee34ad81
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.0.beta.1

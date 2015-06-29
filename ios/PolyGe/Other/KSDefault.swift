@@ -11,7 +11,7 @@ let kTimeLabelTextColor = UIColor.grayColor()// 时间字体颜色
 let kChatTimeFont = UIFont.systemFontOfSize(11)//时间字体
 let kUserPlaceHolderImage = UIImage(named: "User")
 
-func LocalizedString(key: String, comment: String = "") -> String
+func KSLocalizedString(key: String, comment: String = "") -> String
 {
     return NSLocalizedString(key, comment: comment)
 }

@@ -7,13 +7,20 @@
 //
 
 import UIKit
-import Aspects
 extension UIViewController {
     class public func loadXib() -> UIViewController? {
-        let name = NSStringFromClass(self.self)
-        return UIViewController.loadXib(name.pathExtension)
+        return UIViewController.loadXib(self.className())
     }
     class public func loadXib(name: String) -> UIViewController?{
         return NSBundle.mainBundle().loadNibNamed(name, owner: nil, options: nil).first as? UIViewController
-    }    
+    }
+    public func ksNavigationController() -> UINavigationController?{
+        if let nav = self as? UINavigationController {
+            return nav
+        }else if let tabBar = self as? UITabBarController {
+            return tabBar.selectedViewController?.ksNavigationController()
+        }
+        return self.navigationController
+    }
+
 }

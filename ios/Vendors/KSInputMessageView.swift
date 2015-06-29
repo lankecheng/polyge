@@ -2,7 +2,7 @@ import UIKit
 protocol KSInputMessageViewDelegate: NSObjectProtocol{
     func sendMessageText(text: String)
     func sendMessagePhoto(data: NSData, fileName: String)
-    func sendMessageVoice(voiceData: NSData,voiceTime: Int16)
+    func sendMessageVoice(voiceData: NSData,voiceTime: UInt8)
 }
 class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KSAVAudioRecorderDelegate{
     lazy var audioRecorder: KSAVAudioRecorder = {
@@ -26,6 +26,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         commonInit()
     }
     func commonInit() {
+        self.backgroundColor = UIColor.whiteColor()
         //设置边框
         layer.borderWidth = kBorderWidth
         layer.borderColor = kBorderColor
@@ -33,7 +34,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         //切换语音和文字输入框按钮
         voiceOrTextBtn = UIButton(type:.Custom) as UIButton
         addSubview(voiceOrTextBtn)
-    voiceOrTextBtn.constrainWidth(30).constrainLeading(5).constrainTop(5).constrainCenterY()
+        voiceOrTextBtn.constrainWidth(30).constrainLeading(5).constrainTop(5).constrainCenterY()
 
         voiceOrTextBtn.setBackgroundImage(UIImage(named: "Edit"), forState: UIControlState.Normal)
         let speechImage = UIImage(named: "Speech")
@@ -162,7 +163,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         })
         
     }
-    func endConvertWithData(voiceData: NSData,voiceTime: Int16){
+    func endConvertWithData(voiceData: NSData,voiceTime: UInt8){
         delegate?.sendMessageVoice(voiceData,voiceTime: voiceTime)
         KSProgressHUD.dismissWithSuccess("录音成功")
         
@@ -217,7 +218,7 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         }
         let format = NSDateFormatter()
         format.dateFormat="yyyyMMddHHmmss"
-        let currentFileName = "\(format.stringFromDate(NSDate())).\(pathExtension)"//"\(appDelegate.user.id!)-avatar-\(format.stringFromDate(NSDate())).\(pathExtension)"
+        let currentFileName = "\(format.stringFromDate(NSDate())).\(pathExtension)"
         let imageData = UIImagePNGRepresentation(smallImg)
         var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory : AnyObject = paths[0]

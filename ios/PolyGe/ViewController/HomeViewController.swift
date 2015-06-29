@@ -9,7 +9,7 @@
 import UIKit
 
 class HomeViewController: KSTabTableViewController {
-    let languages = ["Englist","Chinese"]
+    let languages = ["English","Chinese"]
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
@@ -25,9 +25,10 @@ class HomeViewController: KSTabTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.languageCell, forIndexPath: indexPath) as! KSLanguageTableViewCell
+        let cell =  tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.languageCell, forIndexPath: indexPath) as! KSLanguageTableViewCell
+        cell.label.text = KSLocalizedString(languages[indexPath.row])
+        cell.languageImage.image = UIImage(named: languages[indexPath.row])
+        return cell
     }
-    
-
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 class KSPersonViewController: KSTableViewController {
-    var person = User()
+    var person = User.MR_createEntity()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableHeaderView?.backgroundColor = KSColor.tintColor
@@ -34,15 +34,15 @@ class KSPersonViewController: KSTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 6
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var identifier = MainStoryboard.TableViewCellIdentifiers.subtitleCell
+        var identifier = KSStoryboard.TableViewCellIdentifiers.subtitleCell
         if indexPath.row == 4 {
-            identifier = MainStoryboard.TableViewCellIdentifiers.playAudioCell
-        }else if indexPath.row == 6 {
-            identifier = MainStoryboard.TableViewCellIdentifiers.reportAbuseCell
+            identifier = KSStoryboard.TableViewCellIdentifiers.playAudioCell
+        }else if indexPath.row == 5 {
+            identifier = KSStoryboard.TableViewCellIdentifiers.reportOrSwitchCell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
         switch indexPath.row {
@@ -61,11 +61,15 @@ class KSPersonViewController: KSTableViewController {
         case 4:
             let playAudioCell = cell as! KSPlayAudioTableViewCell
             playAudioCell.titleLable.text = "About me"
-            playAudioCell.subTitleLable.text = "about"
+            playAudioCell.subTitleLable.text = person.about
         case 5:
-            cell.textLabel?.text = "User comments"
-            cell.detailTextLabel?.text = person.about
-        case 6:
+            let reportOrSwitchCell = cell as! KSReportOrSwitchTableViewCell
+            if person.uid == NSUserDefaults.userID {
+                reportOrSwitchCell.button.setTitle(KSLocalizedString("Switch Account"), forState: .Normal)
+            }else{
+                 reportOrSwitchCell.button.setTitle(KSLocalizedString("Report Account"), forState: .Normal)
+            }
+
            break
 
         default:
@@ -76,16 +80,23 @@ class KSPersonViewController: KSTableViewController {
     }
 
     @IBAction func openMessage(sender: AnyObject) {
-        let viewController = KSChattingViewController()
+        let viewController = ChattingViewController()
+        viewController.receiveUserID = person.uid
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func openPhone(sender: AnyObject) {
-        let viewController = KSChattingViewController()
+        let viewController = ChattingViewController()
+        viewController.receiveUserID = person.uid
         navigationController?.pushViewController(viewController, animated: true)
     }
     @IBAction func playAudio(sender: AnyObject) {
 
+    }
+    @IBAction func reportOrSwitchAccout(sender: AnyObject) {
+        if person.uid == NSUserDefaults.userID {
+            navigationController?.pushViewController(KSStoryboard.loginViewController, animated: true)
+        }
     }
     
 }

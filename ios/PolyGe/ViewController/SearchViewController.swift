@@ -34,9 +34,9 @@ class SearchViewController: KSTabTableViewController{
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (personType == .Professional && indexPath.row == conditions.count) || (personType == .Partner && indexPath.row == conditions.count-1 ) {
-            return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.searchCell, forIndexPath: indexPath) as UITableViewCell
+            return tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.searchCell, forIndexPath: indexPath) as UITableViewCell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.subtitleCell, forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.subtitleCell, forIndexPath: indexPath) as UITableViewCell
             cell.textLabel?.text = conditions[indexPath.row][0] as? String
             cell.detailTextLabel?.text = conditions[indexPath.row][1] as? String
             cell.layoutIfNeeded()

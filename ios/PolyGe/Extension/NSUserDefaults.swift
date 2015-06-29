@@ -46,12 +46,12 @@ extension NSUserDefaults {
             standardUserDefaults()["token"] = newValue
         }
     }
-    class var userID: Int64?{
+    class var userID: UInt64?{
         get{
-        return (standardUserDefaults()["userID"] as? NSNumber)?.longLongValue
+        return (standardUserDefaults()["userID"] as? NSNumber)?.unsignedLongLongValue
         }
         set{
-            standardUserDefaults()["userID"] = NSNumber(longLong: newValue!)
+            standardUserDefaults()["userID"] = NSNumber(unsignedLongLong: newValue!)
         }
     }
     

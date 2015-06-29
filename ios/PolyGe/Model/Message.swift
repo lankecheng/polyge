@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-enum MessageType : Int16{//当前消息的类型
+enum MessageType : UInt8{//当前消息的类型
     case Text = 0//文字
     case Picture = 1//图片
     case Voice = 2//声音
@@ -28,18 +28,19 @@ enum MessageState{//当前发送消息状态
 class Message: NSManagedObject {
     
     @NSManaged var createDate: NSDate
-    @NSManaged var createUserID: Int64
+    @NSManaged var createUserID: UInt64
+    @NSManaged var receiveUserID: UInt64
     @NSManaged var messageData: NSData
-    @NSManaged var messageTypeValue: Int16
+    @NSManaged var messageTypeValue: NSNumber
     @NSManaged var pkMessage: String
-    @NSManaged var voiceTime: Int16
+    @NSManaged var voiceTime: NSNumber
     
     var messageType: MessageType{
         get{
-            return MessageType(rawValue: self.messageTypeValue)!
+            return MessageType(rawValue: self.messageTypeValue.unsignedCharValue)!
         }
         set{
-            self.messageTypeValue = newValue.rawValue
+            self.messageTypeValue = NSNumber(unsignedChar: newValue.rawValue)
         }
     }
     var userIcon: String? {
@@ -83,6 +84,44 @@ class Message: NSManagedObject {
         }else{
             self.showDateLabel = false
         }
+    }
+    func toData() -> NSData {
+        let data = NSMutableData()
+        data.appendUInt64(createUserID)
+        data.appendUInt64(receiveUserID)
+        data.appendUInt8(messageTypeValue.unsignedCharValue)
+        data.appendUInt64(UInt64(createDate.timeIntervalSince1970))
+        data.appendData(messageData)
+        if messageType == .Voice {
+            data.appendUInt8(voiceTime.unsignedCharValue)
+        }
+        data.appendData(data.crc32()!)
+        return data
+    }
+    class func createMessage(data: NSData) -> Message? {
+        guard data.length > 29 else{
+            return nil
+        }
+        guard data.subdataWithRange(NSMakeRange(0, data.length - 4)).crc32() == data.subdataWithRange(NSMakeRange(data.length - 4, 4)) else{
+            return nil
+        }
+       let message =  Message.MR_createEntity()
+        data.getBytes(&message.createUserID, length: 8)
+        message.createUserID = UInt64(bigEndian: message.createUserID)
+        data.getBytes(&message.receiveUserID, range: NSMakeRange(8,8))
+        message.createUserID = UInt64(bigEndian: message.createUserID)
+        data.getBytes(&message.messageTypeValue, range: NSMakeRange(16,1))
+        var timeInterval: UInt64 = 0
+        data.getBytes(&timeInterval, range: NSMakeRange(17,8))
+        timeInterval = UInt64(bigEndian: timeInterval)
+        message.createDate = NSDate(timeIntervalSince1970: Double(timeInterval))
+        if message.messageType == .Voice {
+            message.messageData = data.subdataWithRange(NSMakeRange(25, data.length - 30))
+            data.getBytes(&message.voiceTime, range: NSMakeRange(data.length - 5,1))
+        }else{
+            message.messageData = data.subdataWithRange(NSMakeRange(25, data.length - 29))
+        }
+        return message
     }
     
 }

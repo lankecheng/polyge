@@ -6,6 +6,7 @@
         <attribute name="messageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="messageTypeValue" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="pkMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiveUserID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="voiceTime" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
@@ -22,7 +23,7 @@
         <attribute name="user_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Message" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Message" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="User" positionX="-54" positionY="27" width="128" height="210"/>
     </elements>
 </model>

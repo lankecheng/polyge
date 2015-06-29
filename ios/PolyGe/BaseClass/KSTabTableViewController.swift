@@ -9,8 +9,8 @@
 import UIKit
 
 class KSTabTableViewController: KSTableViewController {
-    var firstTabTitle = NSLocalizedString("Professional", comment: "")
-    var secondTabTitle = NSLocalizedString("Partner", comment: "")
+    var firstTabTitle = KSLocalizedString("Professional")
+    var secondTabTitle = KSLocalizedString("Partner")
     var personType  = PersonType.Professional
     
     override func viewDidLoad() {
