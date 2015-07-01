@@ -4,7 +4,7 @@ protocol KSInputMessageViewDelegate: NSObjectProtocol{
     func sendMessagePhoto(data: NSData, fileName: String)
     func sendMessageVoice(voiceData: NSData,voiceTime: UInt8)
 }
-class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KSAVAudioRecorderDelegate{
+class KSInputMessageView: UIView{
     lazy var audioRecorder: KSAVAudioRecorder = {
         KSAVAudioRecorder(delegate: self)
     }()
@@ -133,8 +133,36 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
             endRecordVoice(nil)
         }
     }
-    
-    //MARK: UITextViewDelegate
+    func didVoiceOrTextBtn(btn: UIButton){//点击切换语音和文字输入
+        btn.selected = !btn.selected
+        if btn.selected{
+            self.inputTextView.resignFirstResponder()
+            self.inputTextView.hidden = true
+            self.pressstartRecorderBtn.hidden = false
+        }else{
+            self.inputTextView.hidden = false
+            self.pressstartRecorderBtn.hidden = true
+        }
+        
+    }
+    func didSendMessageBtn(){
+        if self.inputTextView.text.characters.count > 0{
+            self.inputTextView.resignFirstResponder()
+            self.delegate?.sendMessageText(self.inputTextView.text)
+            self.inputTextView.text = ""
+            //重新滚到顶
+            self.inputTextView.scrollRangeToVisible(NSMakeRange(0,0))
+            self.getCurBtnShowType()
+        }else{
+            self.inputTextView.resignFirstResponder()
+            let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
+            sheet.showInView(self.window!)
+        }
+        
+    }
+
+}
+extension KSInputMessageView: UITextViewDelegate {
     func textViewDidBeginEditing(textView: UITextView) {
         getCurBtnShowType()
     }
@@ -146,14 +174,9 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     func textViewDidEndEditing(textView: UITextView) {
         getCurBtnShowType()
     }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        voiceOrTextBtn.selected = false
-        inputTextView.hidden = false
-        pressstartRecorderBtn.hidden = true
-    }
-    
-    //MARK: KSAVAudioRecorderDelegate
+}
+extension KSInputMessageView: KSAVAudioRecorderDelegate {
+
     func failRecord(failedStr: String){
         KSProgressHUD.dismissWithError(failedStr)
         //缓冲消失时间（最好有回调消失完成)
@@ -174,7 +197,8 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
         })
         
     }
-    //MARK: UIActionSheetDelegate
+}
+extension KSInputMessageView: UIActionSheetDelegate {
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
             getCamera()
@@ -187,28 +211,29 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     //打开相机
     func getCamera(){
         //先设定sourceType为相机，然后判断相机是否可用（ipod）没相机，不可用将sourceType设定为相片库
-        var sourceType = UIImagePickerControllerSourceType.Camera
-        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-            sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        var sourceType :UIImagePickerControllerSourceType = .Camera
+        if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            sourceType = .PhotoLibrary
         }
         let picker = UIImagePickerController()
-        picker.delegate = self
+//        picker.delegate = self
         picker.allowsEditing = true//设置可编辑
         picker.sourceType = sourceType
-        self.viewController()!.presentViewController(picker, animated: true, completion: nil)//进入照相界面
+        self.viewController()?.presentViewController(picker, animated: true, completion: nil)//进入照相界面
     }
     func getImage(){
         let pickerImage = UIImagePickerController()
-        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
-            pickerImage.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        if !UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
+            pickerImage.sourceType = .PhotoLibrary
             pickerImage.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(pickerImage.sourceType)!
         }
-        pickerImage.delegate = self
+//        pickerImage.delegate = self
         pickerImage.allowsEditing = true
-        self.viewController()!.presentViewController(pickerImage, animated: true, completion: nil)
+        self.viewController()?.presentViewController(pickerImage, animated: true, completion: nil)
     }
-    //选择好照片后choose后执行的方法
-    // MARK: UIImagePickerControllerDelegate
+}
+extension KSInputMessageView: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]){
         let img = info[UIImagePickerControllerOriginalImage] as! UIImage
         let smallImg = self.scaleFromImage(img, size: CGSize(width: img.size.width * 0.8,height: img.size.height * 0.8))
@@ -250,34 +275,4 @@ class KSInputMessageView: UIView, UITextViewDelegate, UITextFieldDelegate,UIActi
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    func didVoiceOrTextBtn(btn: UIButton){//点击切换语音和文字输入
-        btn.selected = !btn.selected
-        if btn.selected{
-            self.inputTextView.resignFirstResponder()
-            self.inputTextView.hidden = true
-            self.pressstartRecorderBtn.hidden = false
-        }else{
-            self.inputTextView.hidden = false
-            self.pressstartRecorderBtn.hidden = true
-        }
-
-    }
-    func didSendMessageBtn(){
-        if self.inputTextView.text.characters.count > 0{
-            self.inputTextView.resignFirstResponder()
-            self.delegate?.sendMessageText(self.inputTextView.text)
-            self.inputTextView.text = ""
-            //重新滚到顶
-            self.inputTextView.scrollRangeToVisible(NSMakeRange(0,0))
-            self.getCurBtnShowType()
-        }else{
-            self.inputTextView.resignFirstResponder()
-            let sheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Images")
-            sheet.showInView(self.window!)
-        }
-        
-    }
-
-
 }

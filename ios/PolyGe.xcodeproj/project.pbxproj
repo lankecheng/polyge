@@ -77,6 +77,18 @@
 		948B7BFE71AE837CC321AC05 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A4B5444DF40CB6C2FB822 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3C2FBBDA1B42D36B00800B02 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3C315F601ADF5F360040FF99 /* PolyGe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyGe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C315F651ADF5F370040FF99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = PolyGe/AppDelegate.swift; sourceTree = "<group>"; };
@@ -499,6 +511,7 @@
 				3C315F5E1ADF5F360040FF99 /* Resources */,
 				7025B87EF0C95998DA228AD3 /* Embed Pods Frameworks */,
 				9E4DBCFB9126092F8018B3D0 /* Copy Pods Resources */,
+				3C2FBBDA1B42D36B00800B02 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -842,7 +855,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "40c0aada-ed0d-4769-a8bd-c6b7913e2c4b";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
