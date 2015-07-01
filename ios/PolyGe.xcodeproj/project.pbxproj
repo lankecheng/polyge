@@ -819,7 +819,7 @@
 					"$(PROJECT_DIR)/PolyGe",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.king.PolyGe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.king.polyge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "40c0aada-ed0d-4769-a8bd-c6b7913e2c4b";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
@@ -851,7 +851,7 @@
 					"$(PROJECT_DIR)/PolyGe",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.king.PolyGe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.king.polyge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "40c0aada-ed0d-4769-a8bd-c6b7913e2c4b";
 				SWIFT_OBJC_BRIDGING_HEADER = "PolyGe/PolyGe-Bridging-Header.h";
