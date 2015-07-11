@@ -11,10 +11,13 @@ import UIKit
 class MeViewController: KSTableViewController {
     var dataSource: [[[String:String]]] = []
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerClass(UITableViewCell.classForCoder(),forCellReuseIdentifier:KSStoryboard.TableViewCellIdentifiers.cell)
+        self.setupDataSource()
+       
+    }
+    func setupDataSource() {
         if NSUserDefaults.hasLogin {
             dataSource = [
                 [["image":KSUserHelper.sharedInstance.avatar ?? "User","title":KSUserHelper.sharedInstance.uname],
@@ -36,8 +39,11 @@ class MeViewController: KSTableViewController {
                     ["image":"Help","title":KSLocalizedString("Help")]]
             ]
         }
-
-        
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        dataSource[0][0] = ["image":KSUserHelper.sharedInstance.avatar ?? "User","title":KSUserHelper.sharedInstance.uname]
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,13 +56,15 @@ class MeViewController: KSTableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return dataSource.count
     }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource[section].count
+    
+            return dataSource[section].count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.cell, forIndexPath: indexPath) as UITableViewCell
-        let data = dataSource[indexPath.section][indexPath.row]
+        let data = self.dataSource[indexPath.section][indexPath.row]
         var image = UIImage(named: data["image"]!)
 
         if indexPath.section == 0 && indexPath.row == 0 {
@@ -77,7 +85,7 @@ class MeViewController: KSTableViewController {
         if indexPath.section == 0 && indexPath.row == 0 {
             if let uid = NSUserDefaults.userID {
                 let viewController =  UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier(KSStoryboard.XIBIdentifiers.KSPersonViewController) as! KSPersonViewController
-                viewController.person = KSUserHelper.getUser(uid)
+                viewController.person = KSUserHelper.getUser(uid)!
                 self.navigationController?.pushViewController(
                     viewController, animated: true)
                 

@@ -1,0 +1,6 @@
+#include "CryptoSwift.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/CryptoSwift" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Alamofire" "${PODS_ROOT}/Headers/Public/Cartography" "${PODS_ROOT}/Headers/Public/CoreStore" "${PODS_ROOT}/Headers/Public/CryptoSwift" "${PODS_ROOT}/Headers/Public/DynamicColor" "${PODS_ROOT}/Headers/Public/GCDKit" "${PODS_ROOT}/Headers/Public/Kingfisher" "${PODS_ROOT}/Headers/Public/MJExtension" "${PODS_ROOT}/Headers/Public/ObjectMapper" "${PODS_ROOT}/Headers/Public/ReactiveUI" "${PODS_ROOT}/Headers/Public/RxSwift" "${PODS_ROOT}/Headers/Public/Starscream" "${PODS_ROOT}/Headers/Public/SwiftyJSON"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+PODS_ROOT = ${SRCROOT}
+SKIP_INSTALL = YES

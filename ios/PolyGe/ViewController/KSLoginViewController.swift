@@ -7,10 +7,7 @@
 //
 
 import UIKit
-import MBProgressHUD
 import Alamofire
-import SwiftyJSON
-import MagicalRecord
 
 class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
@@ -93,17 +90,13 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
                 return
             }
             NSUserDefaults.token = json["result"]["token"].string!
-            let user = User(keyValues: json["result"].object,context:  NSManagedObjectContext.MR_defaultContext())
-            NSUserDefaults.userID = user.uid
+            NSUserDefaults.userID = json["result"]["uid"].uInt64Value
             if parameters["phone"] != nil {
                 NSUserDefaults.loginType = .Mobile
             }else{
                 NSUserDefaults.loginType = .Email
             }
-           NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-//            APP_DELEGATE.window?.rootViewController? =  UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UITabBarController
-            APP_DELEGATE.window?.rootViewController?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
-            
+            self.ksNavigationController()?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
         })
     }
 

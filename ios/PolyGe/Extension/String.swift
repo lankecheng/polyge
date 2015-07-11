@@ -10,6 +10,11 @@ import Foundation
 extension String {
     static let phoneRegex = NSPredicate(format: "SELF MATCHES %@", "^1[34578]\\d{9}$")
     static let  emailRegex = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
+    
+    init(data: NSData){
+        let str =  NSString(data: data, encoding: NSUTF8StringEncoding)  as! String
+        self.init(stringLiteral: str)
+    }
     subscript (i: Int) -> Character {
         return self[advance(self.startIndex, i)]
     }

@@ -6,9 +6,8 @@
 //  Copyright © 2015年 king. All rights reserved.
 //
 
-import Foundation
-import MBProgressHUD
-import Async
+import UIKit
+import GCDKit
 extension NSObject {
     class func className() -> String {
         return "\(self)".componentsSeparatedByString(".").last!
@@ -22,7 +21,7 @@ extension NSObject {
 
     func showTextHUD(text: String) {
         guard NSThread.isMainThread() else {
-            Async.main({ () -> Void in
+            GCDQueue.Main.sync({ () -> Void in
                 self.showTextHUD(text)
             })
             return
@@ -35,12 +34,22 @@ extension NSObject {
         hud.mode = .Text
         var duration = Double( KSLocalizedString(text).characters.count)*0.08+0.3
         duration = min(3, max(1, duration))
-        Async.main(after: duration) { () -> Void in
+         GCDQueue.Main.after(duration) { () -> Void in
             if hud.superview != nil {
                 hud.removeFromSuperViewOnHide = true
                 hud.hide(true)
             }
         }
+    }
+    class func hideHUD() {
+        UIWindow.topWindow().hideHUD()
+    }
+    func hideHUD() {
+        guard NSThread.isMainThread() else {
+             GCDQueue.Main.sync{self.hideHUD()}
+            return
+        }
+        MBProgressHUD.hideHUDForView(self.topView(), animated: true)
     }
     func topView() -> UIView {
         if isKindOfClass(UIView) {

@@ -7,16 +7,19 @@
 //
 
 import UIKit
-import CoreData
-import MagicalRecord
+import CoreStore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+//    public override class func initialize() {
+//     
+//    }
     
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        MagicalRecord.setupCoreDataStack()
+        CoreStore.addSQLiteStoreAndWait(fileName: "MyStore-\(NSUserDefaults.userID).sqlite")
+
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.tintColor = KSColor.tintColor
         if NSUserDefaults.hasLogin {
@@ -36,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        config.timeoutIntervalForRequest = 5
         return true
     }
     
@@ -58,7 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(application: UIApplication) {
-        MagicalRecord.cleanUp()
     }
     
 }

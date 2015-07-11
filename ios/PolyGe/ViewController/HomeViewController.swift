@@ -31,4 +31,3 @@ class HomeViewController: KSTabTableViewController {
         return cell
     }
 }
-

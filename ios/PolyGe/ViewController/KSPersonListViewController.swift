@@ -8,9 +8,9 @@
 
 import UIKit
 import Alamofire
-import MagicalRecord
-import SwiftyJSON
-
+import Kingfisher
+import CoreStore
+import ObjectMapper
 class KSPersonListViewController: KSTableViewController {
     var personList: [User] = []
     
@@ -18,8 +18,14 @@ class KSPersonListViewController: KSTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/show_teachers", parameters: ["token":NSUserDefaults.token] ).responseSwiftyJSON ({ (_, _, json, _)  in
-            self.personList =  User.objectArrayWithKeyValuesArray(json["result"].object, context: NSManagedObjectContext.MR_defaultContext()) as! [User]
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            CoreStore.beginSynchronous({ (transaction) -> Void in
+                for objectJson in json["result"].arrayValue {
+                    let user = transaction.create(Into<User>())
+                    Mapper<User>().map(objectJson.object, toObject: user)
+                    self.personList.append(user)
+                }
+                transaction.commit()
+            })
             self.tableView.reloadData()
         })
     }

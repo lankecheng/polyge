@@ -9,11 +9,9 @@
 import UIKit
 
 class KSTabBarViewController: UITabBarController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        KSSocket.sharedInstance.connect()
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,5 +29,4 @@ class KSTabBarViewController: UITabBarController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

@@ -2,7 +2,7 @@
   "name": "Cartography",
   "version": "0.5.0",
   "summary": "Declarative Auto Layout in Swift",
-  "description": "                   Set up your Auto Layout constraints declaratively and without any stringly typing!\n",
+  "description": "Set up your Auto Layout constraints declaratively and without any stringly typing!",
   "homepage": "https://github.com/robb/Cartography",
   "license": {
     "type": "MIT",

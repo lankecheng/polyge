@@ -1,30 +1,31 @@
 PODS:
   - Alamofire (1.2.3)
-  - Async (1.2.1)
-  - Box (1.2.2)
   - Cartography (0.5.0)
+  - CoreStore (1.0.0):
+    - GCDKit (= 1.0.1)
   - CryptoSwift (0.0.11)
-  - Kingfisher (1.4.1)
-  - MagicalRecord (2.3.0)
-  - MBProgressHUD (0.9.1)
-  - MJExtension (2.3.7)
+  - DynamicColor (1.2.1)
+  - GCDKit (1.0.1)
+  - Kingfisher (1.4.2)
+  - MJExtension (2.4.1)
   - ObjectMapper (0.12)
-  - Result (HEAD based on 0.4.4):
-    - Box (~> 1.2)
+  - ReactiveUI (HEAD based on 0.0.2)
+  - RxSwift (1.7)
   - Starscream (0.9.4)
   - SwiftyJSON (2.2.0)
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
-  - Async (from `https://github.com/duemunk/Async.git`, branch `feature/Swift_2.0`)
   - Cartography (from `https://github.com/robb/Cartography.git`, branch `swift-2.0`)
+  - CoreStore (from `https://github.com/JohnEstropia/CoreStore.git`, branch `develop`)
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `swift20`)
+  - DynamicColor
+  - GCDKit (from `https://github.com/JohnEstropia/GCDKit.git`, branch `beta`)
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2.0`)
-  - MagicalRecord
-  - MBProgressHUD
   - MJExtension
   - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-2.0`)
-  - Result (HEAD)
+  - ReactiveUI (HEAD)
+  - RxSwift (from `https://github.com/kzaher/RxSwift.git`, branch `feature/swift2.0`)
   - Starscream (from `https://github.com/daltoniam/Starscream.git`, branch `Swift-2.0`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `xcode7`)
 
@@ -32,21 +33,27 @@ EXTERNAL SOURCES:
   Alamofire:
     :branch: swift-2.0
     :git: https://github.com/Alamofire/Alamofire.git
-  Async:
-    :branch: feature/Swift_2.0
-    :git: https://github.com/duemunk/Async.git
   Cartography:
     :branch: swift-2.0
     :git: https://github.com/robb/Cartography.git
+  CoreStore:
+    :branch: develop
+    :git: https://github.com/JohnEstropia/CoreStore.git
   CryptoSwift:
     :branch: swift20
     :git: https://github.com/krzyzanowskim/CryptoSwift
+  GCDKit:
+    :branch: beta
+    :git: https://github.com/JohnEstropia/GCDKit.git
   Kingfisher:
     :branch: swift-2.0
     :git: https://github.com/onevcat/Kingfisher.git
   ObjectMapper:
     :branch: swift-2.0
     :git: https://github.com/Hearst-DD/ObjectMapper.git
+  RxSwift:
+    :branch: feature/swift2.0
+    :git: https://github.com/kzaher/RxSwift.git
   Starscream:
     :branch: Swift-2.0
     :git: https://github.com/daltoniam/Starscream.git
@@ -58,21 +65,27 @@ CHECKOUT OPTIONS:
   Alamofire:
     :commit: fd71afb3a0af2042b9f05a6b9f29317ad4903703
     :git: https://github.com/Alamofire/Alamofire.git
-  Async:
-    :commit: 23aaf8d7f2e4dc593e87db739b68c58ecb9d19ac
-    :git: https://github.com/duemunk/Async.git
   Cartography:
-    :commit: 7c0bdca4b6f0be4e14f9179de59473306227c714
+    :commit: f4ad9f752a88c39b90ccc10a579ac0e6a11e8047
     :git: https://github.com/robb/Cartography.git
+  CoreStore:
+    :commit: 33268eeea11f7e50abc3974c0272842ed1a4c6cb
+    :git: https://github.com/JohnEstropia/CoreStore.git
   CryptoSwift:
-    :commit: 674cc15c32db9f45b17e8cf90b1dd25e16f12bc4
+    :commit: 52107b755d6f52eb6fcf1a129e26530fb474d806
     :git: https://github.com/krzyzanowskim/CryptoSwift
+  GCDKit:
+    :commit: 32ca69c0d44a572dd2741727fdff9452ca626a8c
+    :git: https://github.com/JohnEstropia/GCDKit.git
   Kingfisher:
-    :commit: 2283c950d5c85f189f4ed35858245d109f3de5e0
+    :commit: 0ea4b75fddfe7a34606fe4ef6d32f97e9c55a375
     :git: https://github.com/onevcat/Kingfisher.git
   ObjectMapper:
     :commit: 813c3be393307c4c27a5cbc7b3223073bea1f21d
     :git: https://github.com/Hearst-DD/ObjectMapper.git
+  RxSwift:
+    :commit: 128cd69d4de99984c4fe1bdeac510faf144d41ed
+    :git: https://github.com/kzaher/RxSwift.git
   Starscream:
     :commit: a69929fbc15d08eb4df32024189dd2e71dfbe322
     :git: https://github.com/daltoniam/Starscream.git
@@ -82,17 +95,17 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
-  Async: d9ee6fc9c415d44fcb892f4c289d1e79ce8ae92d
-  Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
-  Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6
+  Cartography: 314f5ed1495995760487161eeb7a8a0940d88ad3
+  CoreStore: f1c5317b48de595771e35ccb48f1dff5525b65c7
   CryptoSwift: 0ab68b71eaff076bddb1de4e5ac9f85f61c023e2
-  Kingfisher: 962a21cdc2a7b0fa63be3b2c45ea6f180feda535
-  MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
-  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MJExtension: ab4e7c529b2c7a705e6f78f73e33d97929a42b39
+  DynamicColor: 300cc0c33d2e388f7c1ca8c3dc265231dcc60eac
+  GCDKit: b9371181c1d17525a838359993f1e79a7e5fe286
+  Kingfisher: 101c1b4e23cf3bc1e77bdee29d4b9f3e4d720d4f
+  MJExtension: 20f4326e49a0e8d2751612f8c332f47ac09af30e
   ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
-  Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8
+  ReactiveUI: 597b21e143dfc5fe438afc1b7a73c5c7e256175b
+  RxSwift: 10544d9e14377965605f5c7aebffe590f7272ebe
   Starscream: 0ad8f312bb826c3d7610bd842d66528eee34ad81
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.0.beta.2

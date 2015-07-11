@@ -1,8 +1,7 @@
 import UIKit
 import AVFoundation
-import Kingfisher
 import Cartography
-
+import Kingfisher
 class KSMessageCell: UITableViewCell {
     static let NotificationName = "VoicePlayHasInterrupt"
     var avatarBtnView: UIButton!
@@ -88,7 +87,7 @@ class KSMessageCell: UITableViewCell {
         
         //2.头像、消息的布局
         self.messageView.initContent(message)
-        if self.message.from == .Me{
+        if self.message.from {
             messageView.setBackgroundImage(UIImage(named: "Sending_Solid"), forState: .Normal)
             constrain(avatarBtnView,messageView) { view1,view2 in
                 view1.trailing == view1.superview!.trailing - self.Margin

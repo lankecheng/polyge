@@ -1,6 +1,6 @@
 
 import UIKit
-
+import CoreStore
 //定义ui样式
 let kScreenBounds = UIScreen.mainScreen().bounds
 let kCornerRadius: CGFloat = 6
@@ -24,4 +24,5 @@ let APP_BUILD: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"]
 /// Get App version
 let APP_VERSION: String = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
 let APP_DELEGATE = UIApplication.sharedApplication().delegate as! AppDelegate
+
 

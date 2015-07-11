@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreStore
 
 class KSTableViewController: UITableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = .None
@@ -17,5 +19,13 @@ class KSTableViewController: UITableViewController {
         let footView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 1))
         footView.backgroundColor = UIColor.whiteColor()
         tableView.tableFooterView = footView
+        self.view.backgroundColor = UIColor.whiteColor()
+    }
+    
+    // MARK: UITableViewDelegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
+
+

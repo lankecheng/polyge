@@ -9,7 +9,7 @@
 import UIKit
 
 class KSPersonViewController: KSTableViewController {
-    var person = User.MR_createEntity()
+    var person: User?
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableHeaderView?.backgroundColor = KSColor.tintColor
@@ -48,23 +48,23 @@ class KSPersonViewController: KSTableViewController {
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "Native language"
-            cell.detailTextLabel?.text = person.language
+            cell.detailTextLabel?.text = person!.language
         case 1:
             cell.textLabel?.text = "Country"
-            cell.detailTextLabel?.text = person.country
+            cell.detailTextLabel?.text = person!.country
         case 2:
             cell.textLabel?.text = "Occupation"
-            cell.detailTextLabel?.text = person.occupation
+            cell.detailTextLabel?.text = person!.occupation
         case 3:
             cell.textLabel?.text = "Hobbies & interests"
-            cell.detailTextLabel?.text = person.interest
+            cell.detailTextLabel?.text = person!.interest
         case 4:
             let playAudioCell = cell as! KSPlayAudioTableViewCell
             playAudioCell.titleLable.text = "About me"
-            playAudioCell.subTitleLable.text = person.about
+            playAudioCell.subTitleLable.text = person!.about
         case 5:
             let reportOrSwitchCell = cell as! KSReportOrSwitchTableViewCell
-            if person.uid == NSUserDefaults.userID {
+            if person!.uid == NSUserDefaults.userID {
                 reportOrSwitchCell.button.setTitle(KSLocalizedString("Switch Account"), forState: .Normal)
             }else{
                  reportOrSwitchCell.button.setTitle(KSLocalizedString("Report Account"), forState: .Normal)
@@ -81,22 +81,21 @@ class KSPersonViewController: KSTableViewController {
 
     @IBAction func openMessage(sender: AnyObject) {
         let viewController = ChattingViewController()
-        viewController.receiveUserID = person.uid
+        viewController.receiveUserID = person!.uid
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func openPhone(sender: AnyObject) {
         let viewController = ChattingViewController()
-        viewController.receiveUserID = person.uid
+        viewController.receiveUserID = person!.uid
         navigationController?.pushViewController(viewController, animated: true)
     }
     @IBAction func playAudio(sender: AnyObject) {
 
     }
     @IBAction func reportOrSwitchAccout(sender: AnyObject) {
-        if person.uid == NSUserDefaults.userID {
+        if person!.uid == NSUserDefaults.userID {
             navigationController?.pushViewController(KSStoryboard.loginViewController, animated: true)
         }
     }
-    
 }

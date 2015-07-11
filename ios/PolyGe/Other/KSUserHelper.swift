@@ -7,13 +7,17 @@
 //
 
 import Foundation
-import CoreData
+import CoreStore
 class KSUserHelper {
     static let sharedInstance = KSUserHelper()
     var avatar : String?
     var uname: String
     static func getUser(userID: UInt64) -> User? {
-        return User.MR_findByAttribute("uid", withValue: NSNumber(unsignedLongLong: userID)).first as? User
+        return  CoreStore.fetchOne(
+            From(User),
+            Where("uid", isEqualTo: NSNumber(unsignedLongLong:userID))
+            )
+
     }
     init() {
         if let user = KSUserHelper.getUser(NSUserDefaults.userID!) {
@@ -23,4 +27,5 @@ class KSUserHelper {
             uname = "xxx"
         }
     }
+    
 }

@@ -43,5 +43,9 @@ struct KSStoryboard {
             return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController() as! UINavigationController
         }
     }
-    static let loginViewController =  UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("login")
+    static var loginViewController:UIViewController {
+        get{
+          return UIStoryboard(name: "Login", bundle: nil).instantiateViewControllerWithIdentifier("login")
+        }
+    }
 }

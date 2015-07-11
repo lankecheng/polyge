@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import MagicalRecord
-import SwiftyJSON
 
 class KSViewModel {
 

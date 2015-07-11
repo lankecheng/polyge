@@ -20,7 +20,7 @@ class KSMessageContentView: UIButton {
                 view.top == view.superview!.top + 5
                 view.superview!.width == view.width + 25
                 view.superview!.height == view.height + 10
-                if message.from == .Me{
+                if message.from{
                     view.leading == view.superview!.leading + 10
                 }else{
                     view.leading == view.superview!.leading + 15
@@ -29,7 +29,7 @@ class KSMessageContentView: UIButton {
             self.backLabel.textColor = UIColor.blackColor()
             self.backLabel.font = UIFont.systemFontOfSize(14)
             self.backLabel.numberOfLines = 0
-            let attributedString = NSMutableAttributedString(string: NSString(data: self.message.messageData, encoding: NSUTF8StringEncoding) as! String)
+            let attributedString = NSMutableAttributedString(string:String(data: message.messageData))
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 5
             attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
@@ -58,7 +58,7 @@ class KSMessageContentView: UIButton {
                 view.top == view.superview!.top + 5
                 view.superview!.width == view.width + 25
                 view.superview!.height == view.height + 10
-                if message.from == .Me{
+                if message.from {
                     view.leading == view.superview!.leading + 10
                 }else{
                     view.leading == view.superview!.leading + 15
@@ -72,7 +72,7 @@ class KSMessageContentView: UIButton {
             self.voiceImageView = UIImageView()
             self.addSubview(voiceTimeLabel)
             self.addSubview(voiceImageView)
-            if message.from == .Me{
+            if message.from {
                 self.voiceTimeLabel.textAlignment = NSTextAlignment.Right
                 constrain(voiceTimeLabel,voiceImageView) {view1,view2 in
                     view1.top == view1.superview!.top + 5

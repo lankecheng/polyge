@@ -1,8 +1,8 @@
 
 import UIKit
 import AVFoundation
-import Async
 import CoreData
+import GCDKit
 class KSChatTableView: UITableView, UITableViewDelegate{
    
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -24,22 +24,18 @@ class KSChatTableView: UITableView, UITableViewDelegate{
     
     func scrollToBottom(){//显示最后一行消息
         //用自动布局的话，要延迟一下才能滚到最后一行,而且还要延迟两次.
-        Async.main(after: 0.01){
+        GCDQueue.Main.after(0.01){
             if self.contentSize.height > self.frame.height {
                 let indexPath = NSIndexPath(forRow: self.numberOfRowsInSection(0) - 1, inSection: 0)
                 self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
-                 Async.main(after: 0.01){
+                 GCDQueue.Main.after(0.01){
                     self.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
                 }
                
             }
         }
     }
-    
-    func sendMessage(message: Message){//新增消息记录
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        self.scrollToBottom()
-    }
+
     
     //处理监听触发事件
     func sensorStateChange(notification: NSNotificationCenter){

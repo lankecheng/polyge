@@ -8,8 +8,6 @@
 
 import Foundation
 import Alamofire
-import MagicalRecord
-import SwiftyJSON
 
 class KSPersonListViewModel :KSViewModel{
     var userList : [User] = []
