@@ -27,7 +27,7 @@ class KSAVAudioRecorder {
                 do {
                     try AVAudioSession.sharedInstance().setActive(true)
                 } catch let error as NSError {
-                        NSLog(error.localizedDescription)
+                    NSLog(error.localizedDescription)
                 } catch {
                     fatalError()
                 }
@@ -50,16 +50,15 @@ class KSAVAudioRecorder {
             }
         }
         let settings = [
-            //录音格式 无法使用`
-            AVFormatIDKey: Int(kAudioFormatLinearPCM),//kAudioFormatAppleLossless,
+            AVFormatIDKey: Int( kAudioFormatMPEG4AAC),
             //通道数
             AVNumberOfChannelsKey: 2 as NSNumber,
             //采样率
-            AVSampleRateKey : 11025.0,//44100.0
-            AVLinearPCMBitDepthKey: 16,
+            AVSampleRateKey : 44100,
+            AVLinearPCMBitDepthKey: 8,
             //音频质量,采样质量
-            AVEncoderAudioQualityKey: AVAudioQuality.Min.rawValue
-
+            AVEncoderAudioQualityKey: AVAudioQuality.Medium.rawValue,
+            AVSampleRateConverterAudioQualityKey:AVAudioQuality.Medium.rawValue
         ]
         do {
             self.recorder = try AVAudioRecorder(URL: NSURL(fileURLWithPath: self.soundFilePath), settings: settings)

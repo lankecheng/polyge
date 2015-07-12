@@ -22,4 +22,22 @@ extension UIImage {
 //        // 返回新的改变大小后的图片
 //        return transformedImg
     }
+    func normalizedImage() -> UIImage {
+        var returnMe = self
+        if self.size.width > SCREEN_WIDTH * SCREEN_SCALE {
+            returnMe = UIImage.imageWithImage(self, scaledToWidth: SCREEN_WIDTH * SCREEN_SCALE)
+        }
+        return returnMe
+    }
+    static func imageWithImage(sourceImage: UIImage,scaledToWidth:Float) -> UIImage {
+        let oldWidth = sourceImage.size.width
+        let scaleFactor = scaledToWidth / oldWidth
+        let newHeight = sourceImage.size.height * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        sourceImage.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }

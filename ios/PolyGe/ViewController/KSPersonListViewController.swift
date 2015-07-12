@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import Kingfisher
 import CoreStore
-import ObjectMapper
 class KSPersonListViewController: KSTableViewController {
     var personList: [User] = []
     
@@ -21,7 +20,7 @@ class KSPersonListViewController: KSTableViewController {
             CoreStore.beginSynchronous({ (transaction) -> Void in
                 for objectJson in json["result"].arrayValue {
                     let user = transaction.create(Into<User>())
-                    Mapper<User>().map(objectJson.object, toObject: user)
+                    user.fromJSON(objectJson)
                     self.personList.append(user)
                 }
                 transaction.commit()

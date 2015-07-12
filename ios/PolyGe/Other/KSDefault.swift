@@ -1,8 +1,13 @@
 
 import UIKit
 import CoreStore
-//定义ui样式
+//屏幕相关
 let kScreenBounds = UIScreen.mainScreen().bounds
+let SCREEN_WIDTH = kScreenBounds.width
+let SCREEN_HEIGHT = kScreenBounds.height
+let SCREEN_SCALE = UIScreen.mainScreen().scale
+let SCREEN_RATIO = SCREEN_WIDTH/320.0
+//定义ui样式
 let kCornerRadius: CGFloat = 6
 let kBorderWidth: CGFloat = 0.5
 let kBorderColor = UIColor.lightGrayColor().CGColor
@@ -24,5 +29,6 @@ let APP_BUILD: String = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"]
 /// Get App version
 let APP_VERSION: String = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
 let APP_DELEGATE = UIApplication.sharedApplication().delegate as! AppDelegate
+let APPBundleIdentifier = NSBundle.mainBundle().infoDictionary!["CFBundleIdentifier"] as! String
 
 

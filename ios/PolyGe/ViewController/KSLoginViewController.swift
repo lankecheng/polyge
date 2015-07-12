@@ -8,13 +8,13 @@
 
 import UIKit
 import Alamofire
-
+import CoreStore
 class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var userPassTextField: UITextField!
     @IBOutlet weak var userLoginBtn: UIButton!
     var isRelogin = false
-
+    
     override func viewDidLoad() {
         let defaults = NSUserDefaults.standardUserDefaults()
         let username = defaults["username"] as? String
@@ -53,32 +53,32 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             self.view.showTextHUD("用户名不能为空")
             return
         }
-//        guard self.userNameTextField.text?.characters.count > 0 else{
-//            self.view.showTextHUD("手机号码或邮箱不能为空")
-//            return
-//        }
-//        guard self.userNameTextField.text!.checkMobileNumble() || self.userNameTextField.text!.checkEmail() else{
-//            self.view.showTextHUD("输入的手机号码或邮箱输入有误")
-//            return
-//        }
+        //        guard self.userNameTextField.text?.characters.count > 0 else{
+        //            self.view.showTextHUD("手机号码或邮箱不能为空")
+        //            return
+        //        }
+        //        guard self.userNameTextField.text!.checkMobileNumble() || self.userNameTextField.text!.checkEmail() else{
+        //            self.view.showTextHUD("输入的手机号码或邮箱输入有误")
+        //            return
+        //        }
         guard self.userPassTextField.text?.characters.count > 0 else{
             self.view.showTextHUD("密码不能为空")
             return
         }
-
+        
         userLoginBtn.enabled = false
         let userName = userNameTextField.text
         let password = userPassTextField.text
         if userName!.characters.count == 0 || password!.characters.count == 0 {
             userLoginBtn.enabled = true
-           return
+            return
         }
         var parameters = ["pwd":self.userPassTextField.text!,"client_id":"123","user_name":self.userNameTextField.text!]
-//        if self.userNameTextField.text!.checkMobileNumble() {
-//            parameters["phone"] = self.userNameTextField.text!
-//        }else{
-//            parameters["email"] = self.userNameTextField.text!
-//        }
+        //        if self.userNameTextField.text!.checkMobileNumble() {
+        //            parameters["phone"] = self.userNameTextField.text!
+        //        }else{
+        //            parameters["email"] = self.userNameTextField.text!
+        //        }
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = KSLocalizedString("正在登录")
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
@@ -91,6 +91,11 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             }
             NSUserDefaults.token = json["result"]["token"].string!
             NSUserDefaults.userID = json["result"]["uid"].uInt64Value
+            CoreStore.beginSynchronous({ (transaction) -> Void in
+                let user = transaction.create(Into<User>())
+                user.fromJSON(json["result"])
+                transaction.commit()
+            })
             if parameters["phone"] != nil {
                 NSUserDefaults.loginType = .Mobile
             }else{
@@ -99,5 +104,5 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             self.ksNavigationController()?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
         })
     }
-
+    
 }

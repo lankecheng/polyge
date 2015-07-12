@@ -55,14 +55,6 @@
 		3C7E36FB1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */; };
 		3C7E36FD1B3E7E4000B7B272 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */; };
 		3C7E37011B3E898D00B7B272 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E37001B3E898D00B7B272 /* NSObject.swift */; };
-		3C7FBCF61B3C374B000DF45B /* MJConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCE61B3C374B000DF45B /* MJConst.m */; };
-		3C7FBCF71B3C374B000DF45B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCE91B3C374B000DF45B /* MJFoundation.m */; };
-		3C7FBCF81B3C374B000DF45B /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCEB1B3C374B000DF45B /* MJProperty.m */; };
-		3C7FBCF91B3C374B000DF45B /* MJType.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCED1B3C374B000DF45B /* MJType.m */; };
-		3C7FBCFA1B3C374B000DF45B /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCEF1B3C374B000DF45B /* NSObject+MJCoding.m */; };
-		3C7FBCFB1B3C374B000DF45B /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCF11B3C374B000DF45B /* NSObject+MJKeyValue.m */; };
-		3C7FBCFC1B3C374B000DF45B /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCF31B3C374B000DF45B /* NSObject+MJProperty.m */; };
-		3C7FBCFD1B3C374B000DF45B /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7FBCF51B3C374B000DF45B /* NSString+MJExtension.m */; };
 		3C8DCD1B1AE274A6005216F2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8DCD1A1AE274A6005216F2 /* Info.plist */; };
 		3CA3E0981B50B765001A3E93 /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3E0971B50B765001A3E93 /* NSDate.swift */; };
 		3CB3DDDA1AF5F4AE00289E8B /* KSAVAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3DDD11AF5F4AE00289E8B /* KSAVAudioPlayer.swift */; };
@@ -132,23 +124,6 @@
 		3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSPlayReportOrSwitchTableViewCell.swift; path = View/KSPlayReportOrSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIWindow.swift; path = Extension/UIWindow.swift; sourceTree = "<group>"; };
 		3C7E37001B3E898D00B7B272 /* NSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSObject.swift; path = Extension/NSObject.swift; sourceTree = "<group>"; };
-		3C7FBCE51B3C374B000DF45B /* MJConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJConst.h; sourceTree = "<group>"; };
-		3C7FBCE61B3C374B000DF45B /* MJConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJConst.m; sourceTree = "<group>"; };
-		3C7FBCE71B3C374B000DF45B /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
-		3C7FBCE81B3C374B000DF45B /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
-		3C7FBCE91B3C374B000DF45B /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
-		3C7FBCEA1B3C374B000DF45B /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
-		3C7FBCEB1B3C374B000DF45B /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
-		3C7FBCEC1B3C374B000DF45B /* MJType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJType.h; sourceTree = "<group>"; };
-		3C7FBCED1B3C374B000DF45B /* MJType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJType.m; sourceTree = "<group>"; };
-		3C7FBCEE1B3C374B000DF45B /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
-		3C7FBCEF1B3C374B000DF45B /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
-		3C7FBCF01B3C374B000DF45B /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
-		3C7FBCF11B3C374B000DF45B /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
-		3C7FBCF21B3C374B000DF45B /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
-		3C7FBCF31B3C374B000DF45B /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
-		3C7FBCF41B3C374B000DF45B /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
-		3C7FBCF51B3C374B000DF45B /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		3C8DCD1A1AE274A6005216F2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CA3E0971B50B765001A3E93 /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDate.swift; path = Extension/NSDate.swift; sourceTree = "<group>"; };
 		3CB3DDD11AF5F4AE00289E8B /* KSAVAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSAVAudioPlayer.swift; path = Vendors/KSAVAudioPlayer.swift; sourceTree = SOURCE_ROOT; };
@@ -371,30 +346,6 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		3C7FBCE41B3C374B000DF45B /* MJExtension */ = {
-			isa = PBXGroup;
-			children = (
-				3C7FBCE51B3C374B000DF45B /* MJConst.h */,
-				3C7FBCE61B3C374B000DF45B /* MJConst.m */,
-				3C7FBCE71B3C374B000DF45B /* MJExtension.h */,
-				3C7FBCE81B3C374B000DF45B /* MJFoundation.h */,
-				3C7FBCE91B3C374B000DF45B /* MJFoundation.m */,
-				3C7FBCEA1B3C374B000DF45B /* MJProperty.h */,
-				3C7FBCEB1B3C374B000DF45B /* MJProperty.m */,
-				3C7FBCEC1B3C374B000DF45B /* MJType.h */,
-				3C7FBCED1B3C374B000DF45B /* MJType.m */,
-				3C7FBCEE1B3C374B000DF45B /* NSObject+MJCoding.h */,
-				3C7FBCEF1B3C374B000DF45B /* NSObject+MJCoding.m */,
-				3C7FBCF01B3C374B000DF45B /* NSObject+MJKeyValue.h */,
-				3C7FBCF11B3C374B000DF45B /* NSObject+MJKeyValue.m */,
-				3C7FBCF21B3C374B000DF45B /* NSObject+MJProperty.h */,
-				3C7FBCF31B3C374B000DF45B /* NSObject+MJProperty.m */,
-				3C7FBCF41B3C374B000DF45B /* NSString+MJExtension.h */,
-				3C7FBCF51B3C374B000DF45B /* NSString+MJExtension.m */,
-			);
-			path = MJExtension;
-			sourceTree = "<group>";
-		};
 		3C96BFE41AE896B900DB857E /* KSChat */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,7 +387,6 @@
 			children = (
 				3C6528A41B5012D1001A40CC /* MBProgressHUD */,
 				3C3AD3CF1B4EB5910068AFDB /* SwiftNotice.swift */,
-				3C7FBCE41B3C374B000DF45B /* MJExtension */,
 				3C4627BD1AE92A990024D32F /* KMPlaceholderTextView */,
 				3C96BFE41AE896B900DB857E /* KSChat */,
 			);
@@ -627,7 +577,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C63D9241B38591A00EF6196 /* String.swift in Sources */,
-				3C7FBCFB1B3C374B000DF45B /* NSObject+MJKeyValue.m in Sources */,
 				3C63D9251B38591A00EF6196 /* UIImage.swift in Sources */,
 				3C63D92A1B38596900EF6196 /* KSButton.swift in Sources */,
 				3C63D9071B3858AA00EF6196 /* SearchViewController.swift in Sources */,
@@ -646,19 +595,15 @@
 				3CF54C401B3EFF3100D431E5 /* NSMutableData.swift in Sources */,
 				3C63D9261B38591A00EF6196 /* UIView.swift in Sources */,
 				3C63D9151B3858E400EF6196 /* KSLanguageTableViewCell.swift in Sources */,
-				3C7FBCFC1B3C374B000DF45B /* NSObject+MJProperty.m in Sources */,
 				3C315F661ADF5F370040FF99 /* AppDelegate.swift in Sources */,
 				3C3AD3D01B4EB5910068AFDB /* SwiftNotice.swift in Sources */,
 				3CB3DDDD1AF5F4AE00289E8B /* KSChattingViewController.swift in Sources */,
-				3C7FBCFA1B3C374B000DF45B /* NSObject+MJCoding.m in Sources */,
 				3C7E36FD1B3E7E4000B7B272 /* UIWindow.swift in Sources */,
-				3C7FBCFD1B3C374B000DF45B /* NSString+MJExtension.m in Sources */,
 				3C63D9191B3858E400EF6196 /* KSPlayAudioTableViewCell.swift in Sources */,
 				3CDDD1801B4EC84F00B6D12E /* LastMessage.swift in Sources */,
 				3C63D90B1B3858B900EF6196 /* MessageViewController.swift in Sources */,
 				3C63D9211B38591A00EF6196 /* Color.swift in Sources */,
 				3CF770161B3D7EF300671944 /* KSPersonListViewModel.swift in Sources */,
-				3C7FBCF81B3C374B000DF45B /* MJProperty.m in Sources */,
 				3CF770191B3D822600671944 /* KSViewModel.swift in Sources */,
 				3C63D94B1B385A5B00EF6196 /* KSStoryboard.swift in Sources */,
 				3CB3DDDC1AF5F4AE00289E8B /* KSChatTableView.swift in Sources */,
@@ -672,7 +617,6 @@
 				3C63D92F1B38599000EF6196 /* KSTabTableViewController.swift in Sources */,
 				3C63D8FF1B38585200EF6196 /* KSRegistViewController.swift in Sources */,
 				3CB3DDDE1AF5F4AE00289E8B /* KSInputMessageView.swift in Sources */,
-				3C7FBCF61B3C374B000DF45B /* MJConst.m in Sources */,
 				3C63D9511B385AE900EF6196 /* PolyGe.xcdatamodeld in Sources */,
 				3C6528A71B5012D1001A40CC /* MBProgressHUD.m in Sources */,
 				3CB3DDE21AF5F4AE00289E8B /* KSProgressHUD.swift in Sources */,
@@ -681,9 +625,7 @@
 				3C63D90A1B3858B900EF6196 /* ChattingViewController.swift in Sources */,
 				3CB3DDE01AF5F4AE00289E8B /* KSMessageCell.swift in Sources */,
 				3C63D9271B38591A00EF6196 /* UIViewController.swift in Sources */,
-				3C7FBCF71B3C374B000DF45B /* MJFoundation.m in Sources */,
 				3C63D9361B3859C000EF6196 /* KSNotificationHelp.swift in Sources */,
-				3C7FBCF91B3C374B000DF45B /* MJType.m in Sources */,
 				3C63D9031B38589B00EF6196 /* HomeViewController.swift in Sources */,
 				3C63D9141B3858E400EF6196 /* KSFrendListTableViewCell.swift in Sources */,
 				3C7E37011B3E898D00B7B272 /* NSObject.swift in Sources */,

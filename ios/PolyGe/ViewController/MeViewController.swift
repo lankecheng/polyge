@@ -39,6 +39,7 @@ class MeViewController: KSTableViewController {
                     ["image":"Help","title":KSLocalizedString("Help")]]
             ]
         }
+        self.tableView.reloadData()
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

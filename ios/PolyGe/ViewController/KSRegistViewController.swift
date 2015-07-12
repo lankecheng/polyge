@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreStore
 
 class KSRegisterViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField!
@@ -81,7 +82,12 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
                     return
                 }
                 NSUserDefaults.token = json["result"]["token"].string!
-                NSUserDefaults.userID = json["result"]["uid"].uInt64Value
+                CoreStore.beginSynchronous({ (transaction) -> Void in
+                    let user = transaction.create(Into<User>())
+                    user.fromJSON(json["result"])
+                    NSUserDefaults.userID = user.uid
+                    transaction.commit()
+                })
                 if parameters["phone"] != nil {
                     NSUserDefaults.loginType = .Mobile
                 }else{

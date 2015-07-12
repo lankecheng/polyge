@@ -1,4 +1,25 @@
 PODS:
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - Alamofire (1.2.3)
   - Cartography (0.5.0)
   - CoreStore (1.0.0):
@@ -7,12 +28,13 @@ PODS:
   - DynamicColor (1.2.1)
   - GCDKit (1.0.1)
   - Kingfisher (1.4.2)
-  - MJExtension (2.4.1)
-  - ObjectMapper (0.12)
+  - Qiniu (7.0.11.1):
+    - AFNetworking (~> 2.0)
   - ReactiveUI (HEAD based on 0.0.2)
   - RxSwift (1.7)
   - Starscream (0.9.4)
   - SwiftyJSON (2.2.0)
+  - Timepiece (0.3.4)
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
@@ -22,12 +44,12 @@ DEPENDENCIES:
   - DynamicColor
   - GCDKit (from `https://github.com/JohnEstropia/GCDKit.git`, branch `beta`)
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, branch `swift-2.0`)
-  - MJExtension
-  - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-2.0`)
+  - Qiniu
   - ReactiveUI (HEAD)
   - RxSwift (from `https://github.com/kzaher/RxSwift.git`, branch `feature/swift2.0`)
   - Starscream (from `https://github.com/daltoniam/Starscream.git`, branch `Swift-2.0`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `xcode7`)
+  - Timepiece (from `https://github.com/naoty/Timepiece.git`, branch `swift-2.0`)
 
 EXTERNAL SOURCES:
   Alamofire:
@@ -48,9 +70,6 @@ EXTERNAL SOURCES:
   Kingfisher:
     :branch: swift-2.0
     :git: https://github.com/onevcat/Kingfisher.git
-  ObjectMapper:
-    :branch: swift-2.0
-    :git: https://github.com/Hearst-DD/ObjectMapper.git
   RxSwift:
     :branch: feature/swift2.0
     :git: https://github.com/kzaher/RxSwift.git
@@ -60,6 +79,9 @@ EXTERNAL SOURCES:
   SwiftyJSON:
     :branch: xcode7
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+  Timepiece:
+    :branch: swift-2.0
+    :git: https://github.com/naoty/Timepiece.git
 
 CHECKOUT OPTIONS:
   Alamofire:
@@ -69,7 +91,7 @@ CHECKOUT OPTIONS:
     :commit: f4ad9f752a88c39b90ccc10a579ac0e6a11e8047
     :git: https://github.com/robb/Cartography.git
   CoreStore:
-    :commit: 33268eeea11f7e50abc3974c0272842ed1a4c6cb
+    :commit: 8cfe8e2500803334d4b2f09cf36ee0e5c72043bb
     :git: https://github.com/JohnEstropia/CoreStore.git
   CryptoSwift:
     :commit: 52107b755d6f52eb6fcf1a129e26530fb474d806
@@ -80,9 +102,6 @@ CHECKOUT OPTIONS:
   Kingfisher:
     :commit: 0ea4b75fddfe7a34606fe4ef6d32f97e9c55a375
     :git: https://github.com/onevcat/Kingfisher.git
-  ObjectMapper:
-    :commit: 813c3be393307c4c27a5cbc7b3223073bea1f21d
-    :git: https://github.com/Hearst-DD/ObjectMapper.git
   RxSwift:
     :commit: 128cd69d4de99984c4fe1bdeac510faf144d41ed
     :git: https://github.com/kzaher/RxSwift.git
@@ -92,8 +111,12 @@ CHECKOUT OPTIONS:
   SwiftyJSON:
     :commit: fb9f6b43cd8d3684c3129793057eb2a2564e2430
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+  Timepiece:
+    :commit: b6872e14c26953c784047c0d84f31ddcc7792732
+    :git: https://github.com/naoty/Timepiece.git
 
 SPEC CHECKSUMS:
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
   Cartography: 314f5ed1495995760487161eeb7a8a0940d88ad3
   CoreStore: f1c5317b48de595771e35ccb48f1dff5525b65c7
@@ -101,11 +124,11 @@ SPEC CHECKSUMS:
   DynamicColor: 300cc0c33d2e388f7c1ca8c3dc265231dcc60eac
   GCDKit: b9371181c1d17525a838359993f1e79a7e5fe286
   Kingfisher: 101c1b4e23cf3bc1e77bdee29d4b9f3e4d720d4f
-  MJExtension: 20f4326e49a0e8d2751612f8c332f47ac09af30e
-  ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
+  Qiniu: 080a6728b969f6b0e77c9de574ede37e78b0912b
   ReactiveUI: 597b21e143dfc5fe438afc1b7a73c5c7e256175b
   RxSwift: 10544d9e14377965605f5c7aebffe590f7272ebe
   Starscream: 0ad8f312bb826c3d7610bd842d66528eee34ad81
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
+  Timepiece: bfe018a2754a7ae6b2b7ab683a90da45c28e32a0
 
 COCOAPODS: 0.38.0.beta.2

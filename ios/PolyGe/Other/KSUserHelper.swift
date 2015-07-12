@@ -8,16 +8,16 @@
 
 import Foundation
 import CoreStore
+import RxSwift
 class KSUserHelper {
-    static let sharedInstance = KSUserHelper()
-    var avatar : String?
+    static var sharedInstance = KSUserHelper()
+    var avatar: String?
     var uname: String
     static func getUser(userID: UInt64) -> User? {
         return  CoreStore.fetchOne(
             From(User),
             Where("uid", isEqualTo: NSNumber(unsignedLongLong:userID))
             )
-
     }
     init() {
         if let user = KSUserHelper.getUser(NSUserDefaults.userID!) {

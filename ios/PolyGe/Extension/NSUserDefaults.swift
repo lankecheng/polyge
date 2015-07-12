@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreStore
 extension NSUserDefaults {
     subscript (key: String) -> AnyObject? {
         get{
@@ -51,7 +52,12 @@ extension NSUserDefaults {
         return (standardUserDefaults()["userID"] as? NSNumber)?.unsignedLongLongValue
         }
         set{
-            standardUserDefaults()["userID"] = NSNumber(unsignedLongLong: newValue!)
+            if newValue != self.userID {
+                standardUserDefaults()["userID"] = NSNumber(unsignedLongLong: newValue!)
+                CoreStore.defaultStack = DataStack()
+                CoreStore.addSQLiteStoreAndWait(fileName: "MyStore-\(NSUserDefaults.userID).sqlite")
+                KSUserHelper.sharedInstance = KSUserHelper()
+            }
         }
     }
     

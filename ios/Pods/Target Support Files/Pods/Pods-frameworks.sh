@@ -52,6 +52,7 @@ code_sign_if_enabled() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'Pods/AFNetworking.framework'
   install_framework 'Pods/Alamofire.framework'
   install_framework 'Pods/Cartography.framework'
   install_framework 'Pods/CoreStore.framework'
@@ -59,14 +60,15 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods/DynamicColor.framework'
   install_framework 'Pods/GCDKit.framework'
   install_framework 'Pods/Kingfisher.framework'
-  install_framework 'Pods/MJExtension.framework'
-  install_framework 'Pods/ObjectMapper.framework'
+  install_framework 'Pods/Qiniu.framework'
   install_framework 'Pods/ReactiveUI.framework'
   install_framework 'Pods/RxSwift.framework'
   install_framework 'Pods/Starscream.framework'
   install_framework 'Pods/SwiftyJSON.framework'
+  install_framework 'Pods/Timepiece.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'Pods/AFNetworking.framework'
   install_framework 'Pods/Alamofire.framework'
   install_framework 'Pods/Cartography.framework'
   install_framework 'Pods/CoreStore.framework'
@@ -74,10 +76,10 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods/DynamicColor.framework'
   install_framework 'Pods/GCDKit.framework'
   install_framework 'Pods/Kingfisher.framework'
-  install_framework 'Pods/MJExtension.framework'
-  install_framework 'Pods/ObjectMapper.framework'
+  install_framework 'Pods/Qiniu.framework'
   install_framework 'Pods/ReactiveUI.framework'
   install_framework 'Pods/RxSwift.framework'
   install_framework 'Pods/Starscream.framework'
   install_framework 'Pods/SwiftyJSON.framework'
+  install_framework 'Pods/Timepiece.framework'
 fi

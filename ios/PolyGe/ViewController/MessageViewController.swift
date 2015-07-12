@@ -33,7 +33,7 @@ class MessageViewController: KSTabTableViewController,ListSectionObserver {
         let curMessage = monitor![indexPath]
         let receiveUser = KSUserHelper.getUser(curMessage.userID)!
         cell.userNameLable.text = receiveUser.uname;
-        //        cell.avatarImageView.image =
+//                cell.avatarImageView.image =
         cell.interestLable.text = curMessage.info
         return cell
     }
@@ -52,6 +52,7 @@ class MessageViewController: KSTabTableViewController,ListSectionObserver {
             OrderBy(.Ascending("createDate"))
         )
         monitor?.addObserver(self)
+        self.tableView.reloadData()
     }
     deinit {
         monitor?.removeObserver(self)
@@ -79,13 +80,14 @@ class MessageViewController: KSTabTableViewController,ListSectionObserver {
     }
     
     func listMonitor(monitor: ListMonitor<LastMessage>, didUpdateObject object: LastMessage, atIndexPath indexPath: NSIndexPath) {
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
     func listMonitor(monitor: ListMonitor<LastMessage>, didMoveObject object: LastMessage, fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        
-        self.tableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Automatic)
-        self.tableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Automatic)
+        if fromIndexPath != toIndexPath {
+            self.tableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Automatic)            
+        }
     }
     func listMonitor(monitor: ListMonitor<LastMessage>, didInsertSection sectionInfo: NSFetchedResultsSectionInfo, toSectionIndex sectionIndex: Int) {
         

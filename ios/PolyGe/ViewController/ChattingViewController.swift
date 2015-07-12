@@ -75,9 +75,10 @@ class ChattingViewController: KSChattingViewController,ListSectionObserver {
     }
     
     func listMonitor(monitor: ListMonitor<Message>, didMoveObject object: Message, fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        
-        self.tableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Automatic)
-        self.tableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Automatic)
+        if fromIndexPath != toIndexPath {
+            self.tableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Automatic)
+        }
     }
     func listMonitor(monitor: ListMonitor<Message>, didInsertSection sectionInfo: NSFetchedResultsSectionInfo, toSectionIndex sectionIndex: Int) {
         
@@ -118,6 +119,7 @@ extension ChattingViewController: KSInputMessageViewDelegate{
     func sendMessageText(text: String) {
         CoreStore.defaultStack.beginSynchronous { (transaction) -> Void in
             let message = transaction.create(Into<Message>())
+            message.from = true
             message.createDate = NSDate()
             message.messageData = text.dataUsingEncoding(NSUTF8StringEncoding)!
             message.userID = self.receiveUserID
@@ -138,6 +140,7 @@ extension ChattingViewController: KSInputMessageViewDelegate{
     func sendMessagePhoto(data: NSData, fileName: String){
         CoreStore.defaultStack.beginSynchronous { (transaction) -> Void in
             let message = transaction.create(Into<Message>())
+            message.from = true
             message.createDate = NSDate()
             message.userID = self.receiveUserID
             message.messageData = data
@@ -156,6 +159,7 @@ extension ChattingViewController: KSInputMessageViewDelegate{
     func sendMessageVoice(voiceData: NSData,voiceTime: UInt8){
         CoreStore.defaultStack.beginSynchronous { (transaction) -> Void in
             let message = transaction.create(Into<Message>())
+            message.from = true
             message.createDate = NSDate()
             message.userID = self.receiveUserID
             message.messageData = voiceData
