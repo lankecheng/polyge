@@ -81,7 +81,7 @@ class KSMessageCell: UITableViewCell {
         self.message = message
         //1.是否显示时间
         if self.message.showDateLabel{
-            self.timeLable.text = self.message.createDate.relativeTimeToString()
+            self.timeLable.text = self.message.createDate.relativeTimeToString(true)
             self.timeLable.sizeToFit()
         }
         

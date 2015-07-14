@@ -9,9 +9,7 @@
 import Foundation
 import Alamofire
 
-class KSPersonListViewModel :KSViewModel{
-    var userList : [User] = []
-    func refreshCommand() {
-    }
+class KSPersonListViewModel :KSArrayViewModel{
+ 
     
 }

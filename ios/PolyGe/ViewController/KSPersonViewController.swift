@@ -24,8 +24,6 @@ class KSPersonViewController: KSTableViewController {
         }
     }
     
-    //MARK: UITableViewDelegate
-    
     
     //MARK: UITableViewDataSource
 

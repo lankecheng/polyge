@@ -10,7 +10,7 @@ import UIKit
 import CoreStore
 
 class KSTableViewController: UITableViewController {
-
+    var viewModel: KSDataSource?
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = .None
@@ -21,11 +21,21 @@ class KSTableViewController: UITableViewController {
         tableView.tableFooterView = footView
         self.view.backgroundColor = UIColor.whiteColor()
     }
+    // MARK: UITableViewDataSource
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.viewModel?.numberOfSections() ?? 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return self.viewModel?.numberOfObjectsInSection(section) ?? 0
+    }
     
     // MARK: UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
+    
 }
 
 

@@ -10,6 +10,10 @@
 		0D405D7851AD8CFF492DA449 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A4B5444DF40CB6C2FB822 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3C18700F1B48FB2A00E23498 /* KSSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C18700E1B48FB2A00E23498 /* KSSocket.swift */; };
 		3C1870111B4929E800E23498 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1870101B4929E800E23498 /* Request.swift */; };
+		3C2E930E1B53E4A3009B1E71 /* KSArrayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E930D1B53E4A3009B1E71 /* KSArrayViewModel.swift */; };
+		3C2E93101B53E4EB009B1E71 /* KSCoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E930F1B53E4EB009B1E71 /* KSCoreDataViewModel.swift */; };
+		3C2E93121B53EA56009B1E71 /* KSMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E93111B53EA56009B1E71 /* KSMessageViewModel.swift */; };
+		3C2E93161B53ED20009B1E71 /* KSLastMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E93151B53ED20009B1E71 /* KSLastMessageViewModel.swift */; };
 		3C315F661ADF5F370040FF99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C315F651ADF5F370040FF99 /* AppDelegate.swift */; };
 		3C315F6F1ADF5F370040FF99 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C315F6E1ADF5F370040FF99 /* Images.xcassets */; };
 		3C3AD3D01B4EB5910068AFDB /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3AD3CF1B4EB5910068AFDB /* SwiftNotice.swift */; };
@@ -69,12 +73,16 @@
 		3CDDD1801B4EC84F00B6D12E /* LastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDDD17E1B4EC84F00B6D12E /* LastMessage.swift */; };
 		3CF54C401B3EFF3100D431E5 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF54C3F1B3EFF3100D431E5 /* NSMutableData.swift */; };
 		3CF770161B3D7EF300671944 /* KSPersonListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF770151B3D7EF300671944 /* KSPersonListViewModel.swift */; };
-		3CF770191B3D822600671944 /* KSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF770181B3D822600671944 /* KSViewModel.swift */; };
+		3CF770191B3D822600671944 /* KSDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF770181B3D822600671944 /* KSDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3C18700E1B48FB2A00E23498 /* KSSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSSocket.swift; path = Http/KSSocket.swift; sourceTree = "<group>"; };
 		3C1870101B4929E800E23498 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Http/Request.swift; sourceTree = "<group>"; };
+		3C2E930D1B53E4A3009B1E71 /* KSArrayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSArrayViewModel.swift; path = ViewModel/KSArrayViewModel.swift; sourceTree = "<group>"; };
+		3C2E930F1B53E4EB009B1E71 /* KSCoreDataViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSCoreDataViewModel.swift; path = ViewModel/KSCoreDataViewModel.swift; sourceTree = "<group>"; };
+		3C2E93111B53EA56009B1E71 /* KSMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSMessageViewModel.swift; path = ViewModel/KSMessageViewModel.swift; sourceTree = "<group>"; };
+		3C2E93151B53ED20009B1E71 /* KSLastMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSLastMessageViewModel.swift; path = ViewModel/KSLastMessageViewModel.swift; sourceTree = "<group>"; };
 		3C315F601ADF5F360040FF99 /* PolyGe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyGe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C315F651ADF5F370040FF99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = PolyGe/AppDelegate.swift; sourceTree = "<group>"; };
 		3C315F6E1ADF5F370040FF99 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -141,7 +149,7 @@
 		3CF54C3F1B3EFF3100D431E5 /* NSMutableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSMutableData.swift; path = Extension/NSMutableData.swift; sourceTree = "<group>"; };
 		3CF54C421B3F9E9C00D431E5 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		3CF770151B3D7EF300671944 /* KSPersonListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSPersonListViewModel.swift; path = ViewModel/KSPersonListViewModel.swift; sourceTree = "<group>"; };
-		3CF770181B3D822600671944 /* KSViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSViewModel.swift; path = ViewModel/KSViewModel.swift; sourceTree = "<group>"; };
+		3CF770181B3D822600671944 /* KSDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSDataSource.swift; path = ViewModel/KSDataSource.swift; sourceTree = "<group>"; };
 		579B045C10844C1DCF15FCF1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		751A4B5444DF40CB6C2FB822 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB89FF9BC148D0677E9181B0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -434,7 +442,11 @@
 			isa = PBXGroup;
 			children = (
 				3CF770151B3D7EF300671944 /* KSPersonListViewModel.swift */,
-				3CF770181B3D822600671944 /* KSViewModel.swift */,
+				3CF770181B3D822600671944 /* KSDataSource.swift */,
+				3C2E930D1B53E4A3009B1E71 /* KSArrayViewModel.swift */,
+				3C2E930F1B53E4EB009B1E71 /* KSCoreDataViewModel.swift */,
+				3C2E93151B53ED20009B1E71 /* KSLastMessageViewModel.swift */,
+				3C2E93111B53EA56009B1E71 /* KSMessageViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -578,6 +590,7 @@
 			files = (
 				3C63D9241B38591A00EF6196 /* String.swift in Sources */,
 				3C63D9251B38591A00EF6196 /* UIImage.swift in Sources */,
+				3C2E93121B53EA56009B1E71 /* KSMessageViewModel.swift in Sources */,
 				3C63D92A1B38596900EF6196 /* KSButton.swift in Sources */,
 				3C63D9071B3858AA00EF6196 /* SearchViewController.swift in Sources */,
 				3C63D9041B38589B00EF6196 /* KSPersonListViewController.swift in Sources */,
@@ -592,6 +605,7 @@
 				3C63D9161B3858E400EF6196 /* KSMessageListTableViewCell.swift in Sources */,
 				3C63D9371B3859C000EF6196 /* KSUserHelper.swift in Sources */,
 				3C1870111B4929E800E23498 /* Request.swift in Sources */,
+				3C2E93161B53ED20009B1E71 /* KSLastMessageViewModel.swift in Sources */,
 				3CF54C401B3EFF3100D431E5 /* NSMutableData.swift in Sources */,
 				3C63D9261B38591A00EF6196 /* UIView.swift in Sources */,
 				3C63D9151B3858E400EF6196 /* KSLanguageTableViewCell.swift in Sources */,
@@ -604,7 +618,7 @@
 				3C63D90B1B3858B900EF6196 /* MessageViewController.swift in Sources */,
 				3C63D9211B38591A00EF6196 /* Color.swift in Sources */,
 				3CF770161B3D7EF300671944 /* KSPersonListViewModel.swift in Sources */,
-				3CF770191B3D822600671944 /* KSViewModel.swift in Sources */,
+				3CF770191B3D822600671944 /* KSDataSource.swift in Sources */,
 				3C63D94B1B385A5B00EF6196 /* KSStoryboard.swift in Sources */,
 				3CB3DDDC1AF5F4AE00289E8B /* KSChatTableView.swift in Sources */,
 				3CB3DDDA1AF5F4AE00289E8B /* KSAVAudioPlayer.swift in Sources */,
@@ -626,12 +640,14 @@
 				3CB3DDE01AF5F4AE00289E8B /* KSMessageCell.swift in Sources */,
 				3C63D9271B38591A00EF6196 /* UIViewController.swift in Sources */,
 				3C63D9361B3859C000EF6196 /* KSNotificationHelp.swift in Sources */,
+				3C2E930E1B53E4A3009B1E71 /* KSArrayViewModel.swift in Sources */,
 				3C63D9031B38589B00EF6196 /* HomeViewController.swift in Sources */,
 				3C63D9141B3858E400EF6196 /* KSFrendListTableViewCell.swift in Sources */,
 				3C7E37011B3E898D00B7B272 /* NSObject.swift in Sources */,
 				3C63D92B1B38596900EF6196 /* KSColor.swift in Sources */,
 				3C18700F1B48FB2A00E23498 /* KSSocket.swift in Sources */,
 				3C63D8FE1B38585200EF6196 /* KSLoginViewController.swift in Sources */,
+				3C2E93101B53E4EB009B1E71 /* KSCoreDataViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

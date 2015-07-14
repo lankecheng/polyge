@@ -117,7 +117,6 @@
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$20/h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46A-Fd-Rqv">
                                             <rect key="frame" x="503" y="26.5" width="49" height="21.5"/>
                                             <animations/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -648,9 +647,8 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today 14:42" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DPT-jv-opf">
-                                            <rect key="frame" x="452.5" y="19.5" width="99.5" height="21.5"/>
+                                            <rect key="frame" x="467.5" y="19.5" width="99.5" height="21.5"/>
                                             <animations/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -661,7 +659,7 @@
                                         <constraint firstItem="y34-Zd-Fpb" firstAttribute="leading" secondItem="7fB-RX-W4V" secondAttribute="trailing" constant="15" id="06f-JD-WlA"/>
                                         <constraint firstAttribute="centerY" secondItem="7fB-RX-W4V" secondAttribute="centerY" id="GJM-P8-L7m"/>
                                         <constraint firstItem="y34-Zd-Fpb" firstAttribute="top" secondItem="Q6m-Gd-02l" secondAttribute="bottom" constant="2" id="P1h-gw-Adv"/>
-                                        <constraint firstAttribute="trailing" secondItem="DPT-jv-opf" secondAttribute="trailing" constant="15" id="QEv-O0-ftH"/>
+                                        <constraint firstAttribute="trailing" secondItem="DPT-jv-opf" secondAttribute="trailing" id="QEv-O0-ftH"/>
                                         <constraint firstAttribute="centerY" secondItem="y34-Zd-Fpb" secondAttribute="centerY" constant="-10" id="Waz-zv-olT"/>
                                         <constraint firstAttribute="centerY" secondItem="DPT-jv-opf" secondAttribute="centerY" id="br3-C7-rOH"/>
                                         <constraint firstItem="7fB-RX-W4V" firstAttribute="leading" secondItem="PQT-QI-oDQ" secondAttribute="leading" constant="12" id="gKJ-0e-zKH"/>
@@ -672,6 +670,7 @@
                                 <connections>
                                     <outlet property="avatarImageView" destination="7fB-RX-W4V" id="xcQ-wd-2XB"/>
                                     <outlet property="interestLable" destination="y34-Zd-Fpb" id="aA9-jX-ueQ"/>
+                                    <outlet property="timeLable" destination="DPT-jv-opf" id="1nJ-DA-dFg"/>
                                     <outlet property="userNameLable" destination="Q6m-Gd-02l" id="Xpi-VG-vRd"/>
                                     <segue destination="omc-8d-A1J" kind="show" id="nYX-9E-wWd"/>
                                 </connections>

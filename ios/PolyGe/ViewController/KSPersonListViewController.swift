@@ -11,36 +11,32 @@ import Alamofire
 import Kingfisher
 import CoreStore
 class KSPersonListViewController: KSTableViewController {
-    var personList: [User] = []
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         Alamofire.request(.GET, URLString: NSUserDefaults.host+"/show_teachers", parameters: ["token":NSUserDefaults.token] ).responseSwiftyJSON ({ (_, _, json, _)  in
             CoreStore.beginSynchronous({ (transaction) -> Void in
+                
+                var personList: [User] = []
                 for objectJson in json["result"].arrayValue {
                     let user = transaction.create(Into<User>())
                     user.fromJSON(objectJson)
-                    self.personList.append(user)
+                    personList.append(user)
                 }
+                self.viewModel = KSArrayViewModel(dataSource: personList)
                 transaction.commit()
             })
             self.tableView.reloadData()
         })
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     //MARK: UITableViewDataSource
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return personList.count
-    }
-    
+  
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell =  tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.personCell, forIndexPath: indexPath) as! KSPersonListTableViewCell
-        let user = personList[indexPath.row]
+        let user =  self.viewModel![indexPath] as! User
         cell.userNameLable.text = user.uname
         cell.interestLable.text = KSLocalizedString("Topic: ") + (user.interest ?? "")
         if let avatar = user.avatar {
@@ -52,8 +48,8 @@ class KSPersonListViewController: KSTableViewController {
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let cell = sender as! KSPersonListTableViewCell
-        let index = self.tableView.indexPathForCell(cell)
+        let indexPath = self.tableView.indexPathForCell(cell)
         let viewControll = segue.destinationViewController as! KSPersonViewController
-        viewControll.person = self.personList[index!.row]
+        viewControll.person = self.viewModel![indexPath!] as! User
     }
 }

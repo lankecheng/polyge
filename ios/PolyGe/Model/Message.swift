@@ -117,6 +117,7 @@ class Message: NSManagedObject {
             data.getBytes(&timeInterval, range: NSMakeRange(17,8))
             timeInterval = UInt64(bigEndian: timeInterval)
             message.createDate = NSDate(timeIntervalSince1970: Double(timeInterval))
+            //不用服务器传回来的，这样就不会错位了
             if message.messageType == .Voice {
                 message.messageData = data.subdataWithRange(NSMakeRange(25, data.length - 30))
                 data.getBytes(&message.voiceTime, range: NSMakeRange(data.length - 5,1))

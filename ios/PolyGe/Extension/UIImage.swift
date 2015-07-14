@@ -29,10 +29,10 @@ extension UIImage {
         }
         return returnMe
     }
-    static func imageWithImage(sourceImage: UIImage,scaledToWidth:Float) -> UIImage {
+    static func imageWithImage(sourceImage: UIImage,scaledToWidth:CGFloat) -> UIImage {
         let oldWidth = sourceImage.size.width
-        let scaleFactor = scaledToWidth / oldWidth
-        let newHeight = sourceImage.size.height * scaleFactor
+        let scaleFactor = scaledToWidth/oldWidth
+        let newHeight = sourceImage.size.height*scaleFactor
         let newWidth = oldWidth * scaleFactor
         UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
         sourceImage.drawInRect(CGRectMake(0, 0, newWidth, newHeight))

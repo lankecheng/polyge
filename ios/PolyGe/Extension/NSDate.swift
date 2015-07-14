@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Timepiece
 extension NSDate {
     
     // MARK: To String
@@ -24,47 +25,29 @@ extension NSDate {
         return formatter.stringFromDate(self)
     }
     
-    func relativeTimeToString() -> String
+    func relativeTimeToString(containTime: Bool = false) -> String
     {
-        let time = self.timeIntervalSince1970
-        let now = NSDate().timeIntervalSince1970
-        
-        let seconds = now - time
-        let minutes = round(seconds/60)
-        let hours = round(minutes/60)
-        let days = round(hours/24)
-        
-        if seconds < 10 {
-            return NSLocalizedString("just now", comment: "relative time")
-        } else if seconds < 60 {
-            return NSLocalizedString("\(Int(seconds)) seconds ago", comment: "relative time")
-        }
-        
-        if minutes < 60 {
-            if minutes == 1 {
-                return NSLocalizedString("1 minute ago", comment: "relative time")
-            } else {
-                return NSLocalizedString("\(Int(minutes)) minutes ago", comment: "relative time")
+        let timeInterval = NSDate() - self
+        if timeInterval < 1.day {
+            return self.stringFromFormat("HH:mm")
+        }else if timeInterval < 2.day {
+            if containTime {
+                 KSLocalizedString("昨天") + self.stringFromFormat(" HH:mm")
+            }else{
+                return KSLocalizedString("昨天")
+            }
+        }else if timeInterval < 7.week {
+            if containTime {
+                return self.stringFromFormat("EEE HH:mm")
+            }else{
+                return self.stringFromFormat("EEE")
             }
         }
-        
-        if hours < 24 {
-            if hours == 1 {
-                return NSLocalizedString("1 hour ago", comment: "relative time")
-            } else {
-                return NSLocalizedString("\(Int(hours)) hours ago", comment: "relative time")
-            }
+        if containTime {
+            return self.stringFromFormat("yy/MM/dd HH:mm")
+        }else{
+            return self.stringFromFormat("yy/MM/dd")
         }
-        
-        if days < 7 {
-            if days == 1 {
-                return NSLocalizedString("1 day ago", comment: "relative time")
-            } else {
-                return NSLocalizedString("\(Int(days)) days ago", comment: "relative time")
-            }
-        }
-        
-        return self.toString()
     }
 }
 

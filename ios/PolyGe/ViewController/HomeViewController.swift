@@ -9,25 +9,22 @@
 import UIKit
 
 class HomeViewController: KSTabTableViewController {
-    let languages = ["English","Chinese"]
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel = KSArrayViewModel(dataSource: ["English","Chinese"])
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     //MARK: UITableViewDataSource
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages.count
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell =  tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.languageCell, forIndexPath: indexPath) as! KSLanguageTableViewCell
-        cell.label.text = KSLocalizedString(languages[indexPath.row])
-        cell.languageImage.image = UIImage(named: languages[indexPath.row])
+        let str = self.viewModel![indexPath] as! String
+        cell.label.text = KSLocalizedString(str)
+        cell.languageImage.image = UIImage(named: str)
         return cell
     }
 }

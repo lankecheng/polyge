@@ -13,6 +13,8 @@ class KSPersonListTableViewCell: UITableViewCell {
     @IBOutlet weak var userNameLable: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var interestLable: UILabel!
+    @IBOutlet weak var timeLable: UILabel!
+
 
 
     override func awakeFromNib() {
