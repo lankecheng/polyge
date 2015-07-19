@@ -187,7 +187,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="J1F-jX-NH2">
-                            <rect key="frame" x="0.0" y="64" width="600" height="410"/>
+                            <rect key="frame" x="0.0" y="64" width="600" height="268"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="User" translatesAutoresizingMaskIntoConstraints="NO" id="Ryo-E4-fej">
@@ -341,7 +341,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="subtitleCell" textLabel="CSC-ZP-C3b" detailTextLabel="xmh-mZ-a8Q" style="IBUITableViewCellStyleSubtitle" id="4qc-1e-vIN">
-                                <rect key="frame" x="0.0" y="496" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="354" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4qc-1e-vIN" id="G3T-81-hkM">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -369,7 +369,7 @@
                                 <animations/>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="playAudioCell" rowHeight="80" id="xI3-Is-fkz" customClass="KSPlayAudioTableViewCell" customModule="PolyGe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="540" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="398" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xI3-Is-fkz" id="NgU-eS-tRv">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
@@ -428,7 +428,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reportOrSwitchCell" id="NHa-po-QhU" customClass="KSReportOrSwitchTableViewCell" customModule="PolyGe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="620" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="478" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NHa-po-QhU" id="oeN-Hq-SYW">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -468,7 +468,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Cc-04-JFc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2657" y="-275.99999999999989"/>
+            <point key="canvasLocation" x="2657" y="-276"/>
         </scene>
         <!--Home-->
         <scene sceneID="wso-ul-2nF">
