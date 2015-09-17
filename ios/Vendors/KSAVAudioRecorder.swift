@@ -92,7 +92,7 @@ class KSAVAudioRecorder {
     }
     
     func storePath() -> String{
-        return NSTemporaryDirectory().stringByAppendingPathComponent("recording-\(NSDate())")
+        return "\(NSTemporaryDirectory())\recording-\(NSDate())"
     }
     
     func deleteCurRecording(curPath: String){

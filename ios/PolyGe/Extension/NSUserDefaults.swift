@@ -55,7 +55,11 @@ extension NSUserDefaults {
             if newValue != self.userID {
                 standardUserDefaults()["userID"] = NSNumber(unsignedLongLong: newValue!)
                 CoreStore.defaultStack = DataStack()
-                CoreStore.addSQLiteStoreAndWait(fileName: "MyStore-\(NSUserDefaults.userID).sqlite")
+                do{
+                    try CoreStore.addSQLiteStoreAndWait(fileName: "MyStore-\(NSUserDefaults.userID).sqlite")
+                }catch{
+                    
+                }
                 KSUserHelper.sharedInstance = KSUserHelper()
             }
         }

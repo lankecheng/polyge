@@ -1,13 +1,16 @@
 #import <UIKit/UIKit.h>
 
 #import "GTM_Base64.h"
+#import "QNALAssetFile.h"
 #import "QNAsyncRun.h"
 #import "QNCrc32.h"
 #import "QNEtag.h"
+#import "QNFile.h"
+#import "QNFileDelegate.h"
 #import "QNUrlSafeBase64.h"
 #import "QNVersion.h"
 #import "QNDns.h"
-#import "QNhttpDelegate.h"
+#import "QNHttpDelegate.h"
 #import "QNHttpManager.h"
 #import "QNResponseInfo.h"
 #import "QNSessionManager.h"

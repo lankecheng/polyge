@@ -21,7 +21,7 @@ extension Request {
     
     :returns: The request.
     */
-    public func responseSwiftyJSON(completionHandler: (NSURLRequest, NSHTTPURLResponse?, JSON, NSError?) -> Void) -> Self {
+    public func responseSwiftyJSON(completionHandler: (NSURLRequest, NSHTTPURLResponse?, Result<JSON>) -> Void) -> Self {
         return responseSwiftyJSON(nil, options: .AllowFragments, completionHandler:completionHandler)
     }
     
@@ -34,10 +34,9 @@ extension Request {
     
     :returns: The request.
     */
-    public func responseSwiftyJSON(queue: dispatch_queue_t? = nil, options: NSJSONReadingOptions = .AllowFragments, completionHandler: (NSURLRequest, NSHTTPURLResponse?, JSON, NSError?) -> Void) -> Self {
-        
-        return response(queue: queue, serializer: Request.JSONResponseSerializer(options: options), completionHandler: { (request, response, object, error) in
-            if let error = error {
+    public func responseSwiftyJSON(queue: dispatch_queue_t? = nil, options: NSJSONReadingOptions = .AllowFragments, completionHandler: (NSURLRequest, NSHTTPURLResponse?, Result<JSON>) -> Void) -> Self {
+        return response(queue: queue, responseSerializer: Request.JSONResponseSerializer(options: options), completionHandler: { (request, response, result) in
+            if let error = result.error {
                 UIWindow.hideHUD()
                 if error.code == 3840 {
                     UIWindow.showTextHUD("授权失效,请重新登录")
@@ -49,13 +48,14 @@ extension Request {
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 var responseJSON: JSON
-                if error != nil || object == nil{
-                    responseJSON = JSON.null
+                if let object = result.data {
+                    responseJSON = JSON(object)
                 } else {
-                    responseJSON = JSON(object!)
+                    responseJSON = JSON.null
                 }
+                let result1: Result<JSON> = .Success(responseJSON)
                 dispatch_async(queue ?? dispatch_get_main_queue(), {
-                    completionHandler(self.request!, self.response, responseJSON, error)
+                    completionHandler(self.request!, self.response, result1)
                 })
             })
         })

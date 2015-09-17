@@ -43,16 +43,45 @@ public final class DetachedDataTransaction: BaseDataTransaction {
     */
     public func commit(completion: (result: SaveResult) -> Void) {
         
-        CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
-            "Attempted to commit a \(typeName(self)) outside its designated queue."
-        )
-        
         self.context.saveAsynchronouslyWithCompletion { (result) -> Void in
             
             self.result = result
             completion(result: result)
         }
+    }
+    
+    /**
+    Begins a child transaction where `NSManagedObject` creates, updates, and deletes can be made. This is useful for making temporary changes, such as partially filled forms.
+    
+    - returns: a `DetachedDataTransaction` instance where creates, updates, and deletes can be made.
+    */
+    @warn_unused_result
+    public func beginDetached() -> DetachedDataTransaction {
+        
+        return DetachedDataTransaction(
+            mainContext: self.context,
+            queue: self.transactionQueue
+        )
+    }
+    
+    /**
+    Returns the `NSManagedObjectContext` for this detached transaction. Use only for cases where external frameworks need an `NSManagedObjectContext` instance to work with.
+    
+    Note that it is the developer's responsibility to ensure the following:
+    - that the `DetachedDataTransaction` that owns this context should be strongly referenced and prevented from being deallocated during the context's lifetime
+    - that all saves will be done either through the `DetachedDataTransaction`'s `commit(...)` method, or by calling `save()` manually on the context, its parent, and all other ancestor contexts if there are any.
+    */
+    public var internalContext: NSManagedObjectContext {
+        
+        return self.context
+    }
+    
+    
+    // MARK: Internal
+    
+    internal override var bypassesQueueing: Bool {
+        
+        return true
     }
 }
 

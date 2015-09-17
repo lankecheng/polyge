@@ -38,11 +38,11 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
     // MARK: Public
     
     /**
-    Saves the transaction changes asynchronously. This method should not be used after the `commit()` method was already called once.
+    Saves the transaction changes. This method should not be used after the `commit()` method was already called once.
     
     - parameter completion: the block executed after the save completes. Success or failure is reported by the `SaveResult` argument of the block.
     */
-    public func commit(completion: (result: SaveResult) -> Void) {
+    public func commit(completion: (result: SaveResult) -> Void = { _ in }) {
         
         CoreStore.assert(
             self.transactionQueue.isCurrentExecutionContext(),
@@ -54,32 +54,15 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
         )
         
         self.isCommitted = true
-        let semaphore = GCDSemaphore(0)
+        let group = GCDGroup()
+        group.enter()
         self.context.saveAsynchronouslyWithCompletion { (result) -> Void in
             
             self.result = result
             completion(result: result)
-            semaphore.signal()
+            group.leave()
         }
-        semaphore.wait()
-    }
-    
-    /**
-    Saves the transaction changes and waits for completion synchronously. This method should not be used after the `commit()` method was already called once.
-    */
-    public func commit() {
-        
-        CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
-            "Attempted to commit a \(typeName(self)) outside its designated queue."
-        )
-        CoreStore.assert(
-            !self.isCommitted,
-            "Attempted to commit a \(typeName(self)) more than once."
-        )
-        
-        self.isCommitted = true
-        self.result = self.context.saveSynchronously()
+        group.wait()
     }
     
     /**
@@ -130,6 +113,7 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
     - parameter object: the `NSManagedObject` type to be edited
     - returns: an editable proxy for the specified `NSManagedObject`.
     */
+    @warn_unused_result
     public override func edit<T: NSManagedObject>(object: T?) -> T? {
         
         CoreStore.assert(
@@ -147,6 +131,7 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
     - parameter objectID: the `NSManagedObjectID` for the object to be edited
     - returns: an editable proxy for the specified `NSManagedObject`.
     */
+    @warn_unused_result
     public override func edit<T: NSManagedObject>(into: Into<T>, _ objectID: NSManagedObjectID) -> T? {
         
         CoreStore.assert(

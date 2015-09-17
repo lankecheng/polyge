@@ -54,7 +54,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func create<T: NSManagedObject>(into: Into<T>) -> T {
         
         CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
+            self.bypassesQueueing || self.transactionQueue.isCurrentExecutionContext(),
             "Attempted to create an entity of type \(typeName(T)) outside its designated queue."
         )
         
@@ -104,14 +104,18 @@ public /*abstract*/ class BaseDataTransaction {
     - parameter object: the `NSManagedObject` type to be edited
     - returns: an editable proxy for the specified `NSManagedObject`.
     */
+    @warn_unused_result
     public func edit<T: NSManagedObject>(object: T?) -> T? {
         
         CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
+            self.bypassesQueueing || self.transactionQueue.isCurrentExecutionContext(),
             "Attempted to update an entity of type \(typeName(object)) outside its designated queue."
         )
-        
-        return object?.inContext(self.context)
+        guard let object = object else {
+            
+            return nil
+        }
+        return self.context.fetchExisting(object)
     }
     
     /**
@@ -121,10 +125,11 @@ public /*abstract*/ class BaseDataTransaction {
     - parameter objectID: the `NSManagedObjectID` for the object to be edited
     - returns: an editable proxy for the specified `NSManagedObject`.
     */
+    @warn_unused_result
     public func edit<T: NSManagedObject>(into: Into<T>, _ objectID: NSManagedObjectID) -> T? {
         
         CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
+            self.bypassesQueueing || self.transactionQueue.isCurrentExecutionContext(),
             "Attempted to update an entity of type \(typeName(T)) outside its designated queue."
         )
         CoreStore.assert(
@@ -132,8 +137,7 @@ public /*abstract*/ class BaseDataTransaction {
                 || (into.configuration ?? Into.defaultConfigurationName) == objectID.persistentStore?.configurationName,
             "Attempted to update an entity of type \(typeName(T)) but the specified persistent store do not match the `NSManagedObjectID`."
         )
-        
-        return (into.entityClass as! NSManagedObject.Type).inContext(self.context, withObjectID: objectID) as? T
+        return self.fetchExisting(objectID) as? T
     }
     
     /**
@@ -144,11 +148,14 @@ public /*abstract*/ class BaseDataTransaction {
     public func delete(object: NSManagedObject?) {
         
         CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
+            self.bypassesQueueing || self.transactionQueue.isCurrentExecutionContext(),
             "Attempted to delete an entity outside its designated queue."
         )
-        
-        object?.inContext(self.context)?.deleteFromContext()
+        guard let object = object else {
+            
+            return
+        }
+        self.context.fetchExisting(object)?.deleteFromContext()
     }
     
     /**
@@ -171,14 +178,14 @@ public /*abstract*/ class BaseDataTransaction {
     public func delete(objects: [NSManagedObject?]) {
         
         CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
+            self.bypassesQueueing || self.transactionQueue.isCurrentExecutionContext(),
             "Attempted to delete entities outside their designated queue."
         )
         
         let context = self.context
-        for object in objects {
+        for case let object? in objects {
             
-            object?.inContext(context)?.deleteFromContext()
+            context.fetchExisting(object)?.deleteFromContext()
         }
     }
     
@@ -190,7 +197,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func rollback() {
         
         CoreStore.assert(
-            self.transactionQueue.isCurrentExecutionContext(),
+            self.bypassesQueueing || self.transactionQueue.isCurrentExecutionContext(),
             "Attempted to rollback a \(typeName(self)) outside its designated queue."
         )
         
@@ -219,5 +226,10 @@ public /*abstract*/ class BaseDataTransaction {
         self.context = context
         
         context.parentTransaction = self
+    }
+    
+    internal var bypassesQueueing: Bool {
+        
+        return false
     }
 }

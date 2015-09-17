@@ -41,13 +41,13 @@ class Message: NSManagedObject {
     }
     var userIcon: String? {
         get{
-            let user = KSUserHelper.getUser(userID)
+            let user = User.getUser(userID)
             return user?.avatar
         }
     }
     var userName: String?{
         get{
-            let user = KSUserHelper.getUser(userID)
+            let user = User.getUser(userID)
             return user?.avatar
         }
     }

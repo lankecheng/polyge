@@ -46,7 +46,7 @@ internal extension NSManagedObjectContext {
         }
         set {
             
-            if self.parentContext != nil {
+            guard self.parentContext == nil else {
                 
                 return
             }
@@ -75,7 +75,6 @@ internal extension NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         context.parentContext = rootContext
         context.mergePolicy = NSRollbackMergePolicy
-        context.shouldCascadeSavesToParent = false
         context.undoManager = nil
         context.setupForCoreStoreWithContextName("com.corestore.maincontext")
         context.observerForDidSaveNotification = NotificationObserver(
@@ -83,11 +82,15 @@ internal extension NSManagedObjectContext {
             object: rootContext,
             closure: { [weak context] (note) -> Void in
                 
-                context?.performBlockAndWait { () -> Void in
+                context?.performBlock { () -> Void in
                     
+                    let updatedObjects = (note.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>) ?? []
+                    for object in updatedObjects {
+                        
+                        context?.objectWithID(object.objectID).willAccessValueForKey(nil)
+                    }
                     context?.mergeChangesFromContextDidSaveNotification(note)
                 }
-                return
             }
         )
         

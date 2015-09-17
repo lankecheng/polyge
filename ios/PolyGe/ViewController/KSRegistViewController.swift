@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import CoreStore
 
 class KSRegisterViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField!
@@ -65,16 +64,18 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = KSLocalizedString("注册中")
-        Alamofire.request(.GET, URLString: NSUserDefaults.host+"/register", parameters: parameters).responseSwiftyJSON({
-            (request, response, json, error) in
+        Alamofire.request(.GET, NSUserDefaults.host+"/register", parameters: parameters).responseSwiftyJSON({
+            (request, response, result) in
+            let json = result.value!
             guard json["success"].boolValue else{
                 hud.removeFromSuperview()
                 self.view.showTextHUD(json["msg"].string!)
                 return
             }
             hud.labelText = KSLocalizedString("登录中")
-            Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
-                (request, response, json, error) in
+            Alamofire.request(.GET, NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
+                (request, response, result) in
+                let json = result.value!
                 hud.removeFromSuperview()
                 guard json["success"].boolValue  else{
                     self.view.showTextHUD(json["msg"].string!)
@@ -82,12 +83,7 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
                     return
                 }
                 NSUserDefaults.token = json["result"]["token"].string!
-                CoreStore.beginSynchronous({ (transaction) -> Void in
-                    let user = transaction.create(Into<User>())
-                    user.fromJSON(json["result"])
-                    NSUserDefaults.userID = user.uid
-                    transaction.commit()
-                })
+                User.updateUser(json["result"])
                 if parameters["phone"] != nil {
                     NSUserDefaults.loginType = .Mobile
                 }else{

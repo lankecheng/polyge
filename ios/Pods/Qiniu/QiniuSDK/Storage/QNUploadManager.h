@@ -13,7 +13,7 @@
 @class QNResponseInfo;
 @class QNUploadOption;
 @class QNConfiguration;
-
+@class ALAsset;
 /**
  *    上传完成后的回调函数
  *
@@ -83,11 +83,11 @@ typedef void (^QNUpCompletionHandler)(QNResponseInfo *info, NSString *key, NSDic
  *    @param completionHandler 上传完成后的回调函数
  *    @param option            上传时传入的可选参数
  */
-- (void)putData:(NSData *)data
-            key:(NSString *)key
-          token:(NSString *)token
-       complete:(QNUpCompletionHandler)completionHandler
-         option:(QNUploadOption *)option;
+- (void) putData:(NSData *)data
+             key:(NSString *)key
+           token:(NSString *)token
+        complete:(QNUpCompletionHandler)completionHandler
+          option:(QNUploadOption *)option;
 
 /**
  *    上传文件
@@ -98,10 +98,25 @@ typedef void (^QNUpCompletionHandler)(QNResponseInfo *info, NSString *key, NSDic
  *    @param completionHandler 上传完成后的回调函数
  *    @param option            上传时传入的可选参数
  */
-- (void)putFile:(NSString *)filePath
-            key:(NSString *)key
-          token:(NSString *)token
-       complete:(QNUpCompletionHandler)completionHandler
-         option:(QNUploadOption *)option;
+- (void) putFile:(NSString *)filePath
+             key:(NSString *)key
+           token:(NSString *)token
+        complete:(QNUpCompletionHandler)completionHandler
+          option:(QNUploadOption *)option;
+
+/**
+ *    上传ALAsset文件
+ *
+ *    @param alasset           ALAsset文件
+ *    @param key               上传到云存储的key，为nil时表示是由七牛生成
+ *    @param token             上传需要的token, 由服务器生成
+ *    @param completionHandler 上传完成后的回调函数
+ *    @param option            上传时传入的可选参数
+ */
+- (void) putALAsset:(ALAsset *)asset
+                key:(NSString *)key
+              token:(NSString *)token
+           complete:(QNUpCompletionHandler)completionHandler
+             option:(QNUploadOption *)option;
 
 @end

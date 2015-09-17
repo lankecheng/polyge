@@ -16,7 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        CoreStore.addSQLiteStoreAndWait(fileName: "MyStore-\(NSUserDefaults.userID).sqlite")
+        do{
+           try CoreStore.addSQLiteStoreAndWait(fileName: "MyStore-\(NSUserDefaults.userID).sqlite")
+        }catch{
+            
+        }
 
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.tintColor = KSColor.tintColor

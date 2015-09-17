@@ -8,14 +8,14 @@
 
 import UIKit
 import Alamofire
-import Kingfisher
 import CoreStore
 class KSPersonListViewController: KSTableViewController {
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Alamofire.request(.GET, URLString: NSUserDefaults.host+"/show_teachers", parameters: ["token":NSUserDefaults.token] ).responseSwiftyJSON ({ (_, _, json, _)  in
+        Alamofire.request(.GET, NSUserDefaults.host+"/show_teachers", parameters: ["token":NSUserDefaults.token] ).responseSwiftyJSON ({ (_, _, result)  in
+            let json = result.value!
             CoreStore.beginSynchronous({ (transaction) -> Void in
                 
                 var personList: [User] = []

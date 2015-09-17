@@ -33,7 +33,7 @@ internal extension NSManagedObjectModel {
     
     // MARK: Internal
     
-    @nonobjc internal class func fromBundle(bundle: NSBundle, modelName: String, modelVersion: String? = nil) -> NSManagedObjectModel {
+    @nonobjc internal class func fromBundle(bundle: NSBundle, modelName: String, modelVersionHints: Set<String> = []) -> NSManagedObjectModel {
         
         guard let modelFilePath = bundle.pathForResource(modelName, ofType: "momd") else {
             
@@ -46,20 +46,34 @@ internal extension NSManagedObjectModel {
         guard let versionInfo = NSDictionary(contentsOfURL: versionInfoPlistURL),
             let versionHashes = versionInfo["NSManagedObjectModel_VersionHashes"] as? [String: AnyObject] else {
                 
-                fatalError("Could not load \(typeName(NSManagedObjectModel)) metadata from path \"\(versionInfoPlistURL)\"."
-                )
+                fatalError("Could not load \(typeName(NSManagedObjectModel)) metadata from path \"\(versionInfoPlistURL)\".")
         }
         
         let modelVersions = Set(versionHashes.keys)
         let currentModelVersion: String
-        
-        if let modelVersion = modelVersion {
+        if let plistModelVersion = versionInfo["NSManagedObjectModel_CurrentVersionName"] as? String where modelVersionHints.isEmpty || modelVersionHints.contains(plistModelVersion) {
             
-            currentModelVersion = modelVersion
+            currentModelVersion = plistModelVersion
+        }
+        else if let resolvedVersion = modelVersions.intersect(modelVersionHints).first {
+            
+            CoreStore.log(
+                .Warning,
+                message: "The MigrationChain leaf versions do not include the model file's current version. Resolving to version \"\(resolvedVersion)\"."
+            )
+            currentModelVersion = resolvedVersion
+        }
+        else if let resolvedVersion = modelVersions.first ?? modelVersionHints.first {
+            
+            CoreStore.log(
+                .Warning,
+                message: "The MigrationChain leaf versions do not include any of the model file's embedded versions. Resolving to version \"\(resolvedVersion)\"."
+            )
+            currentModelVersion = resolvedVersion
         }
         else {
             
-            currentModelVersion = versionInfo["NSManagedObjectModel_CurrentVersionName"] as? String ?? modelVersions.first!
+            fatalError("No model files were found in URL \"\(modelFileURL)\".")
         }
         
         var modelVersionFileURL: NSURL?
@@ -136,6 +150,15 @@ internal extension NSManagedObjectModel {
         return self.entityNameMapping[NSStringFromClass(entityClass)]!
     }
     
+    @nonobjc internal func entityTypesMapping() -> [String: NSManagedObject.Type] {
+    
+        return self.entityNameMapping.reduce([:]) { (var mapping, pair) in
+            
+            mapping[pair.0] = (NSClassFromString(pair.1)! as! NSManagedObject.Type)
+            return mapping
+        }
+    }
+    
     @nonobjc internal func mergedModels() -> [NSManagedObjectModel] {
         
         return self.modelVersions?.map { self[$0] }.flatMap { $0 == nil ? [] : [$0!] } ?? [self]
@@ -169,14 +192,15 @@ internal extension NSManagedObjectModel {
     
     @nonobjc internal subscript(metadata: [String: AnyObject]) -> NSManagedObjectModel? {
         
-        if let modelHashes = metadata[NSStoreModelVersionHashesKey] as? [String : NSData] {
+        guard let modelHashes = metadata[NSStoreModelVersionHashesKey] as? [String : NSData] else {
             
-            for modelVersion in self.modelVersions ?? [] {
+            return nil
+        }
+        for modelVersion in self.modelVersions ?? [] {
+            
+            if let versionModel = self[modelVersion] where modelHashes == versionModel.entityVersionHashesByName {
                 
-                if let versionModel = self[modelVersion] where modelHashes == versionModel.entityVersionHashesByName {
-                    
-                    return versionModel
-                }
+                return versionModel
             }
         }
         return nil

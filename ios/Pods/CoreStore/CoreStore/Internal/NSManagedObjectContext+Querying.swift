@@ -31,7 +31,43 @@ import CoreData
 
 internal extension NSManagedObjectContext {
     
-    // MARK: Public
+    // MARK: Internal
+    
+    internal func fetchExisting<T: NSManagedObject>(object: T) -> T? {
+        
+        if object.objectID.temporaryID {
+            
+            do {
+                
+                try withExtendedLifetime(self) { (context: NSManagedObjectContext) -> Void in
+                    
+                    try context.obtainPermanentIDsForObjects([object])
+                }
+            }
+            catch {
+                
+                CoreStore.handleError(
+                    error as NSError,
+                    "Failed to obtain permanent ID for object."
+                )
+                return nil
+            }
+        }
+        
+        do {
+            
+            let existingObject = try self.existingObjectWithID(object.objectID)
+            return (existingObject as! T)
+        }
+        catch {
+            
+            CoreStore.handleError(
+                error as NSError,
+                "Failed to load existing \(typeName(object)) in context."
+            )
+            return nil
+        }
+    }
     
     internal func fetchOne<T: NSManagedObject>(from: From<T>, _ fetchClauses: FetchClause...) -> T? {
         
@@ -251,6 +287,7 @@ internal extension NSManagedObjectContext {
         fetchRequest.fetchLimit = 0
         fetchRequest.resultType = .ManagedObjectResultType
         fetchRequest.returnsObjectsAsFaults = true
+        fetchRequest.includesPropertyValues = false
         
         for clause in deleteClauses {
             

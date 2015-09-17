@@ -22,7 +22,7 @@ class MessageViewController: KSTabTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let cell  = tableView.dequeueReusableCellWithIdentifier(KSStoryboard.TableViewCellIdentifiers.lastMessageCell, forIndexPath: indexPath) as! KSPersonListTableViewCell
         let curMessage = self.viewModel![indexPath] as! LastMessage
-        let receiveUser = KSUserHelper.getUser(curMessage.userID)!
+        let receiveUser = User.getUser(curMessage.userID)!
         cell.userNameLable.text = receiveUser.uname;
 //                cell.avatarImageView.image =
         cell.interestLable.text = curMessage.info

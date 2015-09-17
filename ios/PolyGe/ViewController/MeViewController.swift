@@ -86,7 +86,7 @@ class MeViewController: KSTableViewController {
         if indexPath.section == 0 && indexPath.row == 0 {
             if let uid = NSUserDefaults.userID {
                 let viewController =  UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier(KSStoryboard.XIBIdentifiers.KSPersonViewController) as! KSPersonViewController
-                viewController.person = KSUserHelper.getUser(uid)!
+                viewController.person = User.getUser(uid)!
                 self.navigationController?.pushViewController(
                     viewController, animated: true)
                 

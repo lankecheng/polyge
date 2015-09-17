@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import CoreStore
+
 class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var userPassTextField: UITextField!
@@ -81,9 +81,10 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
         //        }
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = KSLocalizedString("正在登录")
-        Alamofire.request(.GET, URLString: NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
-            (request, response, json, error) in
+        Alamofire.request(.GET, NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
+            (request, response, result) in
             hud.removeFromSuperview()
+            let json = result.value!
             guard json["success"].boolValue  else{
                 self.view.showTextHUD(json["msg"].string!)
                 self.userLoginBtn.enabled = true
@@ -91,11 +92,7 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
             }
             NSUserDefaults.token = json["result"]["token"].string!
             NSUserDefaults.userID = json["result"]["uid"].uInt64Value
-            CoreStore.beginSynchronous({ (transaction) -> Void in
-                let user = transaction.create(Into<User>())
-                user.fromJSON(json["result"])
-                transaction.commit()
-            })
+            User.updateUser(json["result"])
             if parameters["phone"] != nil {
                 NSUserDefaults.loginType = .Mobile
             }else{

@@ -31,6 +31,13 @@ import CoreData
 
 public extension NSManagedObject {
     
+    /**
+    Provides a convenience wrapper for accessing `primitiveValueForKey(...)` with proper calls to `willAccessValueForKey(...)` and `didAccessValueForKey(...)`. This is useful when implementing accessor methods for transient attributes.
+    
+    - parameter KVCKey: the KVC key
+    - returns: the primitive value for the KVC key
+    */
+    @warn_unused_result
     public func accessValueForKVCKey(KVCKey: KeyPath) -> AnyObject? {
         
         self.willAccessValueForKey(KVCKey)
@@ -40,10 +47,32 @@ public extension NSManagedObject {
         return primitiveValue
     }
     
+    /**
+    Provides a convenience wrapper for setting `setPrimitiveValue(...)` with proper calls to `willChangeValueForKey(...)` and `didChangeValueForKey(...)`. This is useful when implementing mutator methods for transient attributes.
+    
+    - parameter value: the value to set the KVC key with
+    - parameter KVCKey: the KVC key
+    */
     public func setValue(value: AnyObject?, forKVCKey KVCKey: KeyPath) {
         
         self.willChangeValueForKey(KVCKey)
         self.setPrimitiveValue(value, forKey: KVCKey)
         self.didChangeValueForKey(KVCKey)
+    }
+    
+    /**
+    Re-faults the object to use the latest values from the persistent store
+    */
+    public func refreshAsFault() {
+        
+        self.managedObjectContext?.refreshObject(self, mergeChanges: false)
+    }
+    
+    /**
+    Re-faults the object to use the latest values from the persistent store and merges previously pending changes back
+    */
+    public func refreshAndMerge() {
+        
+        self.managedObjectContext?.refreshObject(self, mergeChanges: true)
     }
 }

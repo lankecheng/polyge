@@ -28,20 +28,6 @@ import CoreData
 import GCDKit
 
 
-private let ObjectMonitorWillChangeObjectNotification = "ObjectMonitorWillChangeObjectNotification"
-private let ObjectMonitorDidDeleteObjectNotification = "ObjectMonitorDidDeleteObjectNotification"
-private let ObjectMonitorDidUpdateObjectNotification = "ObjectMonitorDidUpdateObjectNotification"
-
-private let UserInfoKeyObject = "UserInfoKeyObject"
-
-private struct NotificationKey {
-    
-    static var willChangeObject: Void?
-    static var didDeleteObject: Void?
-    static var didUpdateObject: Void?
-}
-
-
 // MARK: - ObjectMonitor
 
 /**
@@ -85,7 +71,7 @@ public final class ObjectMonitor<T: NSManagedObject> {
     
     - parameter observer: an `ObjectObserver` to send change notifications to
     */
-    public func addObserver<U: ObjectObserver where U.EntityType == T>(observer: U) {
+    public func addObserver<U: ObjectObserver where U.ObjectEntityType == T>(observer: U) {
         
         CoreStore.assert(
             NSThread.isMainThread(),
@@ -95,56 +81,60 @@ public final class ObjectMonitor<T: NSManagedObject> {
         self.removeObserver(observer)
         
         self.registerChangeNotification(
-            &NotificationKey.willChangeObject,
+            &self.willChangeObjectKey,
             name: ObjectMonitorWillChangeObjectNotification,
             toObserver: observer,
             callback: { [weak observer] (monitor) -> Void in
                 
-                if let object = monitor.object, let observer = observer {
+                guard let object = monitor.object, let observer = observer else {
                     
-                    observer.objectMonitor(monitor, willUpdateObject: object)
+                    return
                 }
+                observer.objectMonitor(monitor, willUpdateObject: object)
             }
         )
         self.registerObjectNotification(
-            &NotificationKey.didDeleteObject,
+            &self.didDeleteObjectKey,
             name: ObjectMonitorDidDeleteObjectNotification,
             toObserver: observer,
             callback: { [weak observer] (monitor, object) -> Void in
                 
-                if let observer = observer {
+                guard let observer = observer else {
                     
-                    observer.objectMonitor(monitor, didDeleteObject: object)
+                    return
                 }
+                observer.objectMonitor(monitor, didDeleteObject: object)
             }
         )
         self.registerObjectNotification(
-            &NotificationKey.didUpdateObject,
+            &self.didUpdateObjectKey,
             name: ObjectMonitorDidUpdateObjectNotification,
             toObserver: observer,
             callback: { [weak self, weak observer] (monitor, object) -> Void in
                 
-                if let strongSelf = self, let observer = observer {
+                guard let strongSelf = self, let observer = observer else {
                     
-                    let previousCommitedAttributes = strongSelf.lastCommittedAttributes
-                    let currentCommitedAttributes = object.committedValuesForKeys(nil) as! [String: NSObject]
-                    
-                    let changedKeys = currentCommitedAttributes.keys.reduce(Set<String>()) { (var changedKeys, key) -> Set<String> in
-                        
-                        if previousCommitedAttributes[key] != currentCommitedAttributes[key] {
-                            
-                            changedKeys.insert(key)
-                        }
-                        return changedKeys
-                    }
-                    
-                    strongSelf.lastCommittedAttributes = currentCommitedAttributes
-                    observer.objectMonitor(
-                        monitor,
-                        didUpdateObject: object,
-                        changedPersistentKeys: changedKeys
-                    )
+                    return
                 }
+                
+                let previousCommitedAttributes = strongSelf.lastCommittedAttributes
+                let currentCommitedAttributes = object.committedValuesForKeys(nil) as! [String: NSObject]
+                
+                var changedKeys = Set<String>()
+                for key in currentCommitedAttributes.keys {
+                    
+                    if previousCommitedAttributes[key] != currentCommitedAttributes[key] {
+                        
+                        changedKeys.insert(key)
+                    }
+                }
+                
+                strongSelf.lastCommittedAttributes = currentCommitedAttributes
+                observer.objectMonitor(
+                    monitor,
+                    didUpdateObject: object,
+                    changedPersistentKeys: changedKeys
+                )
             }
         )
     }
@@ -156,7 +146,7 @@ public final class ObjectMonitor<T: NSManagedObject> {
     
     - parameter observer: an `ObjectObserver` to unregister notifications to
     */
-    public func removeObserver<U: ObjectObserver where U.EntityType == T>(observer: U) {
+    public func removeObserver<U: ObjectObserver where U.ObjectEntityType == T>(observer: U) {
         
         CoreStore.assert(
             NSThread.isMainThread(),
@@ -164,9 +154,9 @@ public final class ObjectMonitor<T: NSManagedObject> {
         )
         
         let nilValue: AnyObject? = nil
-        setAssociatedRetainedObject(nilValue, forKey: &NotificationKey.willChangeObject, inObject: observer)
-        setAssociatedRetainedObject(nilValue, forKey: &NotificationKey.didDeleteObject, inObject: observer)
-        setAssociatedRetainedObject(nilValue, forKey: &NotificationKey.didUpdateObject, inObject: observer)
+        setAssociatedRetainedObject(nilValue, forKey: &self.willChangeObjectKey, inObject: observer)
+        setAssociatedRetainedObject(nilValue, forKey: &self.didDeleteObjectKey, inObject: observer)
+        setAssociatedRetainedObject(nilValue, forKey: &self.didUpdateObjectKey, inObject: observer)
     }
     
     
@@ -179,9 +169,11 @@ public final class ObjectMonitor<T: NSManagedObject> {
         let fetchRequest = NSFetchRequest()
         fetchRequest.entity = object.entity
         
-        fetchRequest.fetchLimit = 1
+        fetchRequest.fetchLimit = 0
         fetchRequest.resultType = .ManagedObjectResultType
         fetchRequest.sortDescriptors = []
+        fetchRequest.includesPendingChanges = false
+        fetchRequest.shouldRefreshRefetchedObjects = true
         
         let originalObjectID = object.objectID
         Where("SELF", isEqualTo: originalObjectID).applyToFetchRequest(fetchRequest)
@@ -195,26 +187,13 @@ public final class ObjectMonitor<T: NSManagedObject> {
         
         let fetchedResultsControllerDelegate = FetchedResultsControllerDelegate()
         
-        self.originalObjectID = originalObjectID
         self.fetchedResultsController = fetchedResultsController
         self.fetchedResultsControllerDelegate = fetchedResultsControllerDelegate
         self.parentStack = dataStack
         
         fetchedResultsControllerDelegate.handler = self
         fetchedResultsControllerDelegate.fetchedResultsController = fetchedResultsController
-        
-        
-        do {
-            
-            try fetchedResultsController.performFetch()
-        }
-        catch {
-            
-            CoreStore.handleError(
-                error as NSError,
-                "Failed to perform fetch for \(typeName(NSFetchedResultsController))."
-            )
-        }
+        try! fetchedResultsController.performFetch()
         
         self.lastCommittedAttributes = (self.object?.committedValuesForKeys(nil) as? [String: NSObject]) ?? [:]
     }
@@ -222,11 +201,14 @@ public final class ObjectMonitor<T: NSManagedObject> {
     
     // MARK: Private
     
-    private let originalObjectID: NSManagedObjectID
     private let fetchedResultsController: NSFetchedResultsController
     private let fetchedResultsControllerDelegate: FetchedResultsControllerDelegate
     private var lastCommittedAttributes = [String: NSObject]()
     private weak var parentStack: DataStack?
+    
+    private var willChangeObjectKey: Void?
+    private var didDeleteObjectKey: Void?
+    private var didUpdateObjectKey: Void?
     
     private func registerChangeNotification(notificationKey: UnsafePointer<Void>, name: String, toObserver observer: AnyObject, callback: (monitor: ObjectMonitor<T>) -> Void) {
         
@@ -236,10 +218,11 @@ public final class ObjectMonitor<T: NSManagedObject> {
                 object: self,
                 closure: { [weak self] (note) -> Void in
                     
-                    if let strongSelf = self {
+                    guard let strongSelf = self else {
                         
-                        callback(monitor: strongSelf)
+                        return
                     }
+                    callback(monitor: strongSelf)
                 }
             ),
             forKey: notificationKey,
@@ -255,15 +238,13 @@ public final class ObjectMonitor<T: NSManagedObject> {
                 object: self,
                 closure: { [weak self] (note) -> Void in
                     
-                    if let strongSelf = self,
+                    guard let strongSelf = self,
                         let userInfo = note.userInfo,
-                        let object = userInfo[UserInfoKeyObject] as? T {
+                        let object = userInfo[UserInfoKeyObject] as? T else {
                             
-                            callback(
-                                monitor: strongSelf,
-                                object: object
-                            )
+                            return
                     }
+                    callback(monitor: strongSelf, object: object)
                 }
             ),
             forKey: notificationKey,
@@ -273,13 +254,33 @@ public final class ObjectMonitor<T: NSManagedObject> {
 }
 
 
+// MARK: - ObjectMonitor: Equatable
+
+public func ==<T: NSManagedObject>(lhs: ObjectMonitor<T>, rhs: ObjectMonitor<T>) -> Bool {
+    
+    return lhs === rhs
+}
+
+extension ObjectMonitor: Equatable { }
+
+
 // MARK: - ObjectMonitor: FetchedResultsControllerHandler
 
 extension ObjectMonitor: FetchedResultsControllerHandler {
     
     // MARK: FetchedResultsControllerHandler
     
-    private func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    internal func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(
+            ObjectMonitorWillChangeObjectNotification,
+            object: self
+        )
+    }
+    
+    internal func controllerDidChangeContent(controller: NSFetchedResultsController) { }
+    
+    internal func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
         switch type {
             
@@ -302,57 +303,18 @@ extension ObjectMonitor: FetchedResultsControllerHandler {
         }
     }
     
-    private func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    internal func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) { }
+    
+    internal func controller(controller: NSFetchedResultsController, sectionIndexTitleForSectionName sectionName: String?) -> String? {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(
-            ObjectMonitorWillChangeObjectNotification,
-            object: self
-        )
+        return sectionName
     }
 }
 
 
-// MARK: - FetchedResultsControllerHandler
+private let ObjectMonitorWillChangeObjectNotification = "ObjectMonitorWillChangeObjectNotification"
+private let ObjectMonitorDidDeleteObjectNotification = "ObjectMonitorDidDeleteObjectNotification"
+private let ObjectMonitorDidUpdateObjectNotification = "ObjectMonitorDidUpdateObjectNotification"
 
-private protocol FetchedResultsControllerHandler: class {
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
-    
-    func controllerWillChangeContent(controller: NSFetchedResultsController)
-}
+private let UserInfoKeyObject = "UserInfoKeyObject"
 
-
-// MARK: - FetchedResultsControllerDelegate
-
-private final class FetchedResultsControllerDelegate: NSObject, NSFetchedResultsControllerDelegate {
-    
-    // MARK: NSFetchedResultsControllerDelegate
-    
-    @objc dynamic func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        
-        self.handler?.controllerWillChangeContent(controller)
-    }
-    
-    @objc dynamic func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        
-        self.handler?.controller(controller, didChangeObject: anObject, atIndexPath: indexPath, forChangeType: type, newIndexPath: newIndexPath)
-    }
-    
-    
-    // MARK: Private
-    
-    weak var handler: FetchedResultsControllerHandler?
-    weak var fetchedResultsController: NSFetchedResultsController? {
-        
-        didSet {
-            
-            oldValue?.delegate = nil
-            self.fetchedResultsController?.delegate = self
-        }
-    }
-    
-    deinit {
-        
-        self.fetchedResultsController?.delegate = nil
-    }
-}

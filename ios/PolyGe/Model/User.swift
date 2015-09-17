@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import CoreStore
 @objc(User)
 class User: NSManagedObject {
     @NSManaged var uid: UInt64
@@ -47,5 +48,27 @@ class User: NSManagedObject {
         occupation  = json["occup"].string
         gender    = json["gender"].number
         user_type = json["user_type"].number
+    }
+    static func getUser(userID: UInt64) -> User? {
+        return  CoreStore.fetchOne(
+            From(User),
+            Where("uid", isEqualTo: NSNumber(unsignedLongLong:userID))
+        )
+    }
+    static func updateUser(json: JSON){
+        var user = User.getUser(json["uid"].uInt64Value)
+        if user != nil {
+            CoreStore.beginSynchronous({ (transaction) -> Void in
+                transaction.edit(user!)!.fromJSON(json)
+                transaction.commit()
+            })
+        }else {
+            CoreStore.beginSynchronous({ (transaction) -> Void in
+                user = transaction.create(Into<User>())
+                user!.fromJSON(json)
+                transaction.commit()
+            })
+        }
+       
     }
 }

@@ -1,19 +1,23 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform:ios, "8.0"
 use_frameworks!
-pod 'Kingfisher',:git => 'https://github.com/onevcat/Kingfisher.git',:branch => 'swift-2.0'
-pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git' ,:branch => 'swift-2.0'
-pod 'Cartography', :git => 'https://github.com/robb/Cartography.git' ,:branch => 'swift-2.0'
-pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift', :branch => 'swift20'
-pod 'SwiftyJSON',:git => 'https://github.com/SwiftyJSON/SwiftyJSON.git',:branch => 'xcode7'
-pod 'RxSwift', :git => 'https://github.com/kzaher/RxSwift.git',:branch => 'feature/swift2.0'
-pod 'Starscream', :git => 'https://github.com/daltoniam/Starscream.git',:branch => 'Swift-2.0'
-pod 'ReactiveUI', :head
+
+pod 'Alamofire'
+pod 'AlamofireImage'
+pod 'Cartography',:git => 'https://github.com/robb/Cartography.git'
+pod 'CryptoSwift'
+pod 'SwiftyJSON'
+pod 'Starscream',:head
 pod 'DynamicColor'
-pod 'GCDKit', :git => 'https://github.com/JohnEstropia/GCDKit.git',:branch => 'beta'
+#pod 'GCDKit', :git => 'https://github.com/JohnEstropia/GCDKit.git',:branch => 'beta'
 pod 'CoreStore', :git => 'https://github.com/JohnEstropia/CoreStore.git',:branch => 'develop'
 pod 'Qiniu'
-pod 'Timepiece', :git => 'https://github.com/naoty/Timepiece.git',:branch => 'swift-2.0'
+#pod 'Timepiece'
+pod 'Moya', '~> 2.2.2'
+pod 'Moya/ReactiveCocoa'
+# Include the following only if you want to use ReactiveCocoa extensions with Moya
+#pod 'ReactiveCocoa', '3.0-beta.6'
+#pod 'Moya/Reactive'
 #pod 'APIKit',:git => 'https://github.com/ishkawa/APIKit.git',:branch => 'swift2'
 #pod 'ReactiveCocoa', :git => 'https://github.com/ReactiveCocoa/ReactiveCocoa.git',:branch => 'swift2'
 #pod 'AlecrimCoreData', :git => 'https://github.com/kingslay/AlecrimCoreData.git'

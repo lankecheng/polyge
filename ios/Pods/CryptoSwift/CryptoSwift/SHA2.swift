@@ -9,9 +9,16 @@
 import Foundation
 
 
-final class SHA2 : HashBase, _Hash {
+final class SHA2 : HashProtocol {
     var size:Int { return variant.rawValue }
     let variant:SHA2.Variant
+    
+    let message: NSData
+    
+    init(_ message:NSData, variant: SHA2.Variant) {
+        self.variant = variant
+        self.message = message
+    }
     
     enum Variant: RawRepresentable {
         case sha224, sha256, sha384, sha512
@@ -111,29 +118,22 @@ final class SHA2 : HashBase, _Hash {
         }
     }
     
-    init(_ message:NSData, variant: SHA2.Variant) {
-        self.variant = variant
-        super.init(message)
-    }
-    
     //FIXME: I can't do Generic func out of calculate32 and calculate64 (UInt32 vs UInt64), but if you can - please do pull request.
     func calculate32() -> NSData {
         let tmpMessage = self.prepare(64)
         
         // hash values
         var hh = [UInt32]()
-        variant.h.map({(h) -> () in
+        variant.h.forEach {(h) -> () in
             hh.append(UInt32(h))
-        })
-        
+        }
+		
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
         tmpMessage.appendBytes((message.length * 8).bytes(64 / 8));
         
         // Process the message in successive 512-bit chunks:
         let chunkSizeBytes = 512 / 8 // 64
-        var leftMessageBytes = tmpMessage.length
-        for var i = 0; i < tmpMessage.length; i = i + chunkSizeBytes, leftMessageBytes -= chunkSizeBytes {
-            let chunk = tmpMessage.subdataWithRange(NSRange(location: i, length: min(chunkSizeBytes,leftMessageBytes)))
+        for chunk in NSDataSequence(chunkSize: chunkSizeBytes, data: tmpMessage) {
             // break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15, big-endian
             // Extend the sixteen 32-bit words into sixty-four 32-bit words:
             var M:[UInt32] = [UInt32](count: variant.k.count, repeatedValue: 0)
@@ -192,12 +192,11 @@ final class SHA2 : HashBase, _Hash {
         
         // Produce the final hash value (big-endian) as a 160 bit number:
         let buf: NSMutableData = NSMutableData();
-        
-        variant.resultingArray(hh).map({ (item) -> () in
+        variant.resultingArray(hh).forEach{ (item) -> () in
             var i:UInt32 = UInt32(item.bigEndian)
             buf.appendBytes(&i, length: sizeofValue(i))
-        })
-        
+        }
+		
         return buf.copy() as! NSData;
     }
     
@@ -206,10 +205,11 @@ final class SHA2 : HashBase, _Hash {
         
         // hash values
         var hh = [UInt64]()
-        variant.h.map({(h) -> () in
+        variant.h.forEach {(h) -> () in
             hh.append(h)
-        })
-        
+        }
+		
+  
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
         tmpMessage.appendBytes((message.length * 8).bytes(64 / 8));
         
@@ -277,7 +277,7 @@ final class SHA2 : HashBase, _Hash {
         // Produce the final hash value (big-endian)
         let buf: NSMutableData = NSMutableData();
         
-        variant.resultingArray(hh).map({ (item) -> () in
+        variant.resultingArray(hh).forEach({ (item) -> () in
             var i = item.bigEndian
             buf.appendBytes(&i, length: sizeofValue(i))
         })
