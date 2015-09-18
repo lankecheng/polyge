@@ -13,7 +13,6 @@ class KSLastMessageViewModel: KSCoreDataViewModel<LastMessage> {
     init(tableView: UITableView) {
         let monitor = CoreStore.monitorList(
             From(LastMessage),
-            GroupBy(),
             OrderBy(.Descending("createDate"))
         )
         super.init(tableView: tableView, monitor: monitor)

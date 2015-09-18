@@ -36,7 +36,7 @@ extension Request {
     */
     public func responseSwiftyJSON(queue: dispatch_queue_t? = nil, options: NSJSONReadingOptions = .AllowFragments, completionHandler: (NSURLRequest, NSHTTPURLResponse?, Result<JSON>) -> Void) -> Self {
         return response(queue: queue, responseSerializer: Request.JSONResponseSerializer(options: options), completionHandler: { (request, response, result) in
-            if let error = result.error {
+            if let error = result.error as? NSError {
                 UIWindow.hideHUD()
                 if error.code == 3840 {
                     UIWindow.showTextHUD("授权失效,请重新登录")

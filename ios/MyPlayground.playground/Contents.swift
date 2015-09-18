@@ -13,7 +13,8 @@ let data1 = NSMutableData()
 data1.appendData(data)
 
 
-
+let str = "123456789"
+str.startIndex.advancedBy(7)
 
 
 

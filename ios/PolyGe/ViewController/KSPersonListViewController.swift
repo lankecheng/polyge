@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CoreStore
+import Kingfisher
 class KSPersonListViewController: KSTableViewController {
     
     //MARK: View Life Cycle

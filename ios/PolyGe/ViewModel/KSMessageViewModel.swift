@@ -16,7 +16,6 @@ class KSMessageViewModel: KSCoreDataViewModel<Message> {
     init(tableView: UITableView,receiveUserID: UInt64) {
         let monitor = CoreStore.monitorList(
             From(Message),
-            GroupBy(),
             Where("userID", isEqualTo: NSNumber(unsignedLongLong:receiveUserID)),
             OrderBy(.Ascending("createDate"))
         )

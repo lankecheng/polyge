@@ -1,6 +1,8 @@
 import UIKit
 import AVFoundation
 import Cartography
+import Kingfisher
+
 class KSMessageCell: UITableViewCell {
     static let NotificationName = "VoicePlayHasInterrupt"
     var avatarBtnView: UIButton!
