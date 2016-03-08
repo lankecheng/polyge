@@ -124,7 +124,7 @@ class Message: NSManagedObject {
             }else{
                 message.messageData = data.subdataWithRange(NSMakeRange(25, data.length - 29))
             }
-            transaction.commit()
+            transaction.commitAndWait()
         }
     }
     

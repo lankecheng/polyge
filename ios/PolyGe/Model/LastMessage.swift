@@ -26,7 +26,7 @@ class LastMessage: NSManagedObject {
                 lastMessage = transaction.create(Into<LastMessage>())
                 lastMessage!.userID = userID
                 lastMessage!.createDate = NSDate()
-                transaction.commit()
+                transaction.commitAndWait()
             }
         }
         return lastMessage!

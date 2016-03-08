@@ -27,7 +27,7 @@ class KSPersonListViewController: KSTableViewController {
                     personList.append(user)
                 }
                 self.viewModel = KSArrayViewModel(dataSource: personList)
-                transaction.commit()
+                transaction.commitAndWait()
             })
             self.tableView.reloadData()
         }

@@ -62,7 +62,7 @@ extension ChattingViewController: KSInputMessageViewDelegate{
                 lastMessage.info = text
             }
 
-            transaction.commit()
+            transaction.commitAndWait()
         }
         tableView.scrollToBottom()
     }

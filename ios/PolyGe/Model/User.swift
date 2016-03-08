@@ -60,13 +60,13 @@ class User: NSManagedObject {
         if user != nil {
             CoreStore.beginSynchronous({ (transaction) -> Void in
                 transaction.edit(user!)!.fromJSON(json)
-                transaction.commit()
+                transaction.commitAndWait()
             })
         }else {
             CoreStore.beginSynchronous({ (transaction) -> Void in
                 user = transaction.create(Into<User>())
                 user!.fromJSON(json)
-                transaction.commit()
+                transaction.commitAndWait()
             })
         }
        
