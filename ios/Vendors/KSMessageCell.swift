@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 import Cartography
-import Kingfisher
+import AlamofireImage
 
 class KSMessageCell: UITableViewCell {
     static let NotificationName = "VoicePlayHasInterrupt"
@@ -106,7 +106,7 @@ class KSMessageCell: UITableViewCell {
         }
         //3.获取头像
         if let userIcon = self.message.userIcon {
-            avatarBtnView.kf_setBackgroundImageWithURL(NSURL(string: userIcon)!,forState:.Normal,placeholderImage:kUserPlaceHolderImage)
+            avatarBtnView.af_setBackgroundImageForState(.Normal, URL: NSURL(string: userIcon)!,placeHolderImage: kUserPlaceHolderImage)
         }
 //        let request:NSURLRequest = NSURLRequest(URL:NSURL(string: self.message!.strIcon!)!)
 //        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler:{(response:NSURLResponse!,data:NSData!,error:NSError!)->Void in

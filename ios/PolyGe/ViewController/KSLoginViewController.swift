@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireSwiftyJSON
 
 class KSLoginViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
@@ -81,10 +82,10 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
         //        }
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = KSLocalizedString("正在登录")
-        Alamofire.request(.GET, NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
-            (request, response, result) in
+        Alamofire.request(.GET, NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON{
+            (response) in
             hud.removeFromSuperview()
-            let json = result.value!
+            let json = response.result.value!
             guard json["success"].boolValue  else{
                 self.view.showTextHUD(json["msg"].string!)
                 self.userLoginBtn.enabled = true
@@ -99,7 +100,7 @@ class KSLoginViewController: UIViewController,UITextFieldDelegate{
                 NSUserDefaults.loginType = .Email
             }
             self.ksNavigationController()?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
-        })
+        }
     }
     
 }

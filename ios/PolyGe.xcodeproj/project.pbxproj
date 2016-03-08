@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D405D7851AD8CFF492DA449 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A4B5444DF40CB6C2FB822 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		0D405D7851AD8CFF492DA449 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A4B5444DF40CB6C2FB822 /* Pods.framework */; };
 		3C18700F1B48FB2A00E23498 /* KSSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C18700E1B48FB2A00E23498 /* KSSocket.swift */; };
-		3C1870111B4929E800E23498 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1870101B4929E800E23498 /* Request.swift */; };
 		3C2E930E1B53E4A3009B1E71 /* KSArrayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E930D1B53E4A3009B1E71 /* KSArrayViewModel.swift */; };
 		3C2E93101B53E4EB009B1E71 /* KSCoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E930F1B53E4EB009B1E71 /* KSCoreDataViewModel.swift */; };
 		3C2E93121B53EA56009B1E71 /* KSMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2E93111B53EA56009B1E71 /* KSMessageViewModel.swift */; };
@@ -78,7 +77,6 @@
 
 /* Begin PBXFileReference section */
 		3C18700E1B48FB2A00E23498 /* KSSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSSocket.swift; path = Http/KSSocket.swift; sourceTree = "<group>"; };
-		3C1870101B4929E800E23498 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Http/Request.swift; sourceTree = "<group>"; };
 		3C2E930D1B53E4A3009B1E71 /* KSArrayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSArrayViewModel.swift; path = ViewModel/KSArrayViewModel.swift; sourceTree = "<group>"; };
 		3C2E930F1B53E4EB009B1E71 /* KSCoreDataViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSCoreDataViewModel.swift; path = ViewModel/KSCoreDataViewModel.swift; sourceTree = "<group>"; };
 		3C2E93111B53EA56009B1E71 /* KSMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSMessageViewModel.swift; path = ViewModel/KSMessageViewModel.swift; sourceTree = "<group>"; };
@@ -422,7 +420,6 @@
 			isa = PBXGroup;
 			children = (
 				3C18700E1B48FB2A00E23498 /* KSSocket.swift */,
-				3C1870101B4929E800E23498 /* Request.swift */,
 			);
 			name = Http;
 			sourceTree = "<group>";
@@ -604,7 +601,6 @@
 				3CB3DDE11AF5F4AE00289E8B /* KSMessageContentView.swift in Sources */,
 				3C63D9161B3858E400EF6196 /* KSMessageListTableViewCell.swift in Sources */,
 				3C63D9371B3859C000EF6196 /* KSUserHelper.swift in Sources */,
-				3C1870111B4929E800E23498 /* Request.swift in Sources */,
 				3C2E93161B53ED20009B1E71 /* KSLastMessageViewModel.swift in Sources */,
 				3CF54C401B3EFF3100D431E5 /* NSMutableData.swift in Sources */,
 				3C63D9261B38591A00EF6196 /* UIView.swift in Sources */,

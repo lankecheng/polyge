@@ -80,7 +80,7 @@ class Message: NSManagedObject {
         if messageType == .Voice {
             data.appendUInt8(voiceTime.unsignedCharValue)
         }
-        data.appendData(Hash.crc32(data).calculate()!)
+        data.appendData(data.crc32()!)
         return data
     }
     class func createMessage(data: NSData){

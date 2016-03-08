@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireSwiftyJSON
 
 class KSRegisterViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var userNameTextField: UITextField!
@@ -64,18 +65,18 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = KSLocalizedString("注册中")
-        Alamofire.request(.GET, NSUserDefaults.host+"/register", parameters: parameters).responseSwiftyJSON({
-            (request, response, result) in
-            let json = result.value!
+        Alamofire.request(.GET, NSUserDefaults.host+"/register", parameters: parameters).responseSwiftyJSON{
+            (response) in
+            let json = response.result.value!
             guard json["success"].boolValue else{
                 hud.removeFromSuperview()
                 self.view.showTextHUD(json["msg"].string!)
                 return
             }
             hud.labelText = KSLocalizedString("登录中")
-            Alamofire.request(.GET, NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON({
-                (request, response, result) in
-                let json = result.value!
+            Alamofire.request(.GET, NSUserDefaults.host+"/login", parameters: parameters).responseSwiftyJSON{
+                (response) in
+                let json = response.result.value!
                 hud.removeFromSuperview()
                 guard json["success"].boolValue  else{
                     self.view.showTextHUD(json["msg"].string!)
@@ -90,7 +91,7 @@ class KSRegisterViewController: UIViewController,UITextFieldDelegate {
                     NSUserDefaults.loginType = .Email
                 }
                 self.ksNavigationController()?.presentViewController(KSStoryboard.mainViewController, animated: true, completion: nil)
-            })
-        })
+            }
+        }
     }
 }

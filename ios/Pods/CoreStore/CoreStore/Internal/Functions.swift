@@ -2,7 +2,7 @@
 //  Functions.swift
 //  CoreStore
 //
-//  Copyright (c) 2014 John Rommel Estropia
+//  Copyright © 2014 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@
 
 import Foundation
 
-internal func autoreleasepool<T>(@noescape closure: () -> T?) -> T? {
+internal func autoreleasepool<T>(@noescape closure: () -> T) -> T {
     
-    var closureValue: T?
+    var closureValue: T!
     ObjectiveC.autoreleasepool {
         
         closureValue = closure()
@@ -36,9 +36,9 @@ internal func autoreleasepool<T>(@noescape closure: () -> T?) -> T? {
     return closureValue
 }
 
-internal func autoreleasepool<T>(@noescape closure: () throws -> T?) throws -> T? {
+internal func autoreleasepool<T>(@noescape closure: () throws -> T) throws -> T {
     
-    var closureValue: T?
+    var closureValue: T!
     var closureError: ErrorType?
     ObjectiveC.autoreleasepool {
         

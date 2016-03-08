@@ -2,7 +2,7 @@
 //  NSManagedObjectContext+Transaction.swift
 //  CoreStore
 //
-//  Copyright (c) 2015 John Rommel Estropia
+//  Copyright © 2015 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,9 @@
 
 import Foundation
 import CoreData
-import GCDKit
+#if USE_FRAMEWORKS
+    import GCDKit
+#endif
 
 
 // MARK: - NSManagedObjectContext
@@ -51,6 +53,15 @@ internal extension NSManagedObjectContext {
                 inObject: self
             )
         }
+    }
+    
+    internal func isRunningInAllowedQueue() -> Bool {
+        
+        guard let parentTransaction = self.parentTransaction else {
+            
+            return false
+        }
+        return parentTransaction.isRunningInAllowedQueue()
     }
     
     internal func temporaryContextInTransactionWithConcurrencyType(concurrencyType: NSManagedObjectContextConcurrencyType) -> NSManagedObjectContext {
@@ -153,6 +164,18 @@ internal extension NSManagedObjectContext {
                     completion(result: SaveResult(hasChanges: true))
                 }
             }
+        }
+    }
+    
+    internal func refreshAllObjectsAsFaults() {
+        
+        if #available(iOS 8.3, OSX 10.11, *) {
+            
+            self.refreshAllObjects()
+        }
+        else {
+            
+            self.registeredObjects.forEach { self.refreshObject($0, mergeChanges: false) }
         }
     }
     

@@ -9,14 +9,15 @@
 import UIKit
 import Alamofire
 import CoreStore
-import Kingfisher
+import AlamofireImage
+import AlamofireSwiftyJSON
 class KSPersonListViewController: KSTableViewController {
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Alamofire.request(.GET, NSUserDefaults.host+"/show_teachers", parameters: ["token":NSUserDefaults.token] ).responseSwiftyJSON ({ (_, _, result)  in
-            let json = result.value!
+        Alamofire.request(.GET, NSUserDefaults.host+"/show_teachers", parameters: ["token":NSUserDefaults.token] ).responseSwiftyJSON { (response)  in
+            let json = response.result.value!
             CoreStore.beginSynchronous({ (transaction) -> Void in
                 
                 var personList: [User] = []
@@ -29,7 +30,7 @@ class KSPersonListViewController: KSTableViewController {
                 transaction.commit()
             })
             self.tableView.reloadData()
-        })
+        }
     }
     
     
@@ -41,7 +42,7 @@ class KSPersonListViewController: KSTableViewController {
         cell.userNameLable.text = user.uname
         cell.interestLable.text = KSLocalizedString("Topic: ") + (user.interest ?? "")
         if let avatar = user.avatar {
-            cell.avatarImageView.kf_setImageWithURL(NSURL(string: avatar)!,placeholderImage:kUserPlaceHolderImage)
+            cell.avatarImageView.af_setImageWithURL(NSURL(string: avatar)!,placeholderImage:kUserPlaceHolderImage)
         }else{
             cell.avatarImageView.image = kUserPlaceHolderImage
         }

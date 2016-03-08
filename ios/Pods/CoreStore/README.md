@@ -1,11 +1,12 @@
 # CoreStore
+[![Build Status](https://img.shields.io/travis/JohnEstropia/CoreStore/master.svg)](https://travis-ci.org/JohnEstropia/CoreStore)
 [![Version](https://img.shields.io/cocoapods/v/CoreStore.svg?style=flat)](http://cocoadocs.org/docsets/CoreStore)
 [![Platform](https://img.shields.io/cocoapods/p/CoreStore.svg?style=flat)](http://cocoadocs.org/docsets/CoreStore)
 [![License](https://img.shields.io/cocoapods/l/CoreStore.svg?style=flat)](https://raw.githubusercontent.com/JohnEstropia/CoreStore/master/LICENSE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 Unleashing the real power of Core Data with the elegance and safety of Swift
-* Swift 2.0 (XCode 7), iOS 8+ (or try out the [iOS 7 branch (alpha stage)](https://github.com/JohnEstropia/CoreStore/tree/ios7_support_alpha))
+* Swift 2.1 (Xcode 7.1), iOS 8+/OSX 10.10+ (or try out the [iOS 7 branch](https://github.com/JohnEstropia/CoreStore/tree/ios7_support_alpha))
 
 [Click here for a wiki version of this README](https://github.com/JohnEstropia/CoreStore/wiki)
 
@@ -13,18 +14,18 @@ Unleashing the real power of Core Data with the elegance and safety of Swift
 
 ## What CoreStore does better:
 
-- Heavily supports multiple persistent stores per data stack, just the way *.xcdatamodeld* files are designed to. CoreStore will also manage one data stack by default, but you can create and manage as many as you need.
-- Incremental Migrations! Just tell the data stack the sequence of model versions and CoreStore will automatically use incremental migrations if needed on stores added to that stack.
-- Ability to plug-in your own logging framework
-- Gets around a limitation with other Core Data wrappers where the entity name should be the same as the `NSManagedObject` subclass name. CoreStore loads entity-to-class mappings from the managed object model file, so you are free to name them independently.
-- Provides type-safe, easy to configure observers to replace `NSFetchedResultsController` and KVO
-- Exposes API not just for fetching, but also for querying aggregates and property values
-- Makes it hard to fall into common concurrency mistakes. All `NSManagedObjectContext` tasks are encapsulated into safer, higher-level abstractions without sacrificing flexibility and customizability.
-- Exposes clean and convenient API designed around Swift’s code elegance and type safety.
-- Documentation! No magic here; all public classes, functions, properties, etc. have detailed Apple Docs. This README also introduces a lot of concepts and explains a lot of CoreStore's behavior.
-- **New in 1.3.0:** Efficient importing utilities!
+- **Heavily supports multiple persistent stores per data stack**, just the way *.xcdatamodeld* files are designed to. CoreStore will also manage one data stack by default, but you can create and manage as many as you need.
+- **Progressive Migrations!** Just tell the data stack the sequence of model versions and CoreStore will automatically use progressive migrations if needed on stores added to that stack.
+- Ability to **plug-in your own logging framework**
+- Gets around a limitation with other Core Data wrappers where the entity name should be the same as the `NSManagedObject` subclass name. CoreStore loads entity-to-class mappings from the managed object model file, so you are **free to name entities and their class names independently**.
+- Provides type-safe, easy to configure **observers to replace `NSFetchedResultsController` and KVO**
+- Exposes **API not just for fetching, but also for querying aggregates and property values**
+- Makes it hard to fall into common concurrency mistakes. All `NSManagedObjectContext` tasks are encapsulated into **safer, higher-level abstractions** without sacrificing flexibility and customizability.
+- Exposes clean and convenient API designed around **Swift’s code elegance and type safety**.
+- **Documentation!** No magic here; all public classes, functions, properties, etc. have detailed Apple Docs. This README also introduces a lot of concepts and explains a lot of CoreStore's behavior.
+- **Efficient importing utilities!**
 
-**CoreStore's goal is not to expose shorter, magical syntax, but to provide an API that focuses on readability, consistency, and safety.**
+**[Vote for the next feature!](http://goo.gl/RIiHMP)**
 
 
 
@@ -35,16 +36,17 @@ Unleashing the real power of Core Data with the elegance and safety of Swift
 - CoreStore Tutorials (All of these have demos in the **CoreStoreDemo** app project!)
     - [Setting up](#setting-up)
     - [Migrations](#migrations)
-        - [Incremental migrations](#incremental-migrations)
+        - [Progressive migrations](#progressive-migrations)
         - [Forecasting migrations](#forecasting-migrations)
     - [Saving and processing transactions](#saving-and-processing-transactions)
         - [Transaction types](#transaction-types)
             - [Asynchronous transactions](#asynchronous-transactions)
             - [Synchronous transactions](#synchronous-transactions)
-            - [Detached transactions](#detached-transactions)
+            - [Unsafe transactions](#unsafe-transactions)
         - [Creating objects](#creating-objects)
         - [Updating objects](#updating-objects)
         - [Deleting objects](#deleting-objects)
+        - [Passing objects safely](#passing-objects-safely)
     - [Importing data](#importing-data)
     - [Fetching and querying](#fetching-and-querying)
         - [`From` clause](#from-clause)
@@ -56,7 +58,7 @@ Unleashing the real power of Core Data with the elegance and safety of Swift
             - [`Select<T>` clause](#selectt-clause)
             - [`GroupBy` clause](#groupby-clause)
     - [Logging and error handling](#logging-and-error-handling)
-    - [Observing changes and notifications](#observing-changes-and-notifications)
+    - [Observing changes and notifications](#observing-changes-and-notifications) (unavailable on OSX)
         - [Observe a single object](#observe-a-single-object)
         - [Observe a list of objects](#observe-a-list-of-objects)
 - [Roadmap](#roadmap)
@@ -68,7 +70,7 @@ Unleashing the real power of Core Data with the elegance and safety of Swift
 
 ## TL;DR (a.k.a. sample codes)
 
-Setting-up with incremental migration support:
+Setting-up with progressive migration support:
 ```swift
 CoreStore.defaultStack = DataStack(
     modelName: "MyStore",
@@ -78,17 +80,12 @@ CoreStore.defaultStack = DataStack(
 
 Adding a store:
 ```swift
-do {
-    try CoreStore.addSQLiteStore(
-        fileName: "MyStore.sqlite",
-        completion: { (result) -> Void in
-            // ...
-        }
-    )
-}
-catch {
-    // ...
-}
+try CoreStore.addSQLiteStore(
+    fileName: "MyStore.sqlite",
+    completion: { (result) -> Void in
+        // ...
+    }
+)
 ```
 
 Starting transactions:
@@ -145,7 +142,7 @@ If you are already familiar with the inner workings of CoreData, here is a mappi
 | --- | --- |
 | `NSManagedObjectModel` / `NSPersistentStoreCoordinator`<br />(.xcdatamodeld file) | `DataStack` |
 | `NSPersistentStore`<br />("Configuration"s in the .xcdatamodeld file) | `DataStack` configuration<br />(multiple sqlite / in-memory stores per stack) |
-| `NSManagedObjectContext` | `BaseDataTransaction` subclasses<br />(`SynchronousDataTransaction`, `AsynchronousDataTransaction`, `DetachedDataTransaction`) |
+| `NSManagedObjectContext` | `BaseDataTransaction` subclasses<br />(`SynchronousDataTransaction`, `AsynchronousDataTransaction`, `UnsafeDataTransaction`) |
 
 Popular libraries [RestKit](https://github.com/RestKit/RestKit) and [MagicalRecord](https://github.com/magicalpanda/MagicalRecord) set up their `NSManagedObjectContext`s this way:
 
@@ -172,14 +169,14 @@ catch {
 This one-liner does the following:
 - Triggers the lazy-initialization of `CoreStore.defaultStack` with a default `DataStack`
 - Sets up the stack's `NSPersistentStoreCoordinator`, the root saving `NSManagedObjectContext`, and the read-only main `NSManagedObjectContext`
-- Adds an SQLite store in the *"Application Support"* directory with the file name *"[App bundle name].sqlite"*
+- Adds an SQLite store in the *"Application Support"* directory (or the *"Caches"* directory on tvOS) with the file name *"[App bundle name].sqlite"*
 - Creates and returns the `NSPersistentStore` instance on success, or an `NSError` on failure
 
 For most cases, this configuration is usable as it is. But for more hardcore settings, refer to this extensive example:
 ```swift
 let dataStack = DataStack(
     modelName: "MyModel", // loads from the "MyModel.xcdatamodeld" file
-    migrationChain: ["MyStore", "MyStoreV2", "MyStoreV3"] // model versions for incremental migrations
+    migrationChain: ["MyStore", "MyStoreV2", "MyStoreV3"] // model versions for progressive migrations
 )
 
 do {
@@ -254,18 +251,18 @@ class MyViewController: UIViewController {
 
 
 ## Migrations
-So far we have only seen `addSQLiteStoreAndWait(...)` used to initialize our persistent store. As the method name's "AndWait" suffix suggests, this method will block, even if a migration occurs. If migrations are expected, the asynchronous variant `addSQLiteStore(... completion:)` method is recommended:
+So far we have only seen `addSQLiteStoreAndWait(...)` used to initialize our persistent store. As the method name's "AndWait" suffix suggests, this method blocks so it should not do long tasks such as store migrations (in fact CoreStore won't even attempt to, and any model mismatch will be reported as an error). If migrations are expected, the asynchronous variant `addSQLiteStore(... completion:)` method should be used instead:
 ```swift
 do {
-    let progress: NSProgress = try dataStack.addSQLiteStore(
+    let progress: NSProgress? = try dataStack.addSQLiteStore(
         fileName: "MyStore.sqlite",
         configuration: "Config2",
         completion: { (result) -> Void in
             switch result {
             case .Success(let persistentStore):
-                print("Successfully added sqlite store: \(persistentStore)"
+                print("Successfully added sqlite store: \(persistentStore)")
             case .Failure(let error):
-                print("Failed adding sqlite store with error: \(error)"
+                print("Failed adding sqlite store with error: \(error)")
             }
         }
     )
@@ -289,7 +286,7 @@ progress?.setProgressHandler { [weak self] (progress) -> Void in
 This closure is executed on the main thread so UIKit calls can be done safely.
 
 
-### Incremental migrations
+### Progressive migrations
 By default, CoreStore uses Core Data's default automatic migration mechanism. In other words, CoreStore will try to migrate the existing persistent store to the *.xcdatamodeld* file's current model version. If no mapping model is found from the store's version to the data model's version, CoreStore gives up and reports an error.
 
 The `DataStack` lets you specify hints on how to break a migration into several sub-migrations using a `MigrationChain`. This is typically passed to the `DataStack` initializer and will be applied to all stores added to the `DataStack` with `addSQLiteStore(...)` and its variants:
@@ -312,7 +309,7 @@ This allows for different migration paths depending on the starting version. The
 - MyAppModelV2-MyAppModelV4
 - MyAppModelV3-MyAppModelV4
 
-Initializing with empty values (either `nil`, `[]`, or `[:]`) instructs the `DataStack` to disable incremental migrations and revert to the default migration behavior (i.e. use the .xcdatamodel's current version as the final version):
+Initializing with empty values (either `nil`, `[]`, or `[:]`) instructs the `DataStack` to disable progressive migrations and revert to the default migration behavior (i.e. use the .xcdatamodel's current version as the final version):
 ```swift
 let dataStack = DataStack(migrationChain: nil)
 ```
@@ -375,7 +372,7 @@ CoreStore.beginAsynchronous { (transaction) -> Void in
 ```
 The `commit()` method saves the changes to the persistent store. If `commit()` is not called when the transaction block completes, all changes within the transaction is discarded.
 
-The examples above use `beginAsynchronous(...)`, but there are actually 3 types of transactions at your disposal: *asynchronous*, *synchronous*, and *detached*.
+The examples above use `beginAsynchronous(...)`, but there are actually 3 types of transactions at your disposal: *asynchronous*, *synchronous*, and *unsafe*.
 
 ### Transaction types
 
@@ -401,10 +398,10 @@ CoreStore.beginSynchronous { (transaction) -> Void in
 
 Since `beginSynchronous(...)` technically blocks two queues (the caller's queue and the transaction's background queue), it is considered less safe as it's more prone to deadlock. Take special care that the closure does not block on any other external queues.
 
-#### Detached transactions
+#### Unsafe transactions
 are special in that they do not enclose updates within a closure:
 ```swift
-let transaction = CoreStore.beginDetached()
+let transaction = CoreStore.beginUnsafe()
 // make changes
 downloadJSONWithCompletion({ (json) -> Void in
 
@@ -419,7 +416,7 @@ downloadAnotherJSONWithCompletion({ (json) -> Void in
 ```
 This allows for non-contiguous updates. Do note that this flexibility comes with a price: you are now responsible for managing concurrency for the transaction. As uncle Ben said, "with great power comes great race conditions."
 
-As the above example also shows, only detached transactions are allowed to call `commit()` multiple times; doing so with synchronous and asynchronous transactions will trigger an assert. 
+As the above example also shows, only unsafe transactions are allowed to call `commit()` multiple times; doing so with synchronous and asynchronous transactions will trigger an assert. 
 
 
 You've seen how to create transactions, but we have yet to see how to make *creates*, *updates*, and *deletes*. The 3 types of transactions above are all subclasses of `BaseDataTransaction`, which implements the methods shown below.
@@ -477,7 +474,7 @@ let jane: MyPersonEntity = // ...
 CoreStore.beginAsynchronous { (transaction) -> Void in
     // WRONG: jane.age = jane.age + 1
     // RIGHT:
-    let jane = transaction.edit(jane) // using the same variable name protects us from misusing the non-transaction instance
+    let jane = transaction.edit(jane)! // using the same variable name protects us from misusing the non-transaction instance
     jane.age = jane.age + 1
     transaction.commit()
 }
@@ -490,9 +487,9 @@ let john: MyPersonEntity = // ...
 CoreStore.beginAsynchronous { (transaction) -> Void in
     // WRONG: jane.friends = [john]
     // RIGHT:
-    let jane = transaction.edit(jane)
-    let john = transaction.edit(john)
-    jane.friends = [john]
+    let jane = transaction.edit(jane)!
+    let john = transaction.edit(john)!
+    jane.friends = NSSet(array: [john])
     transaction.commit()
 }
 ```
@@ -529,6 +526,46 @@ CoreStore.beginAsynchronous { (transaction) -> Void in
     transaction.commit()
 }
 ```
+
+### Passing objects safely
+
+Always remember that the `DataStack` and individual transactions manage different `NSManagedObjectContext`s so you cannot just use objects between them. That's why transactions have an `edit(...)` method:
+```swift
+let jane: MyPersonEntity = // ...
+
+CoreStore.beginAsynchronous { (transaction) -> Void in
+    let jane = transaction.edit(jane)!
+    jane.age = jane.age + 1
+    transaction.commit()
+}
+```
+But `CoreStore`, `DataStack` and `BaseDataTransaction` have a very flexible `fetchExisting(...)` method that you can pass instances back and forth with:
+```swift
+let jane: MyPersonEntity = // ...
+
+CoreStore.beginAsynchronous { (transaction) -> Void in
+    let jane = transaction.fetchExisting(jane)! // instance for transaction
+    jane.age = jane.age + 1
+    transaction.commit {
+        let jane = CoreStore.fetchExisting(jane)! // instance for DataStack
+        print(jane.age)
+    }
+}
+```
+`fetchExisting(...)` also works with multiple `NSManagedObject`s or with `NSManagedObjectID`s:
+```swift
+var peopleIDs: [NSManagedObjectID] = // ...
+
+CoreStore.beginAsynchronous { (transaction) -> Void in
+    let jane = transaction.fetchOne(
+        From(MyPersonEntity),
+        Where("name", isEqualTo: "Jane Smith")
+    )
+    jane.friends = NSSet(array: transaction.fetchExisting(peopleIDs)!)
+    // ...
+}
+```
+
 
 ## Importing data
 Some times, if not most of the time, the data that we save to Core Data comes from external sources such as web servers or external files. Say you have a JSON dictionary, you may be extracting values as such:
@@ -577,7 +614,7 @@ public protocol ImportableObject: class {
 First, set `ImportSource` to the expected type of the data source:
 ```swift
 typealias ImportSource = [String: AnyObject]
-``
+```
 This lets us call `importObject(_:source:)` with any `[String: AnyObject]` type as the argument to `source`:
 ```swift
 CoreStore.beginAsynchronous { (transaction) -> Void in
@@ -641,8 +678,62 @@ CoreStore.beginAsynchronous { (transaction) -> Void in
 ```
 
 #### `ImportableUniqueObject`
+Typically, we don't just keep creating objects every time we import data. Usually we also need to update already existing objects. Implementing the `ImportableUniqueObject` protocol lets you specify a "unique ID" that transactions can use to search existing objects before creating new ones:
+```swift
+public protocol ImportableUniqueObject: ImportableObject {
+    typealias ImportSource
+    typealias UniqueIDType: NSObject
 
+    static var uniqueIDKeyPath: String { get }
+    var uniqueIDValue: UniqueIDType { get set }
 
+    static func shouldInsertFromImportSource(source: ImportSource, inTransaction transaction: BaseDataTransaction) -> Bool
+    static func shouldUpdateFromImportSource(source: ImportSource, inTransaction transaction: BaseDataTransaction) -> Bool
+    static func uniqueIDFromImportSource(source: ImportSource, inTransaction transaction: BaseDataTransaction) throws -> UniqueIDType?
+    func didInsertFromImportSource(source: ImportSource, inTransaction transaction: BaseDataTransaction) throws
+    func updateFromImportSource(source: ImportSource, inTransaction transaction: BaseDataTransaction) throws
+}
+```
+Notice that it has the same insert methods as `ImportableObject`, with additional methods for updates and for specifying the unique ID:
+```swift
+class var uniqueIDKeyPath: String {
+    return "personID" 
+}
+var uniqueIDValue: NSNumber { 
+    get { return self.personID }
+    set { self.personID = newValue }
+}
+class func uniqueIDFromImportSource(source: ImportSource, inTransaction transaction: BaseDataTransaction) throws -> NSNumber? {
+    return source["id"] as? NSNumber
+}
+```
+For `ImportableUniqueObject`, the extraction and assignment of values should be implemented from the `updateFromImportSource(...)` method. The `didInsertFromImportSource(...)` by default calls `updateFromImportSource(...)`, but you can separate the implementation for inserts and updates if needed.
+
+You can then create/update an object by calling a transaction's `importUniqueObject(...)` method:
+```swift
+CoreStore.beginAsynchronous { (transaction) -> Void in
+    let json: [String: AnyObject] = // ...
+    try! transaction.importUniqueObject(
+        Into(MyPersonEntity),
+        source: json
+    )
+    // ...
+}
+```
+or multiple objects at once with the `importUniqueObjects(...)` method:
+
+```swift
+CoreStore.beginAsynchronous { (transaction) -> Void in
+    let jsonArray: [[String: AnyObject]] = // ...
+    try! transaction.importObjects(
+        Into(MyPersonEntity),
+        sourceArray: jsonArray
+    )
+    // ...
+}
+```
+As with `ImportableObject`, you can control wether to skip importing an object by implementing 
+`shouldInsertFromImportSource(...)` and `shouldUpdateFromImportSource(...)`, or to cancel all objects by `throw`ing an error from the `uniqueIDFromImportSource(...)`, `didInsertFromImportSource(...)` or `updateFromImportSource(...)` methods.
 
 
 ## Fetching and Querying
@@ -929,7 +1020,7 @@ Doing so channels all logging calls to your logger.
 
 Note that to keep the call stack information intact, all calls to these methods are **NOT** thread-managed. Therefore you have to make sure that your logger is thread-safe or you may otherwise have to dispatch your logging implementation to a serial queue.
 
-## Observing changes and notifications
+## Observing changes and notifications (unavailable on OSX)
 CoreStore provides type-safe wrappers for observing managed objects:
 
 - `ObjectMonitor`: use to monitor changes to a single `NSManagedObject` instance (instead of Key-Value Observing)
@@ -1066,26 +1157,32 @@ let person2 = self.monitor[1, 2]
 
 
 # Roadmap
-- Data importing utilities for transactions
 - Support iCloud stores
+- CoreSpotlight auto-indexing (experimental)
 
 
 # Installation
 - Requires:
     - iOS 8 SDK and above
-    - Swift 2.0 (XCode 7 beta 6)
+    - Swift 2.1 (Xcode 7.2)
 - Dependencies:
     - [GCDKit](https://github.com/JohnEstropia/GCDKit)
 
-### Install with Cocoapods
+### Install with CocoaPods
 ```
 pod 'CoreStore'
 ```
 This installs CoreStore as a framework. Declare `import CoreStore` in your swift file to use the library.
 
 ### Install with Carthage
+In your `Cartfile`, add
 ```
-github "JohnEstropia/CoreStore" >= 1.3.0
+github "JohnEstropia/CoreStore" >= 1.4.4
+github "JohnEstropia/GCDKit" >= 1.1.7
+```
+and run 
+```
+carthage update
 ```
 
 ### Install as Git Submodule

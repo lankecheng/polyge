@@ -8,6 +8,12 @@
 
 import Foundation
 
+/**
+    This extension is deprecated in 0.4.1 and will be obsoleted in 0.5.0.
+
+    The conversion of Duration into NSTimeInterval is performed under incorrect assumption that 1 month is always equal to 30 days.
+    Therefore, The comparison between Duration and NSTimeInterval is also incorrect.
+*/
 public extension NSCalendarUnit {
     public var interval: NSTimeInterval {
         switch self {
