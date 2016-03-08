@@ -55,6 +55,7 @@
 		3C63D9571B385BD100EF6196 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C63D9551B385BD100EF6196 /* LaunchScreen.xib */; };
 		3C63D9581B385BD100EF6196 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C63D9561B385BD100EF6196 /* Localizable.strings */; };
 		3C6528A71B5012D1001A40CC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6528A61B5012D1001A40CC /* MBProgressHUD.m */; };
+		3C6A4C351C8ED4B700AE9BEA /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6A4C341C8ED4B700AE9BEA /* R.generated.swift */; };
 		3C7E36FB1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */; };
 		3C7E36FD1B3E7E4000B7B272 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */; };
 		3C7E37011B3E898D00B7B272 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E37001B3E898D00B7B272 /* NSObject.swift */; };
@@ -127,6 +128,7 @@
 		3C63D9561B385BD100EF6196 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Xib/Localizable.strings; sourceTree = "<group>"; };
 		3C6528A51B5012D1001A40CC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		3C6528A61B5012D1001A40CC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		3C6A4C341C8ED4B700AE9BEA /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		3C7E36FA1B3E6B2100B7B272 /* KSPlayReportOrSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KSPlayReportOrSwitchTableViewCell.swift; path = View/KSPlayReportOrSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		3C7E36FC1B3E7E4000B7B272 /* UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIWindow.swift; path = Extension/UIWindow.swift; sourceTree = "<group>"; };
 		3C7E37001B3E898D00B7B272 /* NSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSObject.swift; path = Extension/NSObject.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 		3C315F571ADF5F360040FF99 = {
 			isa = PBXGroup;
 			children = (
+				3C6A4C341C8ED4B700AE9BEA /* R.generated.swift */,
 				3CF54C421B3F9E9C00D431E5 /* MyPlayground.playground */,
 				3C315F651ADF5F370040FF99 /* AppDelegate.swift */,
 				3C315F621ADF5F360040FF99 /* PolyGe */,
@@ -465,6 +468,7 @@
 			buildConfigurationList = 3C315F811ADF5F370040FF99 /* Build configuration list for PBXNativeTarget "PolyGe" */;
 			buildPhases = (
 				178D3C8A7526F8CBFB4B1912 /* Check Pods Manifest.lock */,
+				3C6A4C331C8ED44900AE9BEA /* ShellScript */,
 				3C315F5C1ADF5F360040FF99 /* Sources */,
 				3C315F5D1ADF5F360040FF99 /* Frameworks */,
 				3C315F5E1ADF5F360040FF99 /* Resources */,
@@ -547,6 +551,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		3C6A4C331C8ED44900AE9BEA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT\"";
 		};
 		D781500E4304084CA62986B0 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -632,6 +649,7 @@
 				3CB3DDE21AF5F4AE00289E8B /* KSProgressHUD.swift in Sources */,
 				3C63D9451B385A0900EF6196 /* Message.swift in Sources */,
 				3C63D9351B3859C000EF6196 /* KSEnum.swift in Sources */,
+				3C6A4C351C8ED4B700AE9BEA /* R.generated.swift in Sources */,
 				3C63D90A1B3858B900EF6196 /* ChattingViewController.swift in Sources */,
 				3CB3DDE01AF5F4AE00289E8B /* KSMessageCell.swift in Sources */,
 				3C63D9271B38591A00EF6196 /* UIViewController.swift in Sources */,

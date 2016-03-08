@@ -11,6 +11,8 @@ PODS:
   - CryptoSwift (0.2.3)
   - DynamicColor (2.4.0)
   - GCDKit (1.1.7)
+  - KSJSONHelp (0.6.1)
+  - KSSwiftExtension (0.4.1)
   - Moya (6.2.0):
     - Moya/Core (= 6.2.0)
   - Moya/Core (6.2.0):
@@ -19,7 +21,12 @@ PODS:
   - Moya/RxSwift (6.2.0):
     - Moya/Core
     - RxSwift (~> 2.0)
+  - R.swift (1.3.0):
+    - R.swift.Library (~> 1.1.0)
+  - R.swift.Library (1.1.0)
   - Result (1.0.2)
+  - RxCocoa (2.2.0):
+    - RxSwift (~> 2.2)
   - RxSwift (2.2.0)
   - Starscream (1.1.2)
   - SwiftyJSON (2.3.2)
@@ -33,8 +40,12 @@ DEPENDENCIES:
   - CoreStore
   - CryptoSwift
   - DynamicColor
+  - KSJSONHelp
+  - KSSwiftExtension
   - Moya
   - Moya/RxSwift
+  - R.swift
+  - RxCocoa
   - Starscream
   - SwiftyJSON
   - Timepiece
@@ -57,8 +68,13 @@ SPEC CHECKSUMS:
   CryptoSwift: b2bf37b8e7cc6d682ef3365cb966bc5ae5174aa5
   DynamicColor: 2f3fd61053684667bad9f03045dcf9a2a5a007ea
   GCDKit: 00a091f8b7cb83c0591288d5a60b080a971b979c
+  KSJSONHelp: b45433fcbccce7a5ca2532553bb72cf3f5ad02e3
+  KSSwiftExtension: 93089d4318d88fa149f4a7fabf381a9e2b05f28a
   Moya: a5e57a405584177027daab240f4d47baa0722562
+  R.swift: 43f8a833dd8cbb4a19908cbfd37fb982e9147899
+  R.swift.Library: 775f3086e07313ed1a1dfddca8418317f5a87397
   Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
+  RxCocoa: 42efb7a7145a8d1d5878e94ce48a580d29e0c796
   RxSwift: b8a749f2204c6c7a5c29b306a9c3bc11d5b87c5b
   Starscream: 58a12fd35a3cb6aaa105716c2d42765f7c1c732f
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a

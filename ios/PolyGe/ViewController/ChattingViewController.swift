@@ -82,7 +82,7 @@ extension ChattingViewController: KSInputMessageViewDelegate{
                 lastMessage.createDate = message.createDate
                 lastMessage.info = "[图片]"
             }
-            transaction.commit()
+            transaction.commitAndWait()
         }
         tableView.scrollToBottom()
     }
@@ -102,7 +102,7 @@ extension ChattingViewController: KSInputMessageViewDelegate{
                 lastMessage.createDate = message.createDate
                 lastMessage.info = "[语音]"
             }
-            transaction.commit()
+            transaction.commitAndWait()
         }
         tableView.scrollToBottom()
     }

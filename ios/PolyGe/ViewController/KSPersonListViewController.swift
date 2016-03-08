@@ -52,6 +52,6 @@ class KSPersonListViewController: KSTableViewController {
         let cell = sender as! KSPersonListTableViewCell
         let indexPath = self.tableView.indexPathForCell(cell)
         let viewControll = segue.destinationViewController as! KSPersonViewController
-        viewControll.person = self.viewModel![indexPath!] as! User
+        viewControll.person = self.viewModel![indexPath!] as? User
     }
 }
